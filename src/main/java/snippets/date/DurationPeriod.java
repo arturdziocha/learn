@@ -1,4 +1,4 @@
-package cheets.date;
+package snippets.date;
 
 import java.time.Duration;
 import java.time.LocalDate;
