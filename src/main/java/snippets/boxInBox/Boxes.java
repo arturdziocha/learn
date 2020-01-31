@@ -73,6 +73,6 @@ public class Boxes {
         int b3 = scanner.nextInt();
         System.out.println(compare(a1, a2, a3, b1, b2, b3));
         System.out.println(compareBetter(a1, a2, a3, b1, b2, b3));
-
+        scanner.close();
     }
 }

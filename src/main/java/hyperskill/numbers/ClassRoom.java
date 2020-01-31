@@ -1,4 +1,4 @@
-package hyperskill.chars.numbers;
+package hyperskill.numbers;
 
 import java.util.Scanner;
 
@@ -12,7 +12,6 @@ public class ClassRoom {
         final int results = st1 / 2 + st1 % 2 + st2 / 2 + st2 % 2 + st3 / 2 + st3 % 2;
 
         System.out.println(results);
-
+        sc.close();
     }
-
 }

@@ -21,5 +21,6 @@ public class Chockolade {
         } else {
             System.out.println("NO");
         }
+        scanner.close();
     }
 }

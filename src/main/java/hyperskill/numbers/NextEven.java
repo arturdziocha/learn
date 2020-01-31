@@ -1,4 +1,4 @@
-package hyperskill.chars.numbers;
+package hyperskill.numbers;
 
 import java.util.Scanner;
 
