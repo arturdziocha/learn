@@ -1,4 +1,4 @@
-package cheets.date;
+package snippets.date;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 

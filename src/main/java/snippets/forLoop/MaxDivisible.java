@@ -29,5 +29,21 @@ public class MaxDivisible {
         }
         System.out.println(currentMax);
 
+        
+        // Scanner scanner = new Scanner(System.in);
+        // int len = scanner.nextInt();
+        // int start = 0;
+        // int max = 0;
+        // int num;
+        // while ( start<len ) {
+        // num = scanner.nextInt();
+        // start++;
+        // if (num%4==0 && num>max) {
+        // max=num;
+        // }
+        // }
+        // System.out.println(max);
     }
+    
+
 }
