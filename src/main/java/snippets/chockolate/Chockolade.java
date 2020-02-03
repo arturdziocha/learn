@@ -3,10 +3,10 @@ package snippets.chockolate;
 import java.util.Scanner;
 
 /**
- * Czekolada ma kszta³t prostok¹ta, podzielonego na segmenty NxM. Mo¿esz
- * podzieliæ ten tabliczkê czekolady na dwie czêœci pojedyncz¹ lini¹ prost¹
- * (tylko raz). SprawdŸ, czy mo¿esz oderwaæ dok³adnie K segmentów od czekolady.
- * Ka¿dy segment to 1x1.
+ * Czekolada ma ksztaÅ‚t prostokÄ…ta, podzielonego na segmenty NxM. MoÅ¼esz
+ * podzieliÄ‡ ten tabliczkÄ™ czekolady na dwie czÄ™ci pojedynczï¿½ liniÄ™ prostÄ…
+ * (tylko raz). SprawdÅº, czy moÅ¼esz oderwaÄ‡ dokÅ‚adnie K segmentÃ³w od czekolady.
+ * KaÅ¼dy segment to 1x1.
  */
 public class Chockolade {
     public static void main(String[] args) {
