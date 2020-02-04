@@ -30,5 +30,6 @@ public class BankProfit {
             years++;
         }
         System.out.println(years);
+        scanner.close();
     }
 }
