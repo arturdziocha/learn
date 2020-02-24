@@ -11,7 +11,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account findAccountByOwnerId(long id) {
-        return Arrays.stream(accounts).filter(account -> account.getId() == id).findFirst().get();
+        return Arrays.stream(accounts).filter(account -> account.getOwner().getId() == id).findFirst().orElse(null);
+
     }
 
     @Override
