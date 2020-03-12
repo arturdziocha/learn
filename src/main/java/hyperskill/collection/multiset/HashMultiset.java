@@ -18,44 +18,68 @@ public class HashMultiset<E> implements Multiset<E> {
 
     @Override
     public void remove(E elem) {
-        if (map.get(elem) > 2) {
-            map.computeIfPresent(elem, (k, v) -> v -= 1);
+        if (contains(elem)) {
+            Integer howMany = map.get(elem);
+            if (howMany > 1) {
+                map.computeIfPresent(elem, (k, v) -> v -= 1);
+            } else {
+                map.remove(elem);
+            }
+
         }
 
     }
 
     @Override
     public void union(Multiset<E> other) {
-
+        for (E e : other.toSet()) {
+            if (!map.containsKey(e)) {
+                map.put(e, other.getMultiplicity(e));
+            }
+        }
     }
 
     @Override
     public void intersect(Multiset<E> other) {
-
+        Map<E, Integer> temp = new HashMap<>();
+        for(Map.Entry<E, Integer> entry: map.entrySet()) {
+            if(other.contains(entry.getKey())) {
+                //TODO Finish Mutiset
+            }
+        }
     }
 
     @Override
     public int getMultiplicity(E elem) {
-        return 0;
+        return contains(elem) ? map.get(elem) : 0;
     }
 
     @Override
     public boolean contains(E elem) {
-        return false;
+        return map.containsKey(elem);
     }
 
     @Override
     public int numberOfUniqueElements() {
-        return 0;
+        return map.size();
     }
 
     @Override
     public int size() {
-        return 0;
+        int sum = 0;
+        for (Map.Entry<E, Integer> entry : map.entrySet()) {
+            sum += entry.getValue();
+        }
+        return sum;
     }
 
     @Override
     public Set<E> toSet() {
-        return null;
+        return map.keySet();
+    }
+
+    @Override
+    public String toString() {
+        return map.toString();
     }
 }

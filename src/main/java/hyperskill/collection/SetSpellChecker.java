@@ -1,5 +1,6 @@
 package hyperskill.collection;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
@@ -40,10 +41,10 @@ public class SetSpellChecker {
             dictionary.add(scanner.nextLine().toLowerCase());
         }
         int lineSize = Integer.parseInt(scanner.nextLine());
-        //scanner.nextLine();
+        // scanner.nextLine();
         Set<String> words = new HashSet<>();
         for (int i = 0; i < lineSize; i++) {
-            words.addAll(List.of(scanner.nextLine().toLowerCase().split("\\s+")));
+            words.addAll(Arrays.asList(scanner.nextLine().toLowerCase().split("\\s+")));
         }
         words.removeAll(dictionary);
         words.forEach(System.out::println);
