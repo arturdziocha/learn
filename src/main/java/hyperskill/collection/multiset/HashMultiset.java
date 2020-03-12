@@ -25,9 +25,7 @@ public class HashMultiset<E> implements Multiset<E> {
             } else {
                 map.remove(elem);
             }
-
         }
-
     }
 
     @Override
@@ -42,16 +40,18 @@ public class HashMultiset<E> implements Multiset<E> {
     @Override
     public void intersect(Multiset<E> other) {
         Map<E, Integer> temp = new HashMap<>();
-        for(Map.Entry<E, Integer> entry: map.entrySet()) {
-            if(other.contains(entry.getKey())) {
-                //TODO Finish Mutiset
+        for (Map.Entry<E, Integer> entry : map.entrySet()) {
+            if (other.contains(entry.getKey())) {
+                int howMany = other.getMultiplicity(entry.getKey());
+                temp.put(entry.getKey(), entry.getValue() > howMany ? howMany : entry.getValue());
             }
         }
+        this.map = temp;
     }
 
     @Override
     public int getMultiplicity(E elem) {
-        return contains(elem) ? map.get(elem) : 0;
+        return map.getOrDefault(elem, 0);
     }
 
     @Override
