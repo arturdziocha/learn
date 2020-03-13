@@ -38,11 +38,16 @@ class HashMultisetTest {
         assertEquals(5, first.numberOfUniqueElements());
         assertEquals(3, first.getMultiplicity(2));
     }
-
+    @Test
+    public void testNumberOfUniqueElements() {
+        assertEquals(3, first.numberOfUniqueElements());
+        assertEquals(4, second.numberOfUniqueElements());
+    }
     @Test
     public void sumAfterIntersect() {
         first.intersect(second);
-        System.out.println(first);
+        assertEquals(3, first.size());
+        assertEquals(2, first.numberOfUniqueElements());
     }
 
 }
