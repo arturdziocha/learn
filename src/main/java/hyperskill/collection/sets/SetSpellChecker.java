@@ -1,4 +1,4 @@
-package hyperskill.collection;
+package hyperskill.collection.sets;
 
 import java.util.Arrays;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package hyperskill.collection.mapShare;
+package hyperskill.collection.maps.mapShare;
 
 import java.util.HashMap;
 import java.util.Map;

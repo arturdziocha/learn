@@ -1,4 +1,4 @@
-package hyperskill.collection.mapCount;
+package hyperskill.collection.maps.mapCount;
 
 import java.util.Arrays;
 import java.util.HashMap;
