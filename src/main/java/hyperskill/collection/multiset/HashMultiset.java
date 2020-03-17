@@ -52,28 +52,20 @@ public class HashMultiset<E> implements Multiset<E> {
 
     @Override
     public void add(E elem) {
-        if (map.containsKey(elem)) {
-            map.computeIfPresent(elem, (k, v) -> v += 1);
-        } else {
-            map.put(elem, 1);
-        }
+        map.put(elem, getMultiplicity(elem) + 1);
     }
 
     @Override
     public void remove(E elem) {
-        if (contains(elem)) {
-            Integer howMany = map.get(elem);
-            if (howMany > 1) {
-                map.computeIfPresent(elem, (k, v) -> v -= 1);
-            } else {
-                map.remove(elem);
-            }
+        map.put(elem, getMultiplicity(elem) - 1);
+        if (getMultiplicity(elem) < 1) {
+            map.remove(elem);
         }
     }
 
     @Override
     public void union(Multiset<E> other) {
-
+/*
         for (E e : other.toSet()) {
             if (map.containsKey(e)) {
                 int howManyInMap = getMultiplicity(e);
@@ -83,12 +75,13 @@ public class HashMultiset<E> implements Multiset<E> {
             } else {
                 map.put(e, other.getMultiplicity(e));
             }
-        }
+        }*/
+        other.toSet().forEach(e -> map.put(e, Math.max(getMultiplicity(e), other.getMultiplicity(e))));
     }
 
     @Override
     public void intersect(Multiset<E> other) {
-        Map<E, Integer> temp = new HashMap<>();
+        /*Map<E, Integer> temp = new HashMap<>();
         for (Map.Entry<E, Integer> entry : map.entrySet()) {
             if (other.contains(entry.getKey())) {
                 int howMany = other.getMultiplicity(entry.getKey());
@@ -96,6 +89,8 @@ public class HashMultiset<E> implements Multiset<E> {
             }
         }
         this.map = temp;
+        */
+        map.forEach((k, v) -> map.put(k, Math.min(v, other.getMultiplicity(k))));
     }
 
     @Override
@@ -115,11 +110,7 @@ public class HashMultiset<E> implements Multiset<E> {
 
     @Override
     public int size() {
-        int sum = 0;
-        for (Map.Entry<E, Integer> entry : map.entrySet()) {
-            sum += entry.getValue();
-        }
-        return sum;
+        return map.values().stream().mapToInt(Integer::intValue).sum();
     }
 
     @Override

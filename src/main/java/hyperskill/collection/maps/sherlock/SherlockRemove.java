@@ -31,18 +31,16 @@ ghhnnl
  */
 public class SherlockRemove {
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("add strings");
-        Map<Character, Long> firstWord = scanner
-                .nextLine()
-                .toLowerCase()
+
+        String fWord = scanner.nextLine().toLowerCase();
+        String sWord = scanner.nextLine().toLowerCase();
+        Map<Character, Long> firstWord = fWord
                 .chars()
                 .mapToObj(c -> (char) c)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-        Map<Character, Long> secondWord = scanner
-                .nextLine()
-                .toLowerCase()
+        Map<Character, Long> secondWord = sWord
                 .chars()
                 .mapToObj(c -> (char) c)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
@@ -59,11 +57,16 @@ public class SherlockRemove {
                 diff.put(secondEntry.getKey(), secondEntry.getValue());
             }
         }
-        System.out.println(firstWord);
-        System.out.println(secondWord);
-        System.out.println(diff);
+
+        //Another solution
+        Map<Integer, Integer> chMap = new HashMap<>();
+        fWord.chars().forEach(ch -> chMap.put(ch, chMap.getOrDefault(ch, 0) + 1));
+        sWord.chars().forEach(ch -> chMap.put(ch, chMap.getOrDefault(ch, 0) - 1));
+        System.out.println(chMap);
+        int delete = chMap.values().stream().reduce(0, (a, b) -> Math.abs(a) + Math.abs(b));
         Long ss = diff.values().stream().reduce(0L, Long::sum);
         System.out.println(ss);
+        System.out.println(delete);
         scanner.close();
 
     }

@@ -1,10 +1,8 @@
 package hyperskill.collection.maps;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.SortedMap;
 import java.util.TreeMap;
 
 /*
@@ -55,14 +53,8 @@ public class ProcessingMaps {
     }
 
     private static Map<Integer, String> getSubMap(TreeMap<Integer, String> map) {
-        SortedMap<Integer, String> ret = new TreeMap<>(Collections.reverseOrder());
-        System.out.println(map.size());
-        if (map.firstKey() % 2 != 0) {
-            ret.putAll(map.subMap(1, true, 5, true));
-        } else {
-            ret.putAll(map.subMap(map.size()-5, true, map.size()-1, true));
-        }
-        return ret;
+        return map.firstKey() % 2 == 0 ? map.tailMap(map.lastKey() - 4, true).descendingMap() :
+                map.headMap(map.firstKey() + 4, true).descendingMap();
     }
 
 }
