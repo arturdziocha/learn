@@ -81,16 +81,17 @@ public class HashMultiset<E> implements Multiset<E> {
 
     @Override
     public void intersect(Multiset<E> other) {
-        /*Map<E, Integer> temp = new HashMap<>();
+        Map<E, Integer> temp = new HashMap<>();
         for (Map.Entry<E, Integer> entry : map.entrySet()) {
             if (other.contains(entry.getKey())) {
                 int howMany = other.getMultiplicity(entry.getKey());
-                temp.put(entry.getKey(), entry.getValue() > howMany ? howMany : entry.getValue());
+                temp.put(entry.getKey(), Math.min(entry.getValue(), howMany));
+                //temp.put(entry.getKey(), entry.getValue() > howMany ? howMany : entry.getValue());
             }
         }
         this.map = temp;
-        */
-        map.forEach((k, v) -> map.put(k, Math.min(v, other.getMultiplicity(k))));
+        
+        //map.forEach((k, v) -> map.put(k, Math.min(v, other.getMultiplicity(k))));
     }
 
     @Override
