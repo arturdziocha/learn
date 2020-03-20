@@ -1,6 +1,5 @@
 package hyperskill.collection.maps;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -14,20 +13,15 @@ public class Project {
         Map<String, String> answers = new TreeMap<>();
         for (int i = 1; i <= howManyCards; i++) {
             System.out.println("The card #" + i + ":");
-            String name = scanner.nextLine();
-            boolean keyExists = answers.containsKey(name);
-            while (keyExists) {
+            String name;
+            while (answers.containsKey(name = scanner.nextLine())) {
                 System.out.println("The card \"" + name + "\" already exists. Try again:");
-                name = scanner.nextLine();
-                keyExists = answers.containsKey(name);
             }
             System.out.println("The definition of the card #" + i + ":");
-            String definition = scanner.nextLine();
-            boolean defExists = answers.values().contains(definition);
-            while(defExists) {
-                System.out.println("The definition \""+definition+"\" already exists. Try again:");
-                definition = scanner.nextLine();
-                defExists = answers.values().contains(definition);
+            String definition;
+            while (answers.containsValue(definition = scanner.nextLine())) {
+                System.out.println("The definition \"" + definition + "\" already exists. Try again:");
+
             }
             answers.put(name, definition);
         }
@@ -38,8 +32,7 @@ public class Project {
                 System.out.println("Correct answer.");
             } else {
                 System.out.print("Wrong answer. ");
-                Collection<String> values = answers.values();
-                if (values.contains(answer)) {
+                if (answers.containsValue(answer)) {
                     String k = answers
                             .entrySet()
                             .stream()
