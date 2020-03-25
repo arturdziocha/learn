@@ -2,8 +2,6 @@ package hyperskill.inputStreams;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 /*
 Read an input text from the console and print the number of words. By word we mean a sequence of characters separated by one or several spaces.
@@ -28,17 +26,18 @@ public class CountWords {
     public static void main(String[] args) throws IOException {
         try (Reader reader = new BufferedReader(new InputStreamReader(
                 new ByteArrayInputStream("between   us      several   space characters. Jezeli.ww".getBytes(StandardCharsets.UTF_8))))) {
-            List<String> lis = new ArrayList<>();
+
             int b;
-            int c = 0;
             int counter = 1;
-            boolean isLastWhitespace = false;
+            boolean isLastWhitespace = true;
             StringBuilder builder = new StringBuilder();
             while ((b = reader.read()) != -1) {
-
+                if(!isLastWhitespace && Character.isWhitespace(b)){
+                    counter++;
+                }
+                isLastWhitespace = Character.isWhitespace(b);
 
             }
-            System.out.println(lis);
             System.out.println(counter);
         }
     }
