@@ -1,13 +1,8 @@
 package hyperskill.inputStreams;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -32,18 +27,19 @@ public class CountWords {
     //TODO
     public static void main(String[] args) throws IOException {
         try (Reader reader = new BufferedReader(new InputStreamReader(
-                new ByteArrayInputStream("between   us  several   space characters".getBytes(StandardCharsets.UTF_8))))) {
-            int b;            
-            StringBuilder line = new StringBuilder();
+                new ByteArrayInputStream("between   us      several   space characters. Jezeli.ww".getBytes(StandardCharsets.UTF_8))))) {
+            List<String> lis = new ArrayList<>();
+            int b;
+            int c = 0;
+            int counter = 1;
+            boolean isLastWhitespace = false;
+            StringBuilder builder = new StringBuilder();
             while ((b = reader.read()) != -1) {
-                
-                line.append((char) b);
+
 
             }
-            String[] words = line.toString().split(" ");
-            System.out.println(Arrays.toString(words));
-            
-            System.out.println(words.length);
+            System.out.println(lis);
+            System.out.println(counter);
         }
     }
 }
