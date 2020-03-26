@@ -1,14 +1,8 @@
 package hyperskill.inputStreams;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /*
 Read an input text from the console and print the number of words. By word we mean a sequence of characters separated by one or several spaces.
@@ -38,7 +32,10 @@ public class CountWords {
             while ((b = reader.read()) != -1) {
                 line.append((char) b);
             }
-            System.out.println(Arrays.stream(line.toString().split(" ")).filter(w -> !w.isEmpty()).count());
+            System.out.println(
+                    Arrays.stream(
+                            line.toString().split(" "))
+                            .filter(w -> !w.isEmpty()).count());
         }
     }
 }
