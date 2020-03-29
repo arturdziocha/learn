@@ -16,3 +16,14 @@ testCompile 'org.junit.jupiter:junit-jupiter:5.5.2'
 test {
     useJUnitPlatform()
 }
+tasks.withType(JavaCompile) {
+    options.compilerArgs += "--enable-preview"
+}
+
+tasks.withType(Test) {
+    jvmArgs += "--enable-preview"
+}
+
+tasks.withType(JavaExec) {
+    jvmArgs += '--enable-preview'
+}
