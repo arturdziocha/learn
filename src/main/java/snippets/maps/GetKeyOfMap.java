@@ -15,6 +15,7 @@ public class GetKeyOfMap {
         }
         return null;
     }
+
     public <K, V> Set<K> getKeys(Map<K, V> map, V value) {
         Set<K> keys = new HashSet<>();
         for (Entry<K, V> entry : map.entrySet()) {
@@ -24,11 +25,18 @@ public class GetKeyOfMap {
         }
         return keys;
     }
+
     public <K, V> Stream<K> keys(Map<K, V> map, V value) {
+        return map.entrySet().stream().filter(entry -> value.equals(entry.getValue())).map(Map.Entry::getKey);
+    }
+
+    public <K, V> K getKeyStream(Map<K, V> map, V value) {
         return map
-          .entrySet()
-          .stream()
-          .filter(entry -> value.equals(entry.getValue()))
-          .map(Map.Entry::getKey);
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().equals(value))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .get();
     }
 }

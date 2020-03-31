@@ -1,10 +1,10 @@
-package hyperskill.collection.maps;
+package hyperskill.projects;
 
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class Project {
+public class Stage4 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Input the number of cards:");

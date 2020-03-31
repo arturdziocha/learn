@@ -1,0 +1,18 @@
+France
+Paris
+Great Britain
+London
+Russia
+Moscow
+black
+czarny
+blue
+niebieski
+green
+zielony
+pink
+różowy
+red
+czerwony
+white
+biały

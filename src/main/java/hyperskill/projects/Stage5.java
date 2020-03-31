@@ -3,8 +3,11 @@ package hyperskill.projects;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.function.BiConsumer;
@@ -197,23 +200,28 @@ public class Stage5 {
         });
         actions.put("import", (sc, ca) -> {
             System.out.println("File name:");
-            String filePathString = "src/main/java/hyperskill/projects/" + sc.nextLine();
-            try (Scanner scanner = new Scanner(new File(filePathString))) {
+            // String fileName = "src/main/java/hyperskill/projects/" +
+            // sc.nextLine();
+            String fileName = sc.nextLine();
+            try (Scanner scanner = new Scanner(new File(fileName))) {
                 int count = 0;
                 while (scanner.hasNext()) {
                     String cardName = scanner.nextLine();
                     String definition = scanner.nextLine();
                     count++;
-                    cards.put(cardName, definition);
+                    ca.put(cardName, definition);
                 }
                 System.out.println(count + " cards have been loaded.");
             } catch (FileNotFoundException e) {
                 System.out.println("File not found.");
             }
+            System.out.println();
         });
         actions.put("export", (sc, ca) -> {
             System.out.println("File name:");
-            String fileName = "src/main/java/hyperskill/projects/" + sc.nextLine();
+            // String fileName = "src/main/java/hyperskill/projects/" +
+            // sc.nextLine();
+            String fileName = sc.nextLine();
             try (PrintWriter writer = new PrintWriter(fileName)) {
                 ca.forEach((key, value) -> {
                     writer.println(key);
@@ -223,26 +231,60 @@ public class Stage5 {
             } catch (FileNotFoundException e) {
                 System.out.println("File not found.");
             }
+            System.out.println();
+        });
+        actions.put("ask", (sc, ca) -> {
+            System.out.println("How many times to ask?");
+            int howManyAsk = Integer.parseInt(sc.nextLine());
+            
+            List<String> keys = new ArrayList<>(ca.keySet());
+            int cardsSize = keys.size();
+            for (int i = 1; i <= howManyAsk; i++) {
+                Random random = new Random(i);
+                String key = keys.get(random.nextInt(cardsSize));
+                String value = ca.get(key);
+                System.out.println("Print the definition of \"" + key + "\":");
+                String answer = sc.nextLine();
+                if (answer.equals(value)) {
+                    System.out.println("Correct answer.");
+                } else if (ca.containsValue(answer)) {
+                    String goodAnswer = ca
+                            .entrySet()
+                            .stream()
+                            .filter(c -> c.getValue().equals(answer))
+                            .findFirst()
+                            .map(Map.Entry::getKey)
+                            .get();
+                    System.out
+                            .println("Wrong answer.  The correct one is \"" + value
+                                    + "\", you've just written the definition of \"" + goodAnswer + "\".");
+                } else {
+                    System.out.println("Wrong answer. The correct one is \"" + value + "\".");
+                }
+            }
+            
+            System.out.println();
         });
         boolean actionFlag = true;
         Scanner scanner = new Scanner(System.in);
         while (actionFlag) {
             System.out.println("Input the action (add, remove, import, export, ask, exit)");
-            System.out.println("add action");
+            // System.out.println("add action");
             String actionName = scanner.nextLine();
             if (actionName.equals("exit")) {
                 System.out.println("Bye bye!");
                 actionFlag = false;
-            } else {
+            } else if (actions.containsKey(actionName)) {
                 actions.get(actionName).accept(scanner, cards);
+            } else {
+                actionFlag = false;
             }
             /**
              * switch (actionName) { case "exit": System.out.println("Good
              * bye"); actionFlag = false; break; case "add": add(scanner,
              * cards); break; }
              */
-            System.out.println(cards);
+            // System.out.println(cards);
         }
-
-    }
+    }   
 }
