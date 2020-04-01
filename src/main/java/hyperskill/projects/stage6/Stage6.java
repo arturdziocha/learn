@@ -1,10 +1,6 @@
-package hyperskill.projects;
+package hyperskill.projects.stage6;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.TreeMap;
-import java.util.function.BiConsumer;
 
 /*
  * Add some statistics features. We suggest you implement the following:
@@ -62,40 +58,20 @@ Input the action (add, remove, import, export, ask, exit, log, hardest card, res
 > exit
 Bye bye!
  */
-public class Stage6 {
+public class Stage6 {    
     public static void main(String[] args) {
-
-        Map<String, String> cards = new TreeMap<>();
-        Map<String, String> errors = new TreeMap<>();
-        Map<String, BiConsumer<Scanner, Map<String, String>>> actions = new LinkedHashMap<>();
-        actions.put("add", (sc, ca) -> {
-            System.out.println("The card:");
-            String cardName = sc.nextLine();
-            if (ca.containsKey(cardName)) {
-                System.out.println("The card \"" + cardName + "\" already exists.");
-            } else {
-                System.out.println("The definition of the card:");
-                String definition = sc.nextLine();
-                if (ca.containsValue(definition)) {
-                    System.out.println("The definition \"" + definition + "\" already exists.");
-                } else {
-                    ca.put(cardName, definition);
-                    System.out.println("The pair (\"" + cardName + "\":\"" + definition + "\") has been added.");
-                }
+        Scanner scanner = new Scanner(System.in);        
+        boolean actionFlag = true;
+        while (actionFlag) {
+            System.out.println("Input the action (add, remove, import, export, ask, exit)");
+            // System.out.println("add action");
+            String actionName = scanner.nextLine();
+            if (actionName.equals("exit")) {
+                System.out.println("Bye bye!");
+                actionFlag = false;
             }
-            System.out.println();
-        });
-        actions.put("remove", (sc, ca) -> {
-            System.out.println("The card:");
-            String cardName = sc.nextLine();
-            if (ca.containsKey(cardName)) {
-                ca.remove(cardName);
-                System.out.println("The card has been removed.");
-            } else {
-                System.out.println("Can't remove \"" + cardName + "\": there is no such card.");
-            }
-            System.out.println();
-        });
+        }
+        scanner.close();
     }
 
 }
