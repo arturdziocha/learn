@@ -1,6 +1,9 @@
 package hyperskill.projects.stage6;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.function.BiConsumer;
 
 /*
  * Add some statistics features. We suggest you implement the following:
@@ -58,12 +61,30 @@ Input the action (add, remove, import, export, ask, exit, log, hardest card, res
 > exit
 Bye bye!
  */
-public class Stage6 {    
+public class Stage6 {
+    private final CardFacade cardFacade;
+    private final LogFacade logFacade;
+    public Stage6() {
+        this.cardFacade = new CardFacade();
+        this.logFacade = new LogFacade();
+    }
+    public CardFacade getCardFacade() {
+        return cardFacade;
+    }
+    public LogFacade getLogFacade() {
+        return logFacade;
+    }
+    
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);        
         boolean actionFlag = true;
+        Stage6 stage = new Stage6();
+        Map<String, BiConsumer<Scanner, Map<String, String>>> actions = new LinkedHashMap<>();
+        actions.put("add", (sc, ca) -> {
+            
+        });
         while (actionFlag) {
-            System.out.println("Input the action (add, remove, import, export, ask, exit)");
+            System.out.println("Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)");
             // System.out.println("add action");
             String actionName = scanner.nextLine();
             if (actionName.equals("exit")) {
