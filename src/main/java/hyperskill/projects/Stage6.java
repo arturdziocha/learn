@@ -1,0 +1,101 @@
+package hyperskill.projects;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.TreeMap;
+import java.util.function.BiConsumer;
+
+/*
+ * Add some statistics features. We suggest you implement the following:
+
+Action log saves the application log to the given file. Save all lines that have been input in or output to the console to the file. You can use a list to store the lines.
+Action hardest card prints the term of the card that has the most mistakes. You can store the mistake count in a map. If there are no cards with mistakes, you should print There are no cards with errors.. And for multiple hardest cards, you should list them all, like in the example below.
+Action reset stats erases the mistake counts for all cards.
+Also you should update serialization/deserialization to store sets of three items (term, definition, mistakes) instead of pairs (term, definition).
+
+Example
+
+The symbol > represents the user input. Notice that it's not the part of the input.
+
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):
+> hardest card
+There are no cards with errors.
+
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):
+> import
+File name:
+> capitals.txt
+28 cards have been loaded.
+
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):
+> hardest card
+The hardest card is "France". You have 10 errors answering it.
+
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):
+> ask
+How many times to ask?
+> 1
+Print the definition of "Russia":
+> Paris
+Wrong answer. (The correct one is "Moscow", you've just written the definition of "France" card.)
+
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):
+> hardest card
+The hardest cards are "Russia", "France". You have 10 errors answering them.
+
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):
+> reset stats
+Card statistics has been reset.
+
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):
+> hardest card
+There are no cards with errors.
+
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):
+> log
+File name:
+> todayLog.txt
+The log has been saved.
+
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):
+> exit
+Bye bye!
+ */
+public class Stage6 {
+    public static void main(String[] args) {
+
+        Map<String, String> cards = new TreeMap<>();
+        Map<String, String> errors = new TreeMap<>();
+        Map<String, BiConsumer<Scanner, Map<String, String>>> actions = new LinkedHashMap<>();
+        actions.put("add", (sc, ca) -> {
+            System.out.println("The card:");
+            String cardName = sc.nextLine();
+            if (ca.containsKey(cardName)) {
+                System.out.println("The card \"" + cardName + "\" already exists.");
+            } else {
+                System.out.println("The definition of the card:");
+                String definition = sc.nextLine();
+                if (ca.containsValue(definition)) {
+                    System.out.println("The definition \"" + definition + "\" already exists.");
+                } else {
+                    ca.put(cardName, definition);
+                    System.out.println("The pair (\"" + cardName + "\":\"" + definition + "\") has been added.");
+                }
+            }
+            System.out.println();
+        });
+        actions.put("remove", (sc, ca) -> {
+            System.out.println("The card:");
+            String cardName = sc.nextLine();
+            if (ca.containsKey(cardName)) {
+                ca.remove(cardName);
+                System.out.println("The card has been removed.");
+            } else {
+                System.out.println("Can't remove \"" + cardName + "\": there is no such card.");
+            }
+            System.out.println();
+        });
+    }
+
+}
