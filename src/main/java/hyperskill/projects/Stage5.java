@@ -256,10 +256,9 @@ public class Stage5 {
                             .map(Map.Entry::getKey)
                             .get();
                     System.out
-                            .println("Wrong answer.  The correct one is \"" + value
-                                    + "\", you've just written the definition of \"" + goodAnswer + "\".");
+                            .println("Wrong answer. The correct one is \"" + value + "\", you've just written the definition of \"" + goodAnswer + "\".");
                 } else {
-                    System.out.println("Wrong answer. The correct one is \"" + value + "\".");
+                    System.out.println("Wrong answer.The correct one is \"" + value + "\".");
                 }
             }
             

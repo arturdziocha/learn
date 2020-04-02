@@ -21,6 +21,9 @@ class CardFacade {
     void add(Card card) {
         cardGateway.add(card);
     }
+    void enlargeErrors(Card card) {
+        cardGateway.enlargeErrors(card);
+    }
 
     void remove(String name) {
         cardGateway.remove(name);
@@ -30,8 +33,11 @@ class CardFacade {
         return cardGateway.getAll();
     }
 
-    Optional<Card> get(String name) {
+    Optional<Card> getByName(String name) {
         return cardGateway.get(name);
+    }
+    Optional<Card> getByDefinition(String definition){
+        return cardGateway.getByDefinition(definition);
     }
     int size() {
         return cardGateway.size();

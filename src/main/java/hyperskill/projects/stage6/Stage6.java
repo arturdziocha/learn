@@ -1,9 +1,16 @@
 package hyperskill.projects.stage6;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /*
  * Add some statistics features. We suggest you implement the following:
@@ -64,35 +71,155 @@ Bye bye!
 public class Stage6 {
     private final CardFacade cardFacade;
     private final LogFacade logFacade;
+
     public Stage6() {
         this.cardFacade = new CardFacade();
         this.logFacade = new LogFacade();
     }
+
     public CardFacade getCardFacade() {
         return cardFacade;
     }
+
     public LogFacade getLogFacade() {
         return logFacade;
     }
-    
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);        
+
+        Map<String, BiConsumer<Scanner, Stage6>> actions = new LinkedHashMap<>();
+        actions.put("add", (sc, st) -> {
+            printAndLog("The card:", st.getLogFacade());
+
+            String cardName = sc.nextLine();
+            log(cardName, st.getLogFacade());
+            if (st.getCardFacade().nameExists(cardName)) {
+                printAndLog("The card \"" + cardName + "\" already exists.", st.getLogFacade());
+            } else {
+                printAndLog("The definition of the card:", st.getLogFacade());
+                String definition = sc.nextLine();
+                log(definition, st.getLogFacade());
+                if (st.getCardFacade().definitionExists(definition)) {
+                    printAndLog("The definition \"" + definition + "\" already exists.", st.getLogFacade());
+                } else {
+                    Card card = new Card(cardName, definition, 0);
+                    st.getCardFacade().add(card);
+                    printAndLog("The pair (\"" + cardName + "\":\"" + definition + "\") has been added.",
+                        st.getLogFacade());
+                }
+            }
+            System.out.println();
+        });
+        actions.put("remove", (sc, st) -> {
+            printAndLog("The card:", st.getLogFacade());
+            String cardName = sc.nextLine();
+            log(cardName, st.getLogFacade());
+            if (st.getCardFacade().nameExists(cardName)) {
+                st.getCardFacade().remove(cardName);
+                printAndLog("The card has been removed.", st.getLogFacade());
+            } else {
+                printAndLog("Can't remove \"" + cardName + "\": there is no such card.", st.getLogFacade());
+            }
+            System.out.println();
+        });
+        actions.put("import", (sc, st) -> {
+            printAndLog("File name:", st.getLogFacade());
+            String fileName = "src/main/java/hyperskill/projects/" + sc.nextLine();
+            log(fileName, st.getLogFacade());
+            // String fileName = sc.nextLine();
+            try (Scanner scanner = new Scanner(new File(fileName))) {
+                int count = 0;
+                while (scanner.hasNext()) {
+                    Card card = new Card(scanner.nextLine(), scanner.nextLine(), Integer.parseInt(scanner.nextLine()));
+                    count++;
+                    st.getCardFacade().add(card);
+                }
+                printAndLog(count + " cards have been loaded.", st.getLogFacade());
+            } catch (FileNotFoundException e) {
+                printAndLog("File not found.", st.getLogFacade());
+            }
+            System.out.println();
+        });
+        actions.put("export", (sc, st) -> {
+            printAndLog("File name:", st.getLogFacade());
+            String fileName = "src/main/java/hyperskill/projects/" + sc.nextLine();
+            log(fileName, st.getLogFacade());
+            // String fileName = sc.nextLine();
+            try (PrintWriter writer = new PrintWriter(fileName)) {
+                List<Card> allCards = st.getCardFacade().getAll();
+                allCards.forEach(card -> {
+                    writer.println(card.getName());
+                    writer.println(card.getDefinition());
+                    writer.println(card.getErrors());
+                });
+                printAndLog(allCards.size() + " cards have been saved.", st.getLogFacade());
+            } catch (FileNotFoundException e) {
+                printAndLog("File not found.", st.getLogFacade());
+            }
+            System.out.println();
+        });
+        actions.put("ask", (sc, st) -> {
+            printAndLog("How many times to ask?", st.getLogFacade());
+            int howManyAsk = Integer.parseInt(sc.nextLine());
+            log("" + howManyAsk, st.getLogFacade());
+            List<Card> allCards = st.getCardFacade().getAll();
+            for (int i = 1; i <= howManyAsk; i++) {
+                Random random = new Random(i);
+                Card card = allCards.get(random.nextInt(allCards.size()));
+                printAndLog("Print the definition of \"" + card.getName() + "\":", st.getLogFacade());
+                String answer = sc.nextLine();
+                log(answer, st.getLogFacade());
+                if (answer.equals(card.getDefinition())) {
+                    printAndLog("Correct answer.", st.getLogFacade());
+                } else {
+                    ifPresentOrElse(st.getCardFacade().getByDefinition(answer),
+                        s -> printAndLog(
+                            "Wrong answer. The correct one is \"" + card.getDefinition()
+                                    + "\", you've just written the definition of \"" + s.getName() + "\".",
+                            st.getLogFacade()),
+                        () -> printAndLog("Wrong answer.The correct one is \"" + card.getDefinition() + "\".",
+                            st.getLogFacade()));
+                    st.getCardFacade().enlargeErrors(card);
+                }
+            }
+        });
+        Scanner scanner = new Scanner(System.in);
         boolean actionFlag = true;
         Stage6 stage = new Stage6();
-        Map<String, BiConsumer<Scanner, Map<String, String>>> actions = new LinkedHashMap<>();
-        actions.put("add", (sc, ca) -> {
-            
-        });
         while (actionFlag) {
-            System.out.println("Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)");
+            printAndLog("Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)",
+                stage.getLogFacade());
             // System.out.println("add action");
             String actionName = scanner.nextLine();
             if (actionName.equals("exit")) {
-                System.out.println("Bye bye!");
+                printAndLog("Bye bye!", stage.getLogFacade());
+                actionFlag = false;
+            } else if (actions.containsKey(actionName)) {
+                actions.get(actionName).accept(scanner, stage);
+            } else {
                 actionFlag = false;
             }
+            System.out.println(stage.getCardFacade().getAll());
+            stage.getLogFacade().getAll().forEach(System.out::println);
         }
         scanner.close();
+    }
+
+    public static void printAndLog(String message, LogFacade logFacade) {
+        System.out.println(message);
+        logFacade.add(message);
+    }
+
+    public static void log(String message, LogFacade logFacade) {
+        logFacade.add(message);
+    }
+
+    public static <T> void ifPresentOrElse(Optional<T> optional, Consumer<? super T> action, Runnable emptyAction) {
+        if (optional.isPresent()) {
+            action.accept(optional.get());
+        } else {
+            emptyAction.run();
+        }
     }
 
 }

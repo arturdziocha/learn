@@ -26,4 +26,8 @@ class Card {
     public void enlargeErrors() {
         this.errors += 1;
     }
+    @Override
+    public String toString() {
+        return this.getName() + ": " + this.getDefinition() + " - "+this.getErrors();
+    }
 }
