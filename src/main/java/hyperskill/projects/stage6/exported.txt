@@ -1,0 +1,15 @@
+biały
+white
+2
+red
+czerwony
+1
+black
+czarny
+3
+France
+Paris
+3
+Russia
+Moskow
+3

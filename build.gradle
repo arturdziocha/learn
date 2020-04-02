@@ -8,7 +8,7 @@ apply plugin: 'eclipse'
 repositories {
         jcenter()
         mavenCentral()
-}  
+}
 dependencies {
 testCompile 'org.junit.jupiter:junit-jupiter:5.5.2'
     testCompile 'org.junit.jupiter:junit-jupiter-engine:5.5.2'

@@ -3,14 +3,7 @@ package hyperskill.projects.stage6;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -108,7 +101,7 @@ public class Stage6 {
                     Card card = new Card(cardName, definition, 0);
                     st.getCardFacade().add(card);
                     printAndLog("The pair (\"" + cardName + "\":\"" + definition + "\") has been added.",
-                        st.getLogFacade());
+                            st.getLogFacade());
                 }
             }
             System.out.println();
@@ -176,12 +169,12 @@ public class Stage6 {
                     printAndLog("Correct answer.", st.getLogFacade());
                 } else {
                     ifPresentOrElse(st.getCardFacade().getByDefinition(answer),
-                        s -> printAndLog(
-                            "Wrong answer. The correct one is \"" + card.getDefinition()
-                                    + "\", you've just written the definition of \"" + s.getName() + "\".",
-                            st.getLogFacade()),
-                        () -> printAndLog("Wrong answer.The correct one is \"" + card.getDefinition() + "\".",
-                            st.getLogFacade()));
+                            s -> printAndLog(
+                                    "Wrong answer. The correct one is \"" + card.getDefinition()
+                                            + "\", you've just written the definition of \"" + s.getName() + "\".",
+                                    st.getLogFacade()),
+                            () -> printAndLog("Wrong answer.The correct one is \"" + card.getDefinition() + "\".",
+                                    st.getLogFacade()));
                     st.getCardFacade().enlargeErrors(card);
                 }
             }
@@ -199,35 +192,43 @@ public class Stage6 {
         });
         actions.put("hardest card", (sc, st) -> {
             List<Card> cards = st.getCardFacade().getAll();
-            int max = cards.stream().map(c -> c.getErrors()).max(Comparator.naturalOrder()).get();
+            int max = cards.stream().map(Card::getErrors).max(Comparator.naturalOrder()).get();
             if (max == 0) {
+
                 printAndLog("There are no cards with errors.", st.getLogFacade());
             } else {
+                System.out.println("Max errors" + max);
                 List<Card> maxCards = cards
                         .stream()
                         .filter(c -> c.getErrors() == max)
                         .collect(Collectors.toCollection(ArrayList::new));
-
-                if (cards.size() == 1) {
+                System.out.println(maxCards);
+                if (maxCards.size() == 1) {
                     printAndLog("The hardest card is \"" + maxCards.get(0).getName() + "\". You have " + max
-                            + " errors answering it.",
-                        st.getLogFacade());
+                                    + " errors answering it.",
+                            st.getLogFacade());
                 } else {
-                    int sum = cards.stream().mapToInt(c -> c.getErrors()).sum();
+                    int sum = maxCards.stream().mapToInt(Card::getErrors).sum();
                     printAndLog(
-                        //TODO
-                        "The hardest cards are \"Russia\", \"France\". You have " + sum + " errors answering them.",
-                        st.getLogFacade());
+                            "The hardest cards are " + maxCards.stream().map(Card::getName).collect(Collectors.joining(
+                                    "\", \"",
+                                    "\"", "\"")) + ". You have" +
+                                    " " + sum +
+                                    " " +
+                                    "errors answering " +
+                                    "them.",
+                            st.getLogFacade());
                 }
             }
         });
-        actions.put("reset stats", (sc, st) -> {});
+        actions.put("reset stats", (sc, st) -> {
+        });
         Scanner scanner = new Scanner(System.in);
         boolean actionFlag = true;
         Stage6 stage = new Stage6();
         while (actionFlag) {
             printAndLog("Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)",
-                stage.getLogFacade());
+                    stage.getLogFacade());
             // System.out.println("add action");
             String actionName = scanner.nextLine();
             if (actionName.equals("exit")) {
@@ -238,8 +239,7 @@ public class Stage6 {
             } else {
                 actionFlag = false;
             }
-            System.out.println(stage.getCardFacade().getAll());
-            stage.getLogFacade().getAll().forEach(System.out::println);
+
         }
         scanner.close();
     }

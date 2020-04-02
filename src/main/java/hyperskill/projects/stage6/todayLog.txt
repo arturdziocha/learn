@@ -1,0 +1,70 @@
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
+The card:
+biały
+The definition of the card:
+white
+The pair ("biały":"white") has been added.
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
+The card:
+red
+The definition of the card:
+czerwony
+The pair ("red":"czerwony") has been added.
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
+The card:
+black
+The definition of the card:
+czarny
+The pair ("black":"czarny") has been added.
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
+The card:
+France
+The definition of the card:
+Paris
+The pair ("France":"Paris") has been added.
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
+The card:
+Russi
+The definition of the card:
+Moskow
+The pair ("Russi":"Moskow") has been added.
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
+How many times to ask?
+8
+Print the definition of "biały":
+white
+Correct answer.
+Print the definition of "France":
+Russia
+Wrong answer.The correct one is "Paris".
+Print the definition of "Russi":
+Mos
+Wrong answer.The correct one is "Moskow".
+Print the definition of "black":
+czary
+Wrong answer.The correct one is "czarny".
+Print the definition of "black":
+cle
+Wrong answer.The correct one is "czarny".
+Print the definition of "red":
+czerwony
+Correct answer.
+Print the definition of "red":
+asda
+Wrong answer.The correct one is "czerwony".
+Print the definition of "Russi":
+asdasd
+Wrong answer.The correct one is "Moskow".
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
+File name:
+src/main/java/hyperskill/projects/stage6/exported
+5 cards have been saved.
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
+File name:
+src/main/java/hyperskill/projects/stage6/exported.txt
+5 cards have been saved.
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
+The hardest cards are "Russia", "France". You have 6 errors answering them.
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
+File name:
+src/main/java/hyperskill/projects/stage6/todayLog.txt
