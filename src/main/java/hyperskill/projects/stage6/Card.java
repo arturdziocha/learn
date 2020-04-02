@@ -26,8 +26,13 @@ class Card {
     public void enlargeErrors() {
         this.errors += 1;
     }
+
+    public void eraseErrors() {
+        this.errors = 0;
+    }
+
     @Override
     public String toString() {
-        return this.getName() + ": " + this.getDefinition() + " - "+this.getErrors();
+        return this.getName() + ": " + this.getDefinition() + " - " + this.getErrors();
     }
 }

@@ -3,6 +3,8 @@ package hyperskill.projects.stage6;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /*
  * Add some statistics features. We suggest you implement the following:
@@ -124,7 +127,7 @@ public class Stage6 {
         });
         actions.put("import", (sc, st) -> {
             printAndLog("File name:", st.getLogFacade());
-            String fileName = "src/main/java/hyperskill/projects/" + sc.nextLine();
+            String fileName = "src/main/java/hyperskill/projects/stage6/" + sc.nextLine();
             log(fileName, st.getLogFacade());
             // String fileName = sc.nextLine();
             try (Scanner scanner = new Scanner(new File(fileName))) {
@@ -142,7 +145,7 @@ public class Stage6 {
         });
         actions.put("export", (sc, st) -> {
             printAndLog("File name:", st.getLogFacade());
-            String fileName = "src/main/java/hyperskill/projects/" + sc.nextLine();
+            String fileName = "src/main/java/hyperskill/projects/stage6/" + sc.nextLine();
             log(fileName, st.getLogFacade());
             // String fileName = sc.nextLine();
             try (PrintWriter writer = new PrintWriter(fileName)) {
@@ -183,6 +186,42 @@ public class Stage6 {
                 }
             }
         });
+        actions.put("log", (sc, st) -> {
+            printAndLog("File name:", st.getLogFacade());
+            String fileName = "src/main/java/hyperskill/projects/stage6/" + sc.nextLine();
+            log(fileName, st.getLogFacade());
+            try (PrintWriter writer = new PrintWriter(fileName)) {
+                st.getLogFacade().getAll().forEach(writer::println);
+                printAndLog("The log has been saved.", st.getLogFacade());
+            } catch (FileNotFoundException e) {
+                printAndLog("File not found.", st.getLogFacade());
+            }
+        });
+        actions.put("hardest card", (sc, st) -> {
+            List<Card> cards = st.getCardFacade().getAll();
+            int max = cards.stream().map(c -> c.getErrors()).max(Comparator.naturalOrder()).get();
+            if (max == 0) {
+                printAndLog("There are no cards with errors.", st.getLogFacade());
+            } else {
+                List<Card> maxCards = cards
+                        .stream()
+                        .filter(c -> c.getErrors() == max)
+                        .collect(Collectors.toCollection(ArrayList::new));
+
+                if (cards.size() == 1) {
+                    printAndLog("The hardest card is \"" + maxCards.get(0).getName() + "\". You have " + max
+                            + " errors answering it.",
+                        st.getLogFacade());
+                } else {
+                    int sum = cards.stream().mapToInt(c -> c.getErrors()).sum();
+                    printAndLog(
+                        //TODO
+                        "The hardest cards are \"Russia\", \"France\". You have " + sum + " errors answering them.",
+                        st.getLogFacade());
+                }
+            }
+        });
+        actions.put("reset stats", (sc, st) -> {});
         Scanner scanner = new Scanner(System.in);
         boolean actionFlag = true;
         Stage6 stage = new Stage6();
