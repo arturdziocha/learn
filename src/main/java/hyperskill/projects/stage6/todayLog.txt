@@ -1,25 +1,31 @@
 Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
+add
+The card:
+Polska
+The definition of the card:
+Warszawa
+The pair ("Polska":"Warszawa") has been added.
+Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
+import
 File name:
 src/main/java/hyperskill/projects/stage6/exported.txt
 5 cards have been loaded.
 Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
-Card statistics has been reset.
-Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
-There are no cards with errors.
-Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
+export
 File name:
 src/main/java/hyperskill/projects/stage6/exported.txt
-5 cards have been saved.
+6 cards have been saved.
 Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
-File name:
-src/main/java/hyperskill/projects/stage6/todayLog.txt
-The log has been saved.
+ask
+How many times to ask?
+2
+Print the definition of "black":
+czarny
+Correct answer.
+Print the definition of "France":
+wa
+Wrong answer.The correct one is "Paris".
 Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
-File name:
-src/main/java/hyperskill/projects/stage6/exported.txt
-5 cards have been loaded.
-Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
-The hardest cards are "black", "France", "Russia". You have 15 errors answering them.
-Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)
+log
 File name:
 src/main/java/hyperskill/projects/stage6/todayLog.txt

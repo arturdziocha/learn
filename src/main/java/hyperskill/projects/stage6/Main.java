@@ -94,37 +94,38 @@ public class Main {
         actions.put("log", Main::log);
         actions.put("hardest card", Main::hardestCard);
         actions.put("reset stats", Main::resetStats);
-        Scanner scanneranner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         boolean actionFlag = true;
         Main stage = new Main();
         while (actionFlag) {
             printAndLog("Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats)",
-                stage.getLogFacade());
+                    stage.getLogFacade());
             // System.out.println("add action");
-            String actionName = scanneranner.nextLine();
+            String actionName = scanner.nextLine();
+            log(actionName, stage.getLogFacade());
             if (actionName.equals("exit")) {
                 printAndLog("Bye bye!", stage.getLogFacade());
                 actionFlag = false;
             } else if (actions.containsKey(actionName)) {
-                actions.get(actionName).accept(scanneranner, stage);
+                actions.get(actionName).accept(scanner, stage);
             } else {
                 actionFlag = false;
             }
 
         }
-        scanneranner.close();
+        scanner.close();
     }
 
-    private static void add(Scanner scanneranner, Main main) {
+    private static void add(Scanner scanner, Main main) {
         printAndLog("The card:", main.getLogFacade());
 
-        String cardName = scanneranner.nextLine();
+        String cardName = scanner.nextLine();
         log(cardName, main.getLogFacade());
         if (main.getCardFacade().nameExists(cardName)) {
             printAndLog("The card \"" + cardName + "\" already exists.", main.getLogFacade());
         } else {
             printAndLog("The definition of the card:", main.getLogFacade());
-            String definition = scanneranner.nextLine();
+            String definition = scanner.nextLine();
             log(definition, main.getLogFacade());
             if (main.getCardFacade().definitionExists(definition)) {
                 printAndLog("The definition \"" + definition + "\" already exists.", main.getLogFacade());
@@ -132,22 +133,22 @@ public class Main {
                 Card card = new Card(cardName, definition, 0);
                 main.getCardFacade().add(card);
                 printAndLog("The pair (\"" + cardName + "\":\"" + definition + "\") has been added.",
-                    main.getLogFacade());
+                        main.getLogFacade());
             }
         }
         System.out.println();
     }
 
-    private static void im(Scanner scanneranner, Main main) {
+    private static void im(Scanner scanner, Main main) {
         printAndLog("File name:", main.getLogFacade());
-        String fileName = "src/main/java/hyperskill/projects/stage6/" + scanneranner.nextLine();
+        //String fileName = "src/main/java/hyperskill/projects/stage6/" + scanner.nextLine();
+        String fileName = scanner.nextLine();
         log(fileName, main.getLogFacade());
-        // String fileName = scanneranner.nextLine();
-        try (Scanner scanneranneranner = new Scanner(new File(fileName))) {
+        try (Scanner sc = new Scanner(new File(fileName))) {
             int count = 0;
-            while (scanneranner.hasNext()) {
-                Card card = new Card(scanneranner.nextLine(), scanneranner.nextLine(),
-                        Integer.parseInt(scanneranner.nextLine()));
+            while (sc.hasNext()) {
+                Card card = new Card(sc.nextLine(), sc.nextLine(),
+                        Integer.parseInt(sc.nextLine()));
                 count++;
                 main.getCardFacade().add(card);
             }
@@ -160,9 +161,9 @@ public class Main {
 
     private static void export(Scanner scanner, Main main) {
         printAndLog("File name:", main.getLogFacade());
-        String fileName = "src/main/java/hyperskill/projects/stage6/" + scanner.nextLine();
+        //String fileName = "src/main/java/hyperskill/projects/stage6/" + scanner.nextLine();
+        String fileName = scanner.nextLine();
         log(fileName, main.getLogFacade());
-        // String fileName = scanner.nextLine();
         try (PrintWriter writer = new PrintWriter(fileName)) {
             List<Card> allCards = main.getCardFacade().getAll();
             allCards.forEach(card -> {
@@ -205,12 +206,12 @@ public class Main {
                 printAndLog("Correct answer.", main.getLogFacade());
             } else {
                 ifPresentOrElse(main.getCardFacade().getByDefinition(answer),
-                    s -> printAndLog(
-                        "Wrong answer. The correct one is \"" + card.getDefinition()
-                                + "\", you've just written the definition of \"" + s.getName() + "\".",
-                        main.getLogFacade()),
-                    () -> printAndLog("Wrong answer.The correct one is \"" + card.getDefinition() + "\".",
-                        main.getLogFacade()));
+                        s -> printAndLog(
+                                "Wrong answer. The correct one is \"" + card.getDefinition()
+                                        + "\", you've just written the definition of \"" + s.getName() + "\".",
+                                main.getLogFacade()),
+                        () -> printAndLog("Wrong answer.The correct one is \"" + card.getDefinition() + "\".",
+                                main.getLogFacade()));
                 main.getCardFacade().enlargeErrors(card);
             }
         }
@@ -219,7 +220,8 @@ public class Main {
 
     private static void log(Scanner scanner, Main main) {
         printAndLog("File name:", main.getLogFacade());
-        String fileName = "src/main/java/hyperskill/projects/stage6/" + scanner.nextLine();
+        //String fileName = "src/main/java/hyperskill/projects/stage6/" + scanner.nextLine();
+        String fileName = scanner.nextLine();
         log(fileName, main.getLogFacade());
         try (PrintWriter writer = new PrintWriter(fileName)) {
             main.getLogFacade().getAll().forEach(writer::println);
@@ -232,26 +234,29 @@ public class Main {
 
     private static void hardestCard(Scanner scanner, Main main) {
         List<Card> cards = main.getCardFacade().getAll();
-        int max = cards.stream().map(Card::getErrors).max(Comparator.naturalOrder()).get();
-        if (max == 0) {
-            printAndLog("There are no cards with errors.", main.getLogFacade());
-        } else {
-            List<Card> maxCards = cards
-                    .stream()
-                    .filter(c -> c.getErrors() == max)
-                    .collect(Collectors.toCollection(ArrayList::new));
-            if (maxCards.size() == 1) {
-                printAndLog("The hardest card is \"" + maxCards.get(0).getName() + "\". You have " + max
-                        + " errors answering it.",
-                    main.getLogFacade());
+        Optional<Integer> max = cards.stream().map(Card::getErrors).max(Comparator.naturalOrder());
+        ifPresentOrElse(max, m -> {
+            if (m == 0) {
+                printAndLog("There are no cards with errors.", main.getLogFacade());
             } else {
-                int sum = maxCards.stream().mapToInt(Card::getErrors).sum();
-                printAndLog("The hardest cards are "
-                        + maxCards.stream().map(Card::getName).collect(Collectors.joining("\", \"", "\"", "\""))
-                        + ". You have" + " " + sum + " " + "errors answering " + "them.",
-                    main.getLogFacade());
+                List<Card> maxCards = cards
+                        .stream()
+                        .filter(c -> c.getErrors() == m)
+                        .collect(Collectors.toCollection(ArrayList::new));
+                if (maxCards.size() == 1) {
+                    printAndLog("The hardest card is \"" + maxCards.get(0).getName() + "\". You have " + m
+                                    + " errors answering it.",
+                            main.getLogFacade());
+                } else {
+                    int sum = maxCards.stream().mapToInt(Card::getErrors).sum();
+                    printAndLog("The hardest cards are "
+                                    + maxCards.stream().map(Card::getName).collect(Collectors.joining("\", \"", "\"", "\""))
+                                    + ". You have" + " " + sum + " " + "errors answering " + "them.",
+                            main.getLogFacade());
+                }
             }
-        }
+        }, () -> printAndLog("There are no cards with errors.", main.getLogFacade()));
+
         System.out.println();
     }
 
