@@ -1,10 +1,8 @@
 package hyperskill.inputStreams;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -49,20 +47,16 @@ Joseph
 public class GuesList {
 
     public static void main(String[] args) throws IOException {
-        try (Reader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            List<String> words = new ArrayList<>();
-            System.out.println("add");
-            StringBuilder builder = new StringBuilder();
-            int n;
-            while ((n = reader.read()) != -1) {
-                char c = (char) n;
-                if (Character.isAlphabetic(c) || Character.isWhitespace(c)) {
-                    builder.append(c);
-                }
-
-            }
-            System.out.println(builder.toString());
+        Scanner scanner = new Scanner(System.in);
+        List<String> list = new ArrayList<>();
+        System.out.println("add");
+        while (scanner.hasNext()) {
+            list.add(scanner.next());
         }
+
+        Collections.reverse(list);
+
+        list.forEach(System.out::println);
     }
 
 }
