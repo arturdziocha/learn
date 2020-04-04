@@ -1,4 +1,4 @@
-package snippets.ternary;
+package hyperskill.ternary;
 
 public class Falses {
     public static void main(String[] args) {

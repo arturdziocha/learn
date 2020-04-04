@@ -1,4 +1,4 @@
-package snippets.busTour;
+package hyperskill.busTour;
 
 import java.util.Scanner;
 

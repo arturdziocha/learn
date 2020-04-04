@@ -1,4 +1,4 @@
-package snippets.profit;
+package hyperskill.profit;
 
 import java.util.Scanner;
 
