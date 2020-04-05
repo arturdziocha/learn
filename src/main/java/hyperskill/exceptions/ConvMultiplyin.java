@@ -58,7 +58,7 @@ public class ConvMultiplyin {
             } catch (NumberFormatException e) {
                 System.out.println("Invalid user input: " + next);
             }
-
         }
+        scanner.close();
     }
 }

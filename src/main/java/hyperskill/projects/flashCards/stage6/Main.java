@@ -1,4 +1,4 @@
-package hyperskill.projects.stage6;
+package hyperskill.projects.flashCards.stage6;
 
 import java.io.File;
 import java.io.FileNotFoundException;

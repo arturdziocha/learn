@@ -32,8 +32,7 @@ public class MethodCatchingSomeExceptions {
             return;
         }
         int[] integers = Arrays.stream(array.split(" "))
-                .mapToInt(Integer::parseInt)
-                .toArray();
+                .mapToInt(Integer::parseInt).toArray();
         Object someValue = integers[integers[0]];
         if (integers[0] + integers[1] == integers[2]) {
             integers = null;
@@ -60,5 +59,6 @@ public class MethodCatchingSomeExceptions {
         } catch (Exception e) {
             System.out.println("Caught: " + e.getClass().getName());
         }
+        scanner.close();
     }
 }
