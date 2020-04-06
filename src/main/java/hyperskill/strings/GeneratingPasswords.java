@@ -1,6 +1,5 @@
 package hyperskill.strings;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -21,42 +20,48 @@ ABAab121AB
 
 1 0 0 2
 Failed test #5 of 17. Your password has repeated symbol 'T'
+*
+* 0 0 100 100
+*
+* 1 0 0 2
  */
 public class GeneratingPasswords {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("add");
-        System.out.println(generatePassword(scanner.nextLine()));
+        int upperSize = scanner.nextInt();
+        int lowerSize = scanner.nextInt();
+        int digitsSize = scanner.nextInt();
+        int size = scanner.nextInt();
+        StringBuilder password = new StringBuilder();
+        do {
+            password.append(generatePassword(upperSize, lowerSize, digitsSize));
+        } while (password.length() < size);
+        System.out.println(password.substring(0, size));
         scanner.close();
     }
 
-    public static String generatePassword(String numbers) {
-        int[] nums = Arrays.stream(numbers.split("\\s+")).mapToInt(Integer::valueOf).toArray();        
+    public static String generatePassword(int upperSize, int lowerSize, int digitsSize) {
         String uppercase = new Random()
                 .ints(34, 65, 90)
                 .distinct()
                 .mapToObj(c -> String.valueOf((char) c))
                 .collect(Collectors.joining());
+        int maxUpperSize = Math.min(upperSize, uppercase.length());
         String lowercase = new Random()
                 .ints(34, 97, 122)
                 .distinct()
                 .mapToObj(c -> String.valueOf((char) c))
                 .collect(Collectors.joining());
+        int maxLoweSize = Math.min(lowerSize, lowercase.length());
         String digits = new Random()
                 .ints(10, 0, 10)
                 .distinct()
                 .boxed()
-                .map(c -> String.valueOf(c))
-                .collect(Collectors.joining());        
-        String uppercaseString = uppercase.substring(0, nums[0]) + lowercase.substring(0, nums[1])
-                + digits.substring(0, nums[2]);
-        return factorialString(uppercaseString, nums[3]).substring(0, nums[3]);
-    }
-
-    public static String factorialString(String string, int length) {
-        if (string.length() < length) {
-            return factorialString(string.concat(string), length);
-        }
-        return string;
+                .map(String::valueOf)
+                .collect(Collectors.joining());
+        int maxDigitsSize = Math.min(digitsSize, digits.length());
+        return uppercase.substring(0, maxUpperSize) + lowercase.substring(0, maxLoweSize) + digits.substring(0,
+                maxDigitsSize);
     }
 }
