@@ -62,21 +62,24 @@ public class CompressionAlgorithm {
         }
         for (int i = 0; i < chars.size(); i++) {
             System.out.print("" + chars.get(i) + howMany.get(i));
-            System.out.println();
         }
-        char previous = str.charAt(0);
-        int count = 0;
+        System.out.println();
+        char current = 0;
+        char previous = 0;
+        int count = 1;
         StringBuilder builder = new StringBuilder();
-        for(char c : str.toCharArray()) {
-            if(previous == c) {
-                count++;
-            }else {
-                builder.append(""+lastChar+count);
-                lastChar = c;
-                count=1;
+        for (int i = 1; i < str.length(); i++) {
+            current = str.charAt(i);
+            previous = str.charAt(i - 1);
+            if (current != previous) {
+                builder.append(previous);
+                builder.append(count);
+                count = 0;
             }
-            
+            count++;
         }
+        builder.append(current);
+        builder.append(count);
         System.out.println(builder.toString());
         scanner.close();
 
