@@ -2,6 +2,7 @@ package hyperskill.strings;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 /*
@@ -20,13 +21,13 @@ ABAab121AB
  */
 public class GeneratingPasswords {
     public static void main(String[] args) {
-        System.out.println(generatePassword("5 0 0 10"));
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(generatePassword(scanner.nextLine()));
+        scanner.close();
     }
 
     public static String generatePassword(String numbers) {
-        int[] nums = Arrays.stream(numbers.split("\\s+")).mapToInt(Integer::valueOf).toArray();
-        int sum = Arrays.stream(nums).sum() - nums[3];
+        int[] nums = Arrays.stream(numbers.split("\\s+")).mapToInt(Integer::valueOf).toArray();        
         String uppercase = new Random()
                 .ints(34, 65, 90)
                 .distinct()
@@ -42,20 +43,16 @@ public class GeneratingPasswords {
                 .distinct()
                 .boxed()
                 .map(c -> String.valueOf(c))
-                .collect(Collectors.joining());
-        // TODO update to string equals num[3]
+                .collect(Collectors.joining());        
         String uppercaseString = uppercase.substring(0, nums[0]) + lowercase.substring(0, nums[1])
                 + digits.substring(0, nums[2]);
-        return factorialString(uppercaseString, nums[3]);
+        return factorialString(uppercaseString, nums[3]).substring(0, nums[3]);
     }
 
     public static String factorialString(String string, int length) {
-        String ss = "";
         if (string.length() < length) {
-            ss += factorialString(string, length);
-        } else {
-            ss = string;
+            return factorialString(string.concat(string), length);
         }
-        return ss;
+        return string;
     }
 }
