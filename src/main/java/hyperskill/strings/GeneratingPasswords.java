@@ -18,6 +18,9 @@ Sample Input 1:
 Sample Output 1:
 
 ABAab121AB
+
+1 0 0 2
+Failed test #5 of 17. Your password has repeated symbol 'T'
  */
 public class GeneratingPasswords {
     public static void main(String[] args) {
