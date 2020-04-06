@@ -1,13 +1,9 @@
 package hyperskill.collection.maps.mapCount;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /*
  * Implement these two methods for a given array of string:
