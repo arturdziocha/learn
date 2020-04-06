@@ -22,6 +22,7 @@ ABAab121AB
 public class GeneratingPasswords {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("add");
         System.out.println(generatePassword(scanner.nextLine()));
         scanner.close();
     }
