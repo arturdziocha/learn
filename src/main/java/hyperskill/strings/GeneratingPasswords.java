@@ -1,10 +1,6 @@
 package hyperskill.strings;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -40,18 +36,18 @@ public class GeneratingPasswords {
         int upperSize = scanner.nextInt();
         int lowerSize = scanner.nextInt();
         int digitsSize = scanner.nextInt();
-        int size = scanner.nextInt();        
+        int size = scanner.nextInt();
         String password = genPassword(upperSize, lowerSize, digitsSize, size);
         System.out.println(password.substring(0, size));
         scanner.close();
     }
 
     public static String genPassword(int upperSize, int lowerSize, int digitsSize,
-            int allSize) {
+                                     int allSize) {
         Random random = new Random();
         StringBuilder password = new StringBuilder();
         do {
-            int lastChar = (int) password.length() > 0 ? password.charAt(password.length() - 1) : 0;
+            int lastChar = password.length() > 0 ? password.charAt(password.length() - 1) : 0;
             if (upperSize == 0 && lowerSize == 0 && digitsSize == 0 && allSize != 0) {
                 List<Integer> no = IntStream
                         .rangeClosed(33, 47)
@@ -87,13 +83,13 @@ public class GeneratingPasswords {
         int max = ints.stream().max(Comparator.comparing(Integer::valueOf)).get();
         int min = ints.stream().min(Comparator.comparing(Integer::valueOf)).get();
         int lastRandom = 0;
-        int nextInt = 0;
+        int nextInt;
         for (int i = 0; i < size; i++) {
             do {
                 nextInt = random.nextInt(max - min + 1) + min;
             } while (nextInt == lastRandom || nextInt == lastChar);
             lastRandom = nextInt;
-            builder.append(String.valueOf((char) nextInt));
+            builder.append((char) nextInt);
         }
         return builder.toString();
     }
