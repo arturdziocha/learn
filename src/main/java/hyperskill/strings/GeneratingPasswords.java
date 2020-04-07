@@ -1,7 +1,8 @@
 package hyperskill.strings;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -29,6 +30,8 @@ Failed test #5 of 17. Your password has repeated symbol 'T'
 * 1 0 0 2
 *
 * 33 33 33 100
+* 
+* 0 0 0 100
  */
 public class GeneratingPasswords {
     public static void main(String[] args) {
@@ -37,64 +40,62 @@ public class GeneratingPasswords {
         int upperSize = scanner.nextInt();
         int lowerSize = scanner.nextInt();
         int digitsSize = scanner.nextInt();
-        int size = scanner.nextInt();
-        int[] upperCases = IntStream.range(65, 91).toArray();
-        int[] lowerCases = IntStream.range(97, 122).toArray();
-        int[] digits = IntStream.range(48, 58).toArray();
-        System.out.println(upperCases.length);
-        Arrays.stream(upperCases).mapToObj(c->(char)c).forEach(System.out::print);
-        StringBuilder password = new StringBuilder();
-        do {
-            int lastChar = (int) password.length() > 0 ? password.charAt(password.length() - 1) : 0;
-            password.append(generatePassword(upperSize, lowerSize, digitsSize, lastChar));
-        } while (password.length() < size);
-        System.out.println();
+        int size = scanner.nextInt();        
+        String password = genPassword(upperSize, lowerSize, digitsSize, size);
         System.out.println(password.substring(0, size));
         scanner.close();
     }
-    public static String genPass(int upperSize, int lowerSize, int digitsSize, int allSize){
-        return "";
+
+    public static String genPassword(int upperSize, int lowerSize, int digitsSize,
+            int allSize) {
+        Random random = new Random();
+        StringBuilder password = new StringBuilder();
+        do {
+            int lastChar = (int) password.length() > 0 ? password.charAt(password.length() - 1) : 0;
+            if (upperSize == 0 && lowerSize == 0 && digitsSize == 0 && allSize != 0) {
+                List<Integer> no = IntStream
+                        .rangeClosed(33, 47)
+                        .boxed()
+                        .collect(Collectors.toCollection(ArrayList::new));
+                password.append(generateFromInts(random, no, allSize, lastChar));
+            }
+
+            if (upperSize > 0) {
+                List<Integer> upperCases = IntStream
+                        .range(65, 91)
+                        .boxed()
+                        .collect(Collectors.toCollection(ArrayList::new));
+                password.append(generateFromInts(random, upperCases, upperSize, lastChar));
+            }
+            if (lowerSize > 0) {
+                List<Integer> lowerCases = IntStream
+                        .range(97, 123)
+                        .boxed()
+                        .collect(Collectors.toCollection(ArrayList::new));
+                password.append(generateFromInts(random, lowerCases, lowerSize, lastChar));
+            }
+            if (digitsSize > 0) {
+                List<Integer> digits = IntStream.range(48, 58).boxed().collect(Collectors.toCollection(ArrayList::new));
+                password.append(generateFromInts(random, digits, digitsSize, lastChar));
+            }
+        } while (password.length() < allSize);
+        return password.toString();
     }
 
-    public static String generateFromInts(Random random, int[] ints, int size, int lastChar) {
+    public static String generateFromInts(Random random, List<Integer> ints, int size, int lastChar) {
         StringBuilder builder = new StringBuilder();
-        int max = Arrays.stream(ints).boxed().max(Comparator.comparing(Integer::valueOf)).get();
-        int min = Arrays.stream(ints).boxed().min(Comparator.comparing(Integer::valueOf)).get();
+        int max = ints.stream().max(Comparator.comparing(Integer::valueOf)).get();
+        int min = ints.stream().min(Comparator.comparing(Integer::valueOf)).get();
         int lastRandom = 0;
         int nextInt = 0;
         for (int i = 0; i < size; i++) {
             do {
                 nextInt = random.nextInt(max - min + 1) + min;
-            } while (nextInt != lastRandom && nextInt != lastChar);
+            } while (nextInt == lastRandom || nextInt == lastChar);
             lastRandom = nextInt;
             builder.append(String.valueOf((char) nextInt));
         }
         return builder.toString();
     }
 
-    public static String generatePassword(int upperSize, int lowerSize, int digitsSize, int lastChar) {
-        String uppercase = new Random()
-                .ints(34, 65, 90)
-                .filter(s -> s != lastChar)
-                .distinct()
-                .mapToObj(c -> String.valueOf((char) c))
-                .collect(Collectors.joining());
-        int maxUpperSize = Math.min(upperSize, uppercase.length());
-        String lowercase = new Random()
-                .ints(34, 97, 122)
-                .filter(i -> i != lastChar)
-                .distinct()
-                .mapToObj(c -> String.valueOf((char) c))
-                .collect(Collectors.joining());
-        int maxLoweSize = Math.min(lowerSize, lowercase.length());
-        String digits = new Random()
-                .ints(digitsSize, 48, 58)
-                .filter(i -> i != lastChar)
-                .mapToObj(c -> String.valueOf((char) c))
-                .distinct()
-                .collect(Collectors.joining());
-        int maxDigitsSize = Math.min(digitsSize, digits.length());
-        return uppercase.substring(0, maxUpperSize) + lowercase.substring(0, maxLoweSize) + digits.substring(0,
-                maxDigitsSize);
-    }
 }
