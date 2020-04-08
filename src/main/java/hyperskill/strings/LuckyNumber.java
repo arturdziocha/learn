@@ -34,5 +34,6 @@ public class LuckyNumber {
             sum2 += numbers.get(j);
         }
         System.out.println(sum1 == sum2 ? "YES" : "NO");
+        scanner.close();
     }
 }
