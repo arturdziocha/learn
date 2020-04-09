@@ -1,7 +1,10 @@
 package hyperskill.strings;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /*
  * You want to hack a website now. First, get all the available parameters that you can find in the URL. Then print them in the "key : value" format. If a parameter doesn't have value, print "not found".
@@ -35,14 +38,15 @@ public class ParseUrl {
         Scanner scanner = new Scanner(System.in);
         System.out.println("add");
         String urlString = scanner.nextLine();
-        String[] ss = urlString.split("\\?");
-        System.out.println(Arrays.toString(ss));
-        String[] sssStrings = ss[1].split("&");
-        for(String sss : sssStrings) {
-            String[] ww = sss.split("=");
-            
-            System.out.println(Arrays.toString(ww));
-        }
-        
+        String parameters = urlString.split("\\?")[1];
+        Map<String, String> map = Arrays
+                .stream(parameters.split("&"))
+                .map(s -> s.split("="))
+                .collect(Collectors
+                        .toMap(s -> s[0], s -> s.length == 1 ? "not found" : s[1], (s1, s2) -> s1, LinkedHashMap::new));
+        map.entrySet().forEach(k -> System.out.println(k.getKey() + " : " + k.getValue()));
+        System.out.println(map.containsKey("pass") ? "password : " + map.get("pass") : "");
+        scanner.close();
+
     }
 }
