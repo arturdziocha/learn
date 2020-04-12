@@ -1,4 +1,4 @@
-package hyperskill.projects.encryptdecrypt.stage1;
+package hyperskill.projects.encryptdecrypt;
 
 import java.util.Scanner;
 

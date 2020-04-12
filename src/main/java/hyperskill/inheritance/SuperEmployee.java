@@ -3,6 +3,7 @@ package hyperskill.inheritance;
 public class SuperEmployee {
 
 }
+
 class Employeer {
 
     protected String name;

@@ -47,14 +47,14 @@ public class Euphenious {
 
     public static void main(String[] args) {
         List<Character> vovels = Arrays.asList('a', 'e', 'i', 'o', 'u');
-        List<Character> consonants = IntStream.rangeClosed('a', 'z').mapToObj(c->(char)c).collect(Collectors.toCollection(ArrayList::new));
+        List<Character> consonants = IntStream.rangeClosed('a', 'z').mapToObj(c -> (char) c).collect(Collectors.toCollection(ArrayList::new));
         consonants.removeAll(vovels);
         System.out.println(consonants);
         Scanner scanner = new Scanner(System.in);
         String word = scanner.next();
         int count = 0;
-        for(int i=0;i<word.length();i++) {
-            
+        for (int i = 0; i < word.length(); i++) {
+
         }
 
     }

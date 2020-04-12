@@ -1,6 +1,7 @@
 package hyperskill.strings;
 
 import java.util.Scanner;
+
 /*
  * Write a program that takes a sentence as input and returns the index of the first occurrence of the word "the" (can be part of a word), regardless of the capitalization. If there is no occurrence of it must output -1.
 
@@ -38,7 +39,7 @@ public class FindTheFirstOccurrence {
             firstOccurence = line.equals("the") ? 0 : -1;
         } else {
             for (int i = 0; i < line.length() - 3; i++) {
-                if (line.charAt(i) == 't' && line.charAt(i + 1) == 'h' && line.charAt(i + 2) == 'e') {                    
+                if (line.charAt(i) == 't' && line.charAt(i + 1) == 'h' && line.charAt(i + 2) == 'e') {
                     firstOccurence = i;
                     break;
                 }

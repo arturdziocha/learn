@@ -5,8 +5,8 @@ public class ReplaceString {
         String a = "Jaa";
         System.out.println(a.replace('a', 'b'));
         System.out.println(a.toLowerCase().startsWith("j"));
-        
-        String s = a.substring(0,1);
+
+        String s = a.substring(0, 1);
         String jChar = "j";
         System.out.println(s.equalsIgnoreCase(jChar));
     }

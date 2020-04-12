@@ -58,6 +58,6 @@ public interface Multiset<E> {
      * The set of unique elements (without repeating)
      */
     Set<E> toSet();
-    
+
     String toString();
 }

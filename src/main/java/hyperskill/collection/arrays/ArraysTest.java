@@ -13,7 +13,7 @@ public class ArraysTest {
     }
 
     public static void test1() {
-        int[] a = { 2, 3, 1, 0, 9 };
+        int[] a = {2, 3, 1, 0, 9};
         int s = a[0] + a[1] + a[a.length - 1];
         int y = a[3] - 2 * a[2];
         System.out.println(s / y);
@@ -23,7 +23,7 @@ public class ArraysTest {
      * Print array after changes
      */
     public static void test2() {
-        int[] c = { 3, 5, 2, 1, 4 };
+        int[] c = {3, 5, 2, 1, 4};
         int x = c[0];
         x += 10;
         c[0] -= x;
@@ -45,7 +45,7 @@ public class ArraysTest {
     // 3: r = 0 for i in 0..len(a): if a[i] < len(a): r += a[a[i]]
 
     public static void test3() {
-        int[] a = { 3, 0, 3, 9, 2, 1 };
+        int[] a = {3, 0, 3, 9, 2, 1};
         int r = 7;
         int x;
         for (int i = 0; i < a.length; i++) {
@@ -78,7 +78,7 @@ public class ArraysTest {
     // elif a[i] < len(a):
     // a[i] += a[a[i]]
     public static void test4() {
-        int[] a = { 9, 8, 3, 1, 5, 4 };
+        int[] a = {9, 8, 3, 1, 5, 4};
         for (int i = 0; i < a.length; i++) {
             if (a[i] % 2 == 0) {
                 a[i] += 1;
@@ -88,7 +88,8 @@ public class ArraysTest {
         }
         System.out.println(Arrays.toString(a));
     }
-//    Consider two arrays aa and bb:
+
+    //    Consider two arrays aa and bb:
 //
 //        a = [4, 0, 9, 2, 1]
 //        b = [6, 3, 2, 9, 0]
@@ -108,17 +109,17 @@ public class ArraysTest {
     // Each array should be on a separate line (first aa, then bb). For example,
     // your output may look like this:
     public static void test5() {
-        int[] a = { 4, 0, 9, 2, 1 };
-        int[] b = { 6, 3, 2, 9, 0 };
-        for(int i=0;i<a.length;i++) {
-            if(i%2==0) {
-                a[i]-=b[i];
-            }else {
-                b[i]-=a[i];
+        int[] a = {4, 0, 9, 2, 1};
+        int[] b = {6, 3, 2, 9, 0};
+        for (int i = 0; i < a.length; i++) {
+            if (i % 2 == 0) {
+                a[i] -= b[i];
+            } else {
+                b[i] -= a[i];
             }
-            if(a[i]%2==0) {
-                a[i]+=1;
-                b[i]+=1;
+            if (a[i] % 2 == 0) {
+                a[i] += 1;
+                b[i] += 1;
             }
         }
         System.out.println(Arrays.toString(a));

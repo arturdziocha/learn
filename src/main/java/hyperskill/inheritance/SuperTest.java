@@ -36,7 +36,7 @@ class SubClass extends SuperClass {
      */
     public void printSubValue() {
         super.printBaseValue(); // It invokes the method of SuperClass, super is
-                                // optional here
+        // optional here
         System.out.println(field);
     }
 }

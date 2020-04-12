@@ -19,7 +19,7 @@ public class NumOfEvenNumbers {
             int num;
             while (scanner.hasNext()) {
                 num = scanner.nextInt();
-                if(num==0) {
+                if (num == 0) {
                     break;
                 }
                 if (num % 2 == 0) {

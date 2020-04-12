@@ -3,13 +3,7 @@ package hyperskill.projects;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 /*
@@ -236,7 +230,7 @@ public class Stage5 {
         actions.put("ask", (sc, ca) -> {
             System.out.println("How many times to ask?");
             int howManyAsk = Integer.parseInt(sc.nextLine());
-            
+
             List<String> keys = new ArrayList<>(ca.keySet());
             int cardsSize = keys.size();
             for (int i = 1; i <= howManyAsk; i++) {
@@ -261,7 +255,7 @@ public class Stage5 {
                     System.out.println("Wrong answer.The correct one is \"" + value + "\".");
                 }
             }
-            
+
             System.out.println();
         });
         boolean actionFlag = true;
@@ -285,5 +279,5 @@ public class Stage5 {
              */
             // System.out.println(cards);
         }
-    }   
+    }
 }

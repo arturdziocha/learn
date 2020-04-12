@@ -90,7 +90,7 @@ public class HashMultiset<E> implements Multiset<E> {
             }
         }
         this.map = temp;
-        
+
         //map.forEach((k, v) -> map.put(k, Math.min(v, other.getMultiplicity(k))));
     }
 

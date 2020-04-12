@@ -2,7 +2,6 @@ package snippets.arrays;
 
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 /*Write a program that read an array of ints and an integer number n.
 

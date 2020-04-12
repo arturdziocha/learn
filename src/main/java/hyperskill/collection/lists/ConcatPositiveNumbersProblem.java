@@ -20,14 +20,14 @@ Sample Output 1:
 */
 public class ConcatPositiveNumbersProblem {
     public static ArrayList<Integer> concatPositiveNumbers(ArrayList<Integer> firstList,
-            ArrayList<Integer> secondList) {
+                                                           ArrayList<Integer> secondList) {
         ArrayList<Integer> toReturn = firstList
                 .stream()
                 .filter(i -> i.intValue() > 0)
                 .collect(Collectors.toCollection(ArrayList::new));
         toReturn
                 .addAll(
-                    secondList.stream().filter(l -> l.intValue() > 0).collect(Collectors.toCollection(ArrayList::new)));
+                        secondList.stream().filter(l -> l.intValue() > 0).collect(Collectors.toCollection(ArrayList::new)));
         return toReturn;
     }
 

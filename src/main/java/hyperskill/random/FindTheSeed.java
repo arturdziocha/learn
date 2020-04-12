@@ -2,6 +2,7 @@ package hyperskill.random;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
 /*
  * Your job is to find the seed between A and B (both inclusively) that produces N pseudorandom numbers from 0 (inclusive) to K (exclusive). It should also have the maximum of these N numbers to be the minimum among all maximums of other seeds in this range.
 
@@ -51,7 +52,7 @@ public class FindTheSeed {
         int max = k;
         int seed = 0;
         Random random = new Random();
-        
+
         Map<Integer, Integer> seeds = new HashMap<>();
         for (int i = a; i <= b; i++) {
             random.setSeed(i);
@@ -80,11 +81,11 @@ public class FindTheSeed {
                 .sorted(Map.Entry.comparingByValue())
                 .collect(Collectors
                         .toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue,
-                            LinkedHashMap::new));
+                                LinkedHashMap::new));
         System.out.println(seed);
         System.out.println(max);
         System.out.println(map);
         scanner.close();
-        
+
     }
 }

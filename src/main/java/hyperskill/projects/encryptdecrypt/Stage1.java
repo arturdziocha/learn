@@ -1,4 +1,4 @@
-package hyperskill.projects.encryptdecrypt.stage1;
+package hyperskill.projects.encryptdecrypt;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
 /*
  * Description
 
@@ -27,11 +28,11 @@ public class Stage1 {
                 .stream()
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toCollection(ArrayList::new));
-        
+
         Map<Character, Character> map = IntStream
                 .range(0, characters.size())
                 .boxed()
-                .collect(Collectors.toMap(i -> characters.get(i), i -> subs.get(i)));
+                .collect(Collectors.toMap(characters::get, subs::get));
         String encoded = word.chars().mapToObj(c -> (char) c).map(s -> {
             if (Character.isAlphabetic(s)) {
                 return String.valueOf(map.get(s));

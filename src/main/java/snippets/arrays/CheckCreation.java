@@ -2,7 +2,7 @@ package snippets.arrays;
 
 public class CheckCreation {
     public static void main(String[] args) {
-        char[] array = { 'a', 'b', 'c', 'd' };
+        char[] array = {'a', 'b', 'c', 'd'};
 
         char[] array1 = new char[-1];
 

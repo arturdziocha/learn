@@ -10,7 +10,7 @@ public class Triples {
         int[] arr = new int[len];
         for (int i = 0; i < len; i++) {
             arr[i] = scanner.nextInt();
-        }                
+        }
         int howMany = 0;
         for (int i = 0; i < len - 2; i++) {
             if (arr[i] + 1 == arr[i + 1] && arr[i] + 2 == arr[i + 2]) {

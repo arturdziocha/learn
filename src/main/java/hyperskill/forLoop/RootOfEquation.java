@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 /**
  * The roots of a cubic equation
- *
+ * <p>
  * Given the numbers a, b, c, d Output in ascending order all the integers between 0 and 1000 which are the roots of the equation ax^3+bx^2+cx+d=0
  * If the specified interval does not contain the roots of the equation, do not output anything.
- *
+ * <p>
  * Remember, that cubic equation always has 3 roots. Keep it in mind in order to optimize the code.
  */
 

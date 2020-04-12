@@ -6,7 +6,7 @@ public class Chars {
         // char mystery = z - 10;
         // System.out.println(mystery);
         System.out.println('1' + '3');
-        System.out.println((int) '1'-'0');
+        System.out.println((int) '1' - '0');
         System.out.println((int) 'c');
         System.out.println(Character.getNumericValue('1'));
     }

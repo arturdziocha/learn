@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+
 /*
  * Write a program that reads an array of integers and an integer. The program must check if the array contains that number.
 

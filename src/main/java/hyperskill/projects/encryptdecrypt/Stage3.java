@@ -1,4 +1,4 @@
-package hyperskill.projects.encryptdecrypt.stage1;
+package hyperskill.projects.encryptdecrypt;
 
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -33,7 +33,7 @@ public class Stage3 {
         System.out.println(
                 line.chars()
                         .map(c -> encDec.equals("enc") ? c + move : c - move)
-                        .mapToObj(s->String.valueOf((char)s))
+                        .mapToObj(s -> String.valueOf((char) s))
                         .collect(Collectors.joining()));
     }
 }

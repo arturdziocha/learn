@@ -1,10 +1,6 @@
 package hyperskill.collection.lists;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /*
@@ -47,11 +43,11 @@ public class FindNearest {
         for (int i : list) {
             int d = Math.abs(value - i);
             if (d < distance) {
-                distance = d;                
+                distance = d;
                 values.clear();
                 values.add(i);
             } else if (d == distance) {
-                values.add(i);                
+                values.add(i);
             }
         }
         Collections.sort(values);

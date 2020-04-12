@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 public class EqualArrays {
     public static void main(String[] args) {
-        int[] numbers1 = { 1, 2, 3, 4 };
-        int[] numbers2 = { 1, 2, 3, 4 };
-        int[] numbers3 = { 4, 3, 2, 1 };
-        int[] numbers4 = { 1, 2, 3 };
+        int[] numbers1 = {1, 2, 3, 4};
+        int[] numbers2 = {1, 2, 3, 4};
+        int[] numbers3 = {4, 3, 2, 1};
+        int[] numbers4 = {1, 2, 3};
         boolean e1 = Arrays.equals(numbers1, numbers2);
         System.out.println(e1);
         boolean e2 = Arrays.equals(numbers2, numbers3);

@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 /*
  n this problem, you are Sherlock Holmes and you want to quickly detect all anagrams.
 

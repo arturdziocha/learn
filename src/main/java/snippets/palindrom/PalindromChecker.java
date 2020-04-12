@@ -22,13 +22,13 @@ public class PalindromChecker {
     }
 
     public static boolean isPalindrom(String txt) {
-        StringBuilder sb = new StringBuilder();        
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < txt.length(); i++) {
             char c = txt.charAt(i);
             if (Character.isDigit(c) || Character.isAlphabetic(c)) {
                 sb.append(c);
             }
-        }        
+        }
         return sb.toString().equalsIgnoreCase(sb.reverse().toString());
     }
 
@@ -36,7 +36,7 @@ public class PalindromChecker {
         if (!isCaseSensitive) {
             str = str.toLowerCase();
         }
-        String[] skipped = { " ", "!", "-", "_", "+", "=", "{", "}", "[", "]", ";", ":", "\'", "\"", ",", ".", "?" };
+        String[] skipped = {" ", "!", "-", "_", "+", "=", "{", "}", "[", "]", ";", ":", "\'", "\"", ",", ".", "?"};
         for (int i = 0; i < skipped.length; i++) {
             str = str.replace(skipped[i], "");
         }

@@ -21,9 +21,8 @@ public class FizzBuzz {
                     System.out.println(i);
                 }
             }
-           
-        }
-        else if(start > end) {
+
+        } else if (start > end) {
             for (int i = start; i <= end; i--) {
                 if (i % 15 == 0) {
                     System.out.println("FizzBuzz");
@@ -35,8 +34,7 @@ public class FizzBuzz {
                     System.out.println(i);
                 }
             }
-        }
-        else {
+        } else {
             //TODO
         }
         scanner.close();

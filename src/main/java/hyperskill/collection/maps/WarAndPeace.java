@@ -37,7 +37,7 @@ public class WarAndPeace {
         System.out.println("add strings");
         SortedMap<String, Integer> map = new TreeMap<>();
         String[] words = scanner.nextLine().toLowerCase().split(" ");
-        Arrays.stream(words).forEach(word -> {            
+        Arrays.stream(words).forEach(word -> {
             if (map.containsKey(word)) {
                 map.computeIfPresent(word, (k, v) -> v += 1);
             } else {

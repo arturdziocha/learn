@@ -8,6 +8,7 @@ public class ConstantsAndUtilitiesTest {
         System.out.println(ConstantsAndUtilities.convertStringToAnotherString("aa"));
     }
 }
+
 class ConstantsAndUtilities {
 
     public static final String A_CONSTANT_TTT = "A_CONSTANT_TTT"; // here is a value
@@ -19,6 +20,6 @@ class ConstantsAndUtilities {
     }
 
     public static String convertStringToAnotherString(String s) {
-        return "convertStringToAnotherString("+s+")";
+        return "convertStringToAnotherString(" + s + ")";
     }
 }

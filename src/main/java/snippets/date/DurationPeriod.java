@@ -1,10 +1,6 @@
 package snippets.date;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Period;
+import java.time.*;
 
 public class DurationPeriod {
     public static long[] getDurationPeriod(LocalDateTime firstLocalDateTime, LocalDateTime secondLocalDateTime) {

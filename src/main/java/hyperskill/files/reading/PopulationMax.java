@@ -26,12 +26,12 @@ public class PopulationMax {
                 if (currentPopulation - prevPopulation > largestIncrease) {
 
                     largestIncrease = currentPopulation - prevPopulation;
-                    largestIncreaseYear = currentYear;                    
+                    largestIncreaseYear = currentYear;
                 }
                 prevPopulation = currentPopulation;
 
             }
             System.out.println(largestIncreaseYear);
-        } 
+        }
     }
 }

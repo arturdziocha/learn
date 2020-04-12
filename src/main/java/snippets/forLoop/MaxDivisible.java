@@ -9,7 +9,7 @@ import java.util.Scanner;
  * always an element divisible by 4. The number of elements does not exceed
  * 1000. The program should print a single number: the maximum element of the
  * sequence divisible by 4.
- * 
+ *
  * Sample Input 1: 12 16 87 58 25 73 86 36 79 40 12 89 32
  */
 
@@ -29,7 +29,7 @@ public class MaxDivisible {
         }
         System.out.println(currentMax);
 
-        
+
         // Scanner scanner = new Scanner(System.in);
         // int len = scanner.nextInt();
         // int start = 0;
@@ -44,6 +44,6 @@ public class MaxDivisible {
         // }
         // System.out.println(max);
     }
-    
+
 
 }

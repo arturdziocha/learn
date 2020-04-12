@@ -25,7 +25,7 @@ class Newspaper extends Publication {
     public String getDetails() {
         // TODO Auto-generated method stub
         return super.getDetails() + ", source=\"" + source + "\"";
-    }   
+    }
 }
 
 class Article extends Publication {

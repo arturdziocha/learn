@@ -3,6 +3,7 @@ package hyperskill.collection.maps.mapShare;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
 /*
 You need to implement the mapShare method that should modify and return the given map as follows:
 

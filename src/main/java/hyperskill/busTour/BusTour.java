@@ -15,7 +15,7 @@ You should output "Will not crash" if everything will be all right; otherwise, o
  */
 /*
  * 211 5 871 205 123 871 1681
-*/
+ */
 public class BusTour {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

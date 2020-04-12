@@ -25,8 +25,8 @@ import java.util.Scanner;
 //Incomparable
 public class Boxes {
     private static String compareBetter(int a1, int a2, int a3, int b1, int b2, int b3) {
-        int[] box1 = { a1, a2, a3 };
-        int[] box2 = { b1, b2, b3 };
+        int[] box1 = {a1, a2, a3};
+        int[] box2 = {b1, b2, b3};
         Arrays.sort(box1);
         Arrays.sort(box2);
 
