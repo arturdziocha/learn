@@ -1,5 +1,7 @@
 package hyperskill.patterns.factory;
 
+import java.time.DateTimeException;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 /*
@@ -79,41 +81,32 @@ class Time {
     int minute;
     int second;
 
+    Time(int hour, int minute, int second) {
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+    }
+
     public static Time noon() {
-        Time time = new Time();
-        time.hour = 12;
-        time.minute = 0;
-        time.second = 0;
-        return time;
+        return new Time(12, 0, 0);
     }
 
     public static Time midnight() {
-        Time time = new Time();
-        time.hour = 0;
-        time.minute = 0;
-        time.second = 0;
-        return time;
+        return new Time(0, 0, 0);
     }
 
     public static Time ofSeconds(long seconds) {
-        long hours = (seconds % 3600);
-        long minutes = (seconds % 3600) / 60;
-        long sec = seconds % 60;
-        Time time = new Time();
-        time.hour = (int) hours%24;
-        time.minute = (int) minutes;
-        time.second = (int) sec;
-        return time;
+        LocalTime localTime = LocalTime.ofSecondOfDay(seconds % 86_400);
+        return new Time(localTime.getHour(), localTime.getMinute(), localTime.getSecond());
+
     }
 
     public static Time of(int hour, int minute, int second) {
-        if (hour >= 0 && hour < 24 && minute >= 0 && minute < 60 && second >= 0 && second < 60) {
-            Time time = new Time();
-            time.hour = hour;
-            time.minute = minute;
-            time.second = second;
-            return time;
+        try {
+            LocalTime localTime = LocalTime.of(hour, minute, second);
+            return new Time(localTime.getHour(), localTime.getMinute(), localTime.getSecond());
+        } catch (DateTimeException ex) {
+            return null;
         }
-        return null;
     }
 }
