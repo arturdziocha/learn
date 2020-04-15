@@ -7,7 +7,10 @@ import java.util.stream.IntStream;
 
 /*
 Description
-Modify the previous program to work with command-line arguments instead of the standard input. The program must parse three arguments: -mode, -key and -data. The first argument should determine the program’s mode (enc - encryption, dec - decryption). The second argument is an integer key to modify the message, and the third argument is a text or ciphertext within quotes to encrypt or decrypt.
+Modify the previous program to work with command-line arguments instead of the standard input. 
+The program must parse three arguments: -mode, -key and -data. 
+The first argument should determine the program’s mode (enc - encryption, dec - decryption). 
+The second argument is an integer key to modify the message, and the third argument is a text or ciphertext within quotes to encrypt or decrypt.
 
 All the arguments are guaranteed to be passed to the program. If for some reason it turns out to be wrong:
 
