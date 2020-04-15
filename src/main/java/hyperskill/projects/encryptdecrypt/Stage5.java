@@ -52,8 +52,7 @@ public class Stage5 {
             File file = new File("src/main/java/hyperskill/projects/encryptdecrypt/" + actions.get("-in"));
             try (Scanner scanner = new Scanner(file)) {
                 line = scanner.nextLine();
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
+            } catch (FileNotFoundException e) {                
                 e.printStackTrace();
             }
         } else if (actions.containsKey("-data")) {
