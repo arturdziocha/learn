@@ -1,13 +1,12 @@
 package hyperskill.projects.encryptdecrypt;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /*
  * Extend your program by adding different algorithms to encode/decode data. 
@@ -63,100 +62,167 @@ Output:
 Welcome to hyperskill!
  */
 public class Stage6 {
-    public static void main(String[] args) {
-        Map<String, String> actions = toMap(args);
-        String line = "";
-        Hash algorithm = actions.containsKey("-alg") ? HashFactory.hash(actions.get("-alg")) : new ShiftHash();
-        if (actions.containsKey("-in")) {
-            File file = new File("src/main/java/hyperskill/projects/encryptdecrypt/" + actions.get("-in"));
-            // File file = new File(actions.get("-in"));
-            try (Scanner scanner = new Scanner(file)) {
-                line = scanner.nextLine();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        } else if (actions.containsKey("-data")) {
-            line = actions.get("-data");
-        }
-        String ret = encodeDecode(algorithm, actions.getOrDefault("-mode", "enc"),
-            actions.containsKey("-key") ? Integer.parseInt(actions.get("-key")) : 0, line);
-        if (actions.containsKey("-out")) {
-            File file = new File("src/main/java/hyperskill/projects/encryptdecrypt/" + actions.get("-out"));
-            // File file = new File(actions.get("-out"));
-            try (PrintWriter writer = new PrintWriter(file)) {
-                writer.print(ret);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+    public static void main(String[] args) throws IOException {
+        Parameters parameters = new Parameters(args);
+        Context context = new Context(parameters.getMode(), parameters.getAlgorithm());
+        String data = parameters.isInputFileDefined() ? Files.readString(Paths.get(parameters.getInputFileName()))
+                : parameters.getData();
+        String outputData = data
+                .chars()
+                .map(c -> context.process(c, parameters.getKey()))
+                .mapToObj(s -> String.valueOf((char) s))
+                .collect(Collectors.joining());
+        if (parameters.isOutFileDefined()) {
+            Files
+                    .writeString(Paths.get(parameters.getOutFileName()), outputData, StandardOpenOption.WRITE,
+                        StandardOpenOption.TRUNCATE_EXISTING);
         } else {
-            System.out.println(ret);
+            System.out.println(outputData);
         }
+    }
+}
+
+class Parameters {
+    private Mode mode;
+    private Algorithm algorithm;
+    private int key;
+    private String data;
+    private boolean inputFileDefined;
+    private String inputFileName;
+    private boolean outFileDefined;
+    private String outFileName;
+
+    public Parameters(String[] args) {
+        Map<String, String> params = toMap(args);
+        this.algorithm = AlgorithmFactory.select(params.getOrDefault("alg", "shift"));
+        this.mode = Mode.getMode(params.getOrDefault("mode", "enc"));
+        this.key = Integer.parseInt(params.getOrDefault("key", "0"));
+        this.data = params.getOrDefault("data", "");
+        if (params.containsKey("in")) {
+            inputFileDefined = true;
+            inputFileName = params.get("in");
+        } else {
+            inputFileDefined = false;
+        }
+        if (params.containsKey("out")) {
+            outFileDefined = true;
+            outFileName = params.get("out");
+        } else {
+            outFileDefined = false;
+        }
+    }
+
+    public Mode getMode() {
+        return mode;
+    }
+
+    public Algorithm getAlgorithm() {
+        return algorithm;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public boolean isInputFileDefined() {
+        return inputFileDefined;
+    }
+
+    public String getInputFileName() {
+        return inputFileName;
+    }
+
+    public boolean isOutFileDefined() {
+        return outFileDefined;
+    }
+
+    public String getOutFileName() {
+        return outFileName;
     }
 
     private static Map<String, String> toMap(String[] args) {
         Map<String, String> map = new HashMap<>();
         for (int i = 0, j = 1; j < args.length; j += 2, i += 2) {
-            map.put(args[i], args[j]);
+            map.put(args[i].substring(1), args[j]);
         }
         return map;
     }
+}
 
-    public static String encodeDecode(Hash hash, String mode, int move, String line) {
-        return line
-                .chars()
-                .map(c -> mode.equals("enc") ? hash.encode(c, move) : hash.decode(c, move))
-                .mapToObj(s -> String.valueOf((char) s))
-                .collect(Collectors.joining());
+class Context {
+    private final Mode mode;
+    private final Algorithm algorithm;
+
+    Context(Mode mode, Algorithm algorithm) {
+        this.mode = mode;
+        this.algorithm = algorithm;
+    }
+
+    public int process(int c, int key) {
+        switch (mode) {
+            case DECRYPTION:
+                return algorithm.decode(c, key);
+            case ENCRYPTION:
+                return algorithm.encode(c, key);
+            default:
+                throw new RuntimeException("Invalida context mode: " + mode);
+        }
     }
 }
 
-enum HashMode {
-    DECODE,
-    ENCODE;
-}
+enum Mode {
+    ENCRYPTION,
+    DECRYPTION;
 
-class HashFactory {
-    public static Hash hash(String hash) {
-        return hash.equals("unicode") ? new UnicodeHash() : new ShiftHash();
+    static Mode getMode(String mode) {
+        return "enc".equals(mode) ? Mode.ENCRYPTION : Mode.DECRYPTION;
     }
 }
 
-abstract class Hash {
-
-    protected abstract int encode(int c, int offset);
-
-    protected abstract int decode(int c, int offset);
+class AlgorithmFactory {
+    public static Algorithm select(String algorithm) {
+        return "unicode".equals(algorithm) ? new UnicodeAlgorithm() : new ShiftAlgorithm();
+    }
 }
 
-class UnicodeHash extends Hash {
+abstract class Algorithm {
+
+    protected abstract int encode(int c, int key);
+
+    protected abstract int decode(int c, int key);
+}
+
+class UnicodeAlgorithm extends Algorithm {
 
     @Override
-    protected int encode(int c, int offset) {
-        return c + offset;
+    protected int encode(int c, int key) {
+        return c + key;
     }
 
     @Override
-    protected int decode(int c, int offset) {
-        return c - offset;
+    protected int decode(int c, int key) {
+        return c - key;
     }
 }
 
-class ShiftHash extends Hash {
+class ShiftAlgorithm extends Algorithm {
     @Override
-    protected int encode(int c, int offset) {
+    protected int encode(int c, int key) {
         if (Character.isAlphabetic(c)) {
-            int originalAlphabetPosition = c - 'a';
-            System.out.println(originalAlphabetPosition);
-            int newAlphabetPosition = (originalAlphabetPosition + offset) % 26;
-            return ('a' + newAlphabetPosition);
+            int s = Character.isUpperCase(c) ? 65 : 97;
+            return (c - s + key) % 26 + s;
         } else {
             return c;
         }
     }
 
     @Override
-    protected int decode(int c, int offset) {
-        return encode(c, 26 - (offset % 26));
+    protected int decode(int c, int key) {
+        return encode(c, 26 - (key % 26));
+
     }
 }
