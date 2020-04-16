@@ -1,11 +1,12 @@
 package hyperskill.projects.encryptdecrypt;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 /*
@@ -65,7 +66,8 @@ public class Stage6 {
     public static void main(String[] args) throws IOException {
         Parameters parameters = new Parameters(args);
         Context context = new Context(parameters.getMode(), parameters.getAlgorithm());
-        String data = parameters.isInputFileDefined() ? Files.readString(Paths.get(parameters.getInputFileName()))
+        String data = parameters.isInputFileDefined() ? readDataFromFile(parameters.getInputFileName())
+                // Files.readString(Paths.get(parameters.getInputFileName()))
                 : parameters.getData();
         String outputData = data
                 .chars()
@@ -73,11 +75,20 @@ public class Stage6 {
                 .mapToObj(s -> String.valueOf((char) s))
                 .collect(Collectors.joining());
         if (parameters.isOutFileDefined()) {
-            Files
-                    .writeString(Paths.get(parameters.getOutFileName()), outputData, StandardOpenOption.WRITE,
-                        StandardOpenOption.TRUNCATE_EXISTING);
+            try (PrintWriter writer = new PrintWriter(new File(parameters.getOutFileName()))) {
+                writer.print(outputData);
+            }
+            // Files.writeString(Paths.get(parameters.getOutFileName()),
+            // outputData, StandardOpenOption.WRITE,
+            // StandardOpenOption.TRUNCATE_EXISTING);
         } else {
             System.out.println(outputData);
+        }
+    }
+
+    private static String readDataFromFile(String inputFileName) throws FileNotFoundException {
+        try (Scanner scanner = new Scanner(new File(inputFileName))) {
+            return scanner.nextLine();
         }
     }
 }
