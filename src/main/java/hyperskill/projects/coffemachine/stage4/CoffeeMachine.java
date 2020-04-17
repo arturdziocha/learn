@@ -1,4 +1,4 @@
-package hyperskill.projects.coffemachine;
+package hyperskill.projects.coffemachine.stage4;
 
 import java.util.Scanner;
 
@@ -95,64 +95,7 @@ The coffee machine has:
 9 of disposable cups
 0 of money
  */
-public class Stage4 {
-    public static void main(String[] args) {
-        CoffeeMachine machine = new CoffeeMachine(1200, 540, 120, 9, 550);
-        Scanner scanner = new Scanner(System.in);
-        printMachineStatus(machine);
-        System.out.println();
-        System.out.println("Write action (buy, fill, take):");
-        String action = scanner.nextLine();
-        switch (action) {
-            case "buy":
-                buyAction(machine, scanner);
-                break;
-            case "fill":
-                fillAction(machine, scanner);
-                break;
-            case "take":
-                takeAction(machine, scanner);
-                break;
-        }
-        System.out.println();
-        printMachineStatus(machine);
-
-    }
-
-    private static void printMachineStatus(CoffeeMachine machine) {
-        System.out.println("The coffee machine has:\n" +
-                machine.getWater() + " of water\n" +
-                machine.getMilk() + " of milk\n" +
-                machine.getCoffeeBeans() + " of coffee beans\n" +
-                machine.getCubs() + " of disposable cups\n" +
-                machine.getMoney() + " of money");
-    }
-
-    private static void buyAction(CoffeeMachine machine, Scanner scanner) {
-        System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: ");
-        int coffeeChoice = Integer.parseInt(scanner.nextLine());
-        Coffee coffee = CoffeeChoseFactory.choseCoffee(coffeeChoice);
-        machine.makeCoffee(coffee);
-    }
-
-    private static void takeAction(CoffeeMachine machine, Scanner scanner) {
-        int take = machine.takeMoney();
-        System.out.println("I gave you $" + take);
-    }
-
-    private static void fillAction(CoffeeMachine machine, Scanner scanner) {
-        System.out.println("Write how many ml of water do you want to add: ");
-        machine.addWater(scanner.nextInt());
-        System.out.println("Write how many ml of milk do you want to add: ");
-        machine.addMilk(scanner.nextInt());
-        System.out.println("Write how many grams of coffee beans do you want to add: ");
-        machine.addCoffeeBeans(scanner.nextInt());
-        System.out.println("Write how many disposable cups of coffee do you want to add: ");
-        machine.addCubs(scanner.nextInt());
-    }
-}
-
-class CoffeeMachine {
+public class CoffeeMachine {
     private int water, milk, coffeeBeans, cubs, money;
 
     CoffeeMachine(int water, int milk, int coffeeBeans, int cubs, int money) {
@@ -205,74 +148,115 @@ class CoffeeMachine {
         return temp;
     }
 
-    public void makeCoffee(Coffee coffee) {
-        this.water -= coffee.getWaterForCub();
-        this.milk -= coffee.getMilkForCub();
-        this.coffeeBeans -= coffee.getBeansForCub();
+    public void makeCoffee(CoffeeType coffee) {
+        this.water -= coffee.getWater();
+        this.milk -= coffee.getMilk();
+        this.coffeeBeans -= coffee.getBeans();
         this.cubs--;
         this.money += coffee.getCost();
     }
+
+    public static void main(String[] args) {
+        CoffeeMachine machine = new CoffeeMachine(1200, 540, 120, 9, 550);
+        Scanner scanner = new Scanner(System.in);
+        printMachineStatus(machine);
+        System.out.println();
+        System.out.println("Write action (buy, fill, take):");
+        String action = scanner.nextLine();
+        switch (action) {
+            case "buy":
+                buyAction(machine, scanner);
+                break;
+            case "fill":
+                fillAction(machine, scanner);
+                break;
+            case "take":
+                takeAction(machine);
+                break;
+        }
+        System.out.println();
+        printMachineStatus(machine);
+
+    }
+
+    private static void printMachineStatus(CoffeeMachine machine) {
+        System.out.println("The coffee machine has:\n" +
+                machine.getWater() + " of water\n" +
+                machine.getMilk() + " of milk\n" +
+                machine.getCoffeeBeans() + " of coffee beans\n" +
+                machine.getCubs() + " of disposable cups\n" +
+                machine.getMoney() + " of money");
+    }
+
+    private static void buyAction(CoffeeMachine machine, Scanner scanner) {
+        System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: ");
+        int coffeeChoice = Integer.parseInt(scanner.nextLine());
+        CoffeeType coffee = CoffeeChoseFactory.choseCoffee(coffeeChoice);
+        machine.makeCoffee(coffee);
+    }
+
+    private static void takeAction(CoffeeMachine machine) {
+        int take = machine.takeMoney();
+        System.out.println("I gave you $" + take);
+    }
+
+    private static void fillAction(CoffeeMachine machine, Scanner scanner) {
+        System.out.println("Write how many ml of water do you want to add: ");
+        machine.addWater(scanner.nextInt());
+        System.out.println("Write how many ml of milk do you want to add: ");
+        machine.addMilk(scanner.nextInt());
+        System.out.println("Write how many grams of coffee beans do you want to add: ");
+        machine.addCoffeeBeans(scanner.nextInt());
+        System.out.println("Write how many disposable cups of coffee do you want to add: ");
+        machine.addCubs(scanner.nextInt());
+    }
+
+
 }
 
 class CoffeeChoseFactory {
-    public static Coffee choseCoffee(int choose) {
+    public static CoffeeType choseCoffee(int choose) {
         switch (choose) {
             case 1:
-                return new Expresso(250, 16, 4);
+                return CoffeeType.Espresso;
             case 2:
-                return new Latte(350, 75, 20, 7);
+                return CoffeeType.Latte;
             case 3:
-                return new Cappuccino(200, 100, 12, 6);
+                return CoffeeType.Cappuccino;
             default:
                 return null;
         }
     }
 }
 
-abstract class Coffee {
-    protected int milkForCub;
-    protected int waterForCub;
-    protected int beansForCub;
-    protected int cost;
+enum CoffeeType {
+    Espresso(250, 0, 16, 4),
+    Latte(350, 75, 20, 7), Cappuccino(200, 100, 12, 6);
+    private final int milk;
+    private final int water;
+    private final int beans;
+    private final int cost;
 
-    Coffee(int waterForCub, int milkForCub, int beansForCub, int cost) {
-        this.waterForCub = waterForCub;
-        this.milkForCub = milkForCub;
-        this.beansForCub = beansForCub;
+    CoffeeType(int water, int milk, int beans, int cost) {
+        this.milk = milk;
+        this.water = water;
+        this.beans = beans;
         this.cost = cost;
     }
 
-    public int getWaterForCub() {
-        return waterForCub;
+    public int getMilk() {
+        return milk;
     }
 
-    public int getMilkForCub() {
-        return milkForCub;
+    public int getWater() {
+        return water;
     }
 
-    public int getBeansForCub() {
-        return beansForCub;
+    public int getBeans() {
+        return beans;
     }
 
     public int getCost() {
         return cost;
-    }
-}
-
-class Expresso extends Coffee {
-    Expresso(int waterForCub, int beansForCub, int cost) {
-        super(waterForCub, 0, beansForCub, cost);
-    }
-}
-
-class Latte extends Coffee {
-    Latte(int waterForCub, int milkForCub, int beansForCub, int cost) {
-        super(waterForCub, milkForCub, beansForCub, cost);
-    }
-}
-
-class Cappuccino extends Coffee {
-    Cappuccino(int waterForCub, int milkForCub, int beansForCub, int cost) {
-        super(waterForCub, milkForCub, beansForCub, cost);
     }
 }
