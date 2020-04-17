@@ -29,22 +29,12 @@ true
 public class Reese {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("sdd");
-        int reese = scanner.nextInt();
-        boolean weekend = scanner.nextBoolean();
-        if (weekend) {
-            if (reese > 15 && reese < 25) {
-                System.out.println(true);
-            } else {
-                System.out.println(false);
-            }
-        } else {
-            if (reese > 10 && reese < 20) {
-                System.out.println(true);
-            } else {
-                System.out.println(false);
-            }
-        }
+        final int peanuts = scanner.nextInt();
+        final boolean isWeekend = scanner.nextBoolean();
+        final boolean goodForNormalDays = peanuts >= 10 && peanuts <= 20 && !isWeekend;
+        final boolean goodForWeekend = peanuts >= 15 && peanuts <= 25 && isWeekend;
+
+        System.out.println(goodForNormalDays || goodForWeekend);
         scanner.close();
     }
 }
