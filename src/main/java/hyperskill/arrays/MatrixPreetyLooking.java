@@ -1,5 +1,8 @@
 package hyperskill.arrays;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -33,16 +36,16 @@ YBYB
 public class MatrixPreetyLooking {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("add");
-        String line;
+        System.out.println("add");        
+        char[][] matrix = new char[4][4];
         boolean result = true;
-        for (int i = 0; i < 4; i++) {
-            line = scanner.nextLine();
-            for (int j = 0; j < 2; j++) {
-
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < matrix.length; i++) {
+            String line =scanner.nextLine();
+            for (int j = 0; j < line.length()-1; j++) {                
+                list.add(String.valueOf(line.charAt(j))+String.valueOf(line.charAt(j+1)));
             }
         }
-        scanner.close();
-        System.out.println(result ? "YES" : "NO");
+        System.out.println(list);
     }
 }
