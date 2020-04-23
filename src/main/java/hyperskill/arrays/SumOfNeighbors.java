@@ -1,7 +1,10 @@
 package hyperskill.arrays;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /*
  * Write a program, which inputs the rectangular matrix from a sequence of lines, ending with a line, containing the only word "end" (without the quotation marks).
@@ -26,33 +29,44 @@ end
 Sample Output 2:
 
 4
+
+*
+1 2 3 4
+end
  */
 public class SumOfNeighbors {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);       
-        String line = scanner.nextLine();
-        int[] first = Arrays.stream(line.split(" ")).mapToInt(i -> Integer.parseInt(i)).toArray();
-        int[][] matrix = new int[first.length][];
-        matrix[0] = first;
-        int iter = 1;
+        Scanner scanner = new Scanner(System.in);
+        String line;
+        List<Integer> matrixList = new ArrayList<>();
+        int howMany = 0;
         while (!"end".equals(line = scanner.nextLine())) {
-            matrix[iter] = Arrays.stream(line.split(" ")).mapToInt(s -> Integer.parseInt(s)).toArray();
-            iter++;
-        }        
+            matrixList.addAll(
+                    Arrays.stream(line.split(" "))
+                            .mapToInt(Integer::parseInt)
+                            .boxed()
+                            .collect(Collectors.toCollection(ArrayList::new)));
+            howMany++;
+        }
+        int[][] matrix = new int[howMany][matrixList.size() / howMany];
+        int iter = 0;
+        for (int i = 0; i < howMany; i++) {
+            for (int j = 0; j < matrixList.size() / howMany; j++) {
+                matrix[i][j] = matrixList.get(iter);
+                iter++;
+            }
+        }
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 int val = 0;
                 int x = i - 1 < 0 ? matrix.length - 1 : i - 1;
-                
-                int y = j;                
+                int y = j;
                 val += matrix[x][y];
                 x = i + 1 == matrix.length ? 0 : i + 1;
-                y = j;
                 val += matrix[x][y];
                 x = i;
                 y = j - 1 < 0 ? matrix[i].length - 1 : j - 1;
                 val += matrix[x][y];
-                x = i;
                 y = j + 1 == matrix[i].length ? 0 : j + 1;
                 val += matrix[x][y];
                 System.out.print(val + " ");
