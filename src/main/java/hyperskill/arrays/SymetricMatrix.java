@@ -15,6 +15,15 @@ Sample Input 1:
 Sample Output 1:
 
 YES
+
+2
+0 0
+1 1
+
+4
+0 0 0 0
+1 0 0 0
+0 0 0 0
  */
 public class SymetricMatrix {
     public static void main(String[] args) {
@@ -27,15 +36,14 @@ public class SymetricMatrix {
                 matrix[i][j] = scanner.nextInt();
             }
         }
-        boolean result = true;
         for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+            for (int j = i + 1; j < size; j++) {
                 if (matrix[i][j] != matrix[j][i]) {
-                    result = false;
-                    break;
+                    System.out.println("NO");
+                    return;
                 }
             }
         }
-        System.out.println(result ? "YES" : "NO");
+        System.out.println("YES");
     }
 }
