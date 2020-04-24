@@ -48,6 +48,7 @@ public class SumOfNeighbors {
                             .collect(Collectors.toCollection(ArrayList::new)));
             howMany++;
         }
+        scanner.close();
         int[][] matrix = new int[howMany][matrixList.size() / howMany];
         int iter = 0;
         for (int i = 0; i < howMany; i++) {

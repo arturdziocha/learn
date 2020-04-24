@@ -1,6 +1,5 @@
 package hyperskill.arrays;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -32,6 +31,7 @@ public class RotateArray {
         Scanner scanner = new Scanner(System.in);
         int rows = scanner.nextInt();
         int columns = scanner.nextInt();
+        scanner.close();
         int[][] arr = new int[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {

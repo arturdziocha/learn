@@ -31,11 +31,13 @@ public class SymetricMatrix {
         System.out.println("add");
         int size = scanner.nextInt();
         int[][] matrix = new int[size][size];
+
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 matrix[i][j] = scanner.nextInt();
             }
         }
+        scanner.close();
         for (int i = 0; i < size; i++) {
             for (int j = i + 1; j < size; j++) {
                 if (matrix[i][j] != matrix[j][i]) {
