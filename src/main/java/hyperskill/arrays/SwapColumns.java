@@ -34,13 +34,15 @@ public class SwapColumns {
         }
         int firstCol = scanner.nextInt();
         int secondColumn = scanner.nextInt();
+        int f1 = Math.min(firstCol, secondColumn);
+        int f2 = Math.max(firstCol, secondColumn);
         scanner.close();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (j == firstCol) {
-                    int tmp = matrix[i][firstCol];
-                    matrix[i][firstCol] = matrix[i][secondColumn];
-                    matrix[i][secondColumn] = tmp;
+                if (j == f1) {
+                    int tmp = matrix[i][f1];
+                    matrix[i][f1] = matrix[i][f2];
+                    matrix[i][f2] = tmp;
                 }
                 System.out.print(matrix[i][j] + " ");
             }
