@@ -40,7 +40,8 @@ public class TicTacToe {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("add");
-        char[] arr = scanner.nextLine().toCharArray();        
+        char[] arr = scanner.nextLine().toCharArray();      
+        scanner.close();
         for (int i = 0; i < 9; i++) {
             System.out.print("-");
         }
