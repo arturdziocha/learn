@@ -49,7 +49,7 @@ class TicTacToe {
     }
 
     boolean checkNotFinished() {
-        return Arrays.stream(board).flatMap(a -> Arrays.stream(a)).anyMatch(s -> s.equals(BoxState.EMPTY));
+        return Arrays.stream(board).flatMap(Arrays::stream).anyMatch(s -> s.equals(BoxState.EMPTY));
     }
 
     boolean isWin(BoxState state) {
@@ -66,18 +66,14 @@ class TicTacToe {
                     return true;
                 }
             }
-            if (diagonal1 == playerTotal || diagonal2 == playerTotal) {
-                return true;
-            }
-            return false;
+            return diagonal1 == playerTotal || diagonal2 == playerTotal;
         }
         return false;
     }
 
     boolean checkToManyMoves() {
-        long numOfX = Arrays.stream(board).flatMap(a -> Arrays.stream(a)).filter(s -> s.equals(BoxState.X)).count();
-        long numOfO = Arrays.stream(board).flatMap(a -> Arrays.stream(a)).filter(s -> s.equals(BoxState.O)).count();
-        ;
+        long numOfX = Arrays.stream(board).flatMap(Arrays::stream).filter(s -> s.equals(BoxState.X)).count();
+        long numOfO = Arrays.stream(board).flatMap(Arrays::stream).filter(s -> s.equals(BoxState.O)).count();
         return Math.abs(numOfO - numOfX) > 1;
 
     }
