@@ -2,17 +2,71 @@ package hyperskill.projects.tictactoe.stage4;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Scanner;
 
 public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("add");
+
+        String input = scanner.nextLine();
+
+        TicTacToe ticTacToe = new TicTacToe(3);
+        int pos = 0;
+        for (int i = 1; i <= 3; i++) {
+            for (int j = 1; j <= 3; j++) {
+                ticTacToe.setBox(i, j, BoxState.fromChar(input.charAt(pos++)).orElse(BoxState.EMPTY));
+            }
+        }
+        ticTacToe.draw();        
+        boolean play = true;
+        while (play) {
+
+            System.out.printf("Enter the coordinates: ");
+            String[] number = scanner.nextLine().split("\\s+");
+            try {
+                int y = Integer.parseInt(number[0]);
+                int x = xChanger(Integer.parseInt(number[1]));
+                System.out.println("y= " + y + "; x= " + x);
+                if (ticTacToe.checkAxis(x) && ticTacToe.checkAxis(y)) {
+                    if (ticTacToe.isEmptyState(x, y)) {
+                        ticTacToe.setBox(x, y, BoxState.X);
+                        ticTacToe.draw();
+                        play = false;
+                    } else {
+                        System.out.println("This cell is occupied! Choose another one!");
+                    }
+                } else {
+                    System.out.println("Coordinates should be from 1 to 3!");
+                }
+            } catch (Exception e) {
+                System.out.println("You should enter numbers!");
+            }
+        }
+        scanner.close();
+    }
+
+    private static int xChanger(int x) {
+        switch (x) {
+            case 1:
+                return 3;
+            case 3:
+                return 1;
+            default:
+                return 2;
+        }
+    }
 }
+
 class TicTacToe {
     private BoxState[][] board;
     private final int size;
     private BoxState lastPlayer;
+
     TicTacToe(int size) {
         this.size = size;
 
-        this.lastPlayer = BoxState.X;
+        this.lastPlayer = BoxState.EMPTY;
         this.board = new BoxState[size][size];
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
@@ -21,12 +75,27 @@ class TicTacToe {
         }
     }
 
-    void setBox(int x, int y, BoxState state) {
-        if (board[x-1][y-1] != BoxState.EMPTY) {
-            throw new RuntimeException("Box is busy");
-        } else {
-            board[x-1][y-1] = state;
+    public BoxState nextPlayer() {
+        if (lastPlayer == BoxState.X) {
+            return BoxState.O;
         }
+        return BoxState.X;
+    }
+
+    public boolean checkAxis(int axis) {
+        return axis >= 1 || axis <= size;
+    }
+
+    void setBox(int x, int y, BoxState state) {
+        board[x - 1][y - 1] = state;
+        lastPlayer = nextPlayer();
+    }
+
+    public boolean isEmptyState(int x, int y) {
+        if (board[x - 1][y - 1] == BoxState.EMPTY) {
+            return true;
+        }
+        return false;
     }
 
     public void draw() {
