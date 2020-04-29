@@ -12,29 +12,22 @@ public class Main {
         do {
             ticTacToe.print();
             System.out.printf("Enter the coordinates: ");
-            String[] number = scanner.nextLine().split("\\s+");
+            // String[] number = scanner.nextLine().split("\\s+");
+            String numbers = scanner.nextLine();
+            Scanner scInts = new Scanner(numbers);
             try {
-                int y = Integer.parseInt(number[0]);
-                int x = xChanger(Integer.parseInt(number[1]));
-                System.out.println("y= " + y + "; x= " + x);
+                int y = scInts.nextInt();
+                int x = scInts.nextInt();
                 ticTacToe.play(x, y);
             } catch (Exception e) {
                 System.out.println("You should enter numbers!");
             }
-        }while(!ticTacToe.isFinished());
+            scInts.close();
+        } while (!ticTacToe.isFinished());
+        scanner.close();
 
     }
 
-    private static int xChanger(int x) {
-        switch (x) {
-            case 1:
-                return 3;
-            case 3:
-                return 1;
-            default:
-                return 2;
-        }
-    }
 }
 
 class TicTacToe {
@@ -45,7 +38,7 @@ class TicTacToe {
 
     public TicTacToe(int size) {
         this.size = size;
-        this.lastPlayer = BoxState.X;
+        this.lastPlayer = BoxState.EMPTY;
 
         this.board = IntStream
                 .range(0, size)
@@ -55,27 +48,36 @@ class TicTacToe {
     }
 
     public void play(int x, int y) {
-        x = x - 1;
-        y = y - 1;
+
         if (checkAxis(x, y)) {
             System.out.println("Coordinates should be from 1 to 3!");
 
-        } else if (isBusy(x, y)) {
-            System.out.println("This cell is occupied! Choose another one!");
         } else {
-            lastPlayer = nextPlayer();
-            setBox(x, y);
-            System.out.println(finished);
-            if (isWin(lastPlayer)) {
-                finished = true;
-                System.out.println(lastPlayer + " wins");
+            x = xChanger(x) - 1;
+            y = y - 1;
+            if (isBusy(x, y)) {
+                System.out.println("This cell is occupied! Choose another one!");
+
+            } else {
+                lastPlayer = nextPlayer();
+                setBox(x, y);
+                if (isWin(lastPlayer)) {
+                    finished = true;
+                    print();
+                    System.out.println(lastPlayer + " wins");
+                }
+                else if(checkFinished()) {
+                    finished = true;
+                    print();
+                    System.out.println("Draw");
+                }
             }
         }
 
     }
 
     private boolean checkAxis(int x, int y) {
-        return x < 0 || x >= size || y < 0 || y >= 3;
+        return x < 1 || x > size || y < 1 || y > size;
     }
 
     private boolean isBusy(int x, int y) {
@@ -112,6 +114,9 @@ class TicTacToe {
         return false;
     }
 
+    boolean checkFinished() {
+        return Arrays.stream(board).flatMap(Arrays::stream).noneMatch(s -> s.equals(BoxState.EMPTY));
+    }
 
     public boolean isFinished() {
         return finished;
@@ -134,6 +139,17 @@ class TicTacToe {
             System.out.print("-");
         }
         System.out.println();
+    }
+
+    private int xChanger(int x) {
+        switch (x) {
+            case 1:
+                return 3;
+            case 3:
+                return 1;
+            default:
+                return 2;
+        }
     }
 
 }
