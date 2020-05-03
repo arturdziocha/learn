@@ -37,6 +37,7 @@ public class Main {
             System.out.printf("Characters: %.0f\n", numOfChars);
             double score = 4.71 * (numOfChars / numOfWords) + 0.5 * (numOfWords / lines.size()) - 21.43;
             System.out.printf("The score is: %.2f\n", score);
+
         }
 
     }
