@@ -1,4 +1,4 @@
-package hyperskill.math;
+package hyperskill.math.shape;
 
 /*
 You have an abstract class Shape with two abstract methods: getPerimeter() and getArea(). See the provided code template.
