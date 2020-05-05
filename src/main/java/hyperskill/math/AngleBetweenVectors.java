@@ -2,6 +2,7 @@ package hyperskill.math;
 
 import java.util.Arrays;
 import java.util.Scanner;
+
 /*
  * You are given two 2D vectors. Find the angle (in degrees) between them.
 
@@ -39,10 +40,15 @@ public class AngleBetweenVectors {
         int[] v = Arrays.stream(scanner.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
         scanner.close();
         double num = u[0] * v[0] + u[1] * v[1];
-        double uManitude = Math.sqrt(Math.pow(u[0], 2) + Math.pow(u[1], 2));
-        double vManitude = Math.sqrt(Math.pow(v[0], 2) + Math.pow(v[1], 2));
+        double uManitude = Math.sqrt(Math.pow(u[0], 2) + Math.pow(u[1], 2));// Math.hypot(u[0]+u[1])
+        double vManitude = Math.sqrt(Math.pow(v[0], 2) + Math.pow(v[1], 2));// Math.hypot(v[0]+v[1])
         double cosA = num / (uManitude * vManitude);
         System.out.println((int) Math.toDegrees(Math.acos(cosA)));
+        System.out
+                .println(Math
+                        .toDegrees((Math
+                                .acos(
+                                    (u[0] * v[0] + u[1] * v[1]) / (Math.hypot(u[0], u[1]) * Math.hypot(v[0], v[1]))))));
 
     }
 
