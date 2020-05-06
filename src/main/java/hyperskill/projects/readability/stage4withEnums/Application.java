@@ -1,6 +1,8 @@
 package hyperskill.projects.readability.stage4withEnums;
 
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,5 +37,12 @@ public class Application {
 
     private void printAverage(double averageAge) {
         System.out.printf("This text should be understood in average by %.2f year olds.", averageAge);
+    }
+    public static <T> void ifPresentOrElse(Optional<T> optional, Consumer<? super T> action, Runnable emptyAction) {
+        if (optional.isPresent()) {
+            action.accept(optional.get());
+        } else {
+            emptyAction.run();
+        }
     }
 }
