@@ -1,9 +1,6 @@
 package hyperskill.projects.readability.stage4withEnums;
 
-import java.util.Optional;
-import java.util.OptionalDouble;
 import java.util.Scanner;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -18,7 +15,7 @@ public class Application {
         System.out.println(textStatistics);
         System.out
                 .printf("Enter the score you want to calculate (%s, all):%n",
-                    Stream.of(ReadabilityScores.values()).map(Enum::toString).collect(Collectors.joining(", ")));
+                        Stream.of(ReadabilityScores.values()).map(Enum::toString).collect(Collectors.joining(", ")));
 
         final String rsName = new Scanner(System.in).next().toUpperCase();
         final boolean isAll = rsName.equals(ReadabilityScores.ALL);
@@ -31,11 +28,11 @@ public class Application {
                 .ifPresentOrElse(this::printAverage, this::printErrorMessage);
     }
 
-    private static void printErrorMessage() {
+    private void printErrorMessage() {
         System.out.println("Wrong name of Readability Score!");
     }
 
-    private static void printAverage(double averageAge) {
+    private void printAverage(double averageAge) {
         System.out.printf("This text should be understood in average by %.2f year olds.", averageAge);
-    }    
+    }
 }
