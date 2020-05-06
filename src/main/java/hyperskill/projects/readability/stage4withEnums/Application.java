@@ -1,6 +1,7 @@
 package hyperskill.projects.readability.stage4withEnums;
 
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Application {
@@ -14,7 +15,7 @@ public class Application {
         System.out.println(textStatistics);
         System.out
                 .printf("Enter the score you want to calculate (%s, all):%n",
-                    Stream.of(ReadabilityScores.values()).map(Enum::toString).collect(joining(", ")));
+                    Stream.of(ReadabilityScores.values()).map(Enum::toString).collect(Collectors.joining(", ")));
 
         final String rsName = new Scanner(System.in).next().toUpperCase();
         final boolean isAll = rsName.equals(ReadabilityScores.ALL);
