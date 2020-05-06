@@ -1,6 +1,7 @@
 package hyperskill.projects.readability.stage4withEnums;
 
 import java.util.Optional;
+import java.util.OptionalDouble;
 import java.util.Scanner;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -21,7 +22,6 @@ public class Application {
 
         final String rsName = new Scanner(System.in).next().toUpperCase();
         final boolean isAll = rsName.equals(ReadabilityScores.ALL);
-
         Stream
                 .of(ReadabilityScores.values())
                 .filter(rs -> isAll || rs.name().equals(rsName))
@@ -31,18 +31,11 @@ public class Application {
                 .ifPresentOrElse(this::printAverage, this::printErrorMessage);
     }
 
-    private void printErrorMessage() {
+    private static void printErrorMessage() {
         System.out.println("Wrong name of Readability Score!");
     }
 
-    private void printAverage(double averageAge) {
+    private static void printAverage(double averageAge) {
         System.out.printf("This text should be understood in average by %.2f year olds.", averageAge);
-    }
-    public static <T> void ifPresentOrElse(Optional<T> optional, Consumer<? super T> action, Runnable emptyAction) {
-        if (optional.isPresent()) {
-            action.accept(optional.get());
-        } else {
-            emptyAction.run();
-        }
-    }
+    }    
 }
