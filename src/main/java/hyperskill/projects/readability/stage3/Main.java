@@ -34,7 +34,7 @@ public class Main {
         SENTECES("[!.?][^$]|$"),
         WORDS("\\w+"),
         CHARS("\\S"),
-        SYLLABLES("(?i)[aiouy][aeiouy]*|e[aeiouy]*(?!d?\\b)");
+        SYLLABLES("(?i)[aeiouy][^aeiouy\\s]|[aiouy]$");
         private final String regex;
 
         private Regex(String regex) {
