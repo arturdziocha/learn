@@ -23,7 +23,7 @@ class Matrix {
     }
 
     public void addRow(int i, String[] arr) {
-
+        Row row = new Row(arr.length);
     }
 }
 
