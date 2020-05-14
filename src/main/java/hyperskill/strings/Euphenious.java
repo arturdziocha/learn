@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -42,21 +44,48 @@ biiiiig
 Sample Output 4:
 
 2
+
+
+wwwwwwwwwwwwwwwwwwwwwwwwwwwww
  */
 public class Euphenious {
 
     public static void main(String[] args) {
-        List<Character> vovels = Arrays.asList('a', 'e', 'i', 'o', 'u');
-        List<Character> consonants = IntStream.rangeClosed('a', 'z').mapToObj(c -> (char) c).collect(Collectors.toCollection(ArrayList::new));
-        consonants.removeAll(vovels);
-        System.out.println(consonants);
+
         Scanner scanner = new Scanner(System.in);
+        System.out.println("add");
         String word = scanner.next();
-        int count = 0;
-        for (int i = 0; i < word.length(); i++) {
+        scanner.close();
+        System.out.println(find(factorialEuph(word.toLowerCase())));
 
+    }
+
+    static String factorialEuph(String string) {
+        List<Character> vovels = Arrays.asList('a', 'e', 'i', 'o', 'u', 'y');
+        List<Character> consonants = IntStream
+                .rangeClosed('a', 'z')
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.toCollection(ArrayList::new));
+        consonants.removeAll(vovels);
+        String vovelsString = vovels.stream().map(String::valueOf).collect(Collectors.joining());
+        String consonantsString = consonants.stream().map(String::valueOf).collect(Collectors.joining());
+        Pattern pattern = Pattern.compile("[" + vovelsString + "]{3}|[" + consonantsString + "]{3}");
+        Matcher matcher = pattern.matcher(string);
+        if (matcher.find()) {
+            int val = matcher.end(0);
+            string = factorialEuph(string.substring(0, val - 1) + "_" + string.substring(val - 1));
         }
+        return string;
+    }
 
+    static int find(String word) {
+        Pattern pattern = Pattern.compile("[_]");
+        Matcher matcher = pattern.matcher(word);
+        int sum = 0;
+        while (matcher.find()) {
+            sum += 1;
+        }
+        return sum;
     }
 
 }
