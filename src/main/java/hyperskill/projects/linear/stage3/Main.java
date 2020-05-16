@@ -12,7 +12,6 @@ public class Main {
         matrix.read("src/main/java/hyperskill/projects/linear/stage3/in.txt");
         matrix.print();
         matrix.solve();
-        matrix.print();
     }
 }
 
@@ -35,6 +34,7 @@ class Matrix {
 
     void print() {
         IntStream.range(0, n).forEach(s -> System.out.println(Arrays.toString(matrix[s])));
+        System.out.println();
     }
 
     void solve() {
@@ -46,15 +46,39 @@ class Matrix {
             System.out.printf("1 / %1.0f * R1 -> R1", k);
             System.out.println();
         }
-        IntStream.range(0, n).forEach(this::stage1);
+        print();
+        IntStream.range(0, n).forEach(this::st1);
+        for (int row = n - 1; row > 0; row--) {
+            for (int col = row; col > 0; col--) {
+                matrix[col][n] -= matrix[col][row]*matrix[row][n];
+            }
+            System.out.println(row);
+            print();
+        }
+    }
+
+    void st1(int row) {
+        if (matrix[row][row] == 0) {
+
+        }
+        if (matrix[row][row] != 1) {
+            double k = matrix[row][row];
+            IntStream.range(row, matrix[row].length).forEach(i -> matrix[row][i] /= k);
+            System.out.println((1 / k) + " * R" + (row + 1) + " -> R" + (row + 1));
+            print();
+        }
+        IntStream.range(row + 1, n).forEach(i -> {
+            double k = -matrix[i][row];
+            IntStream.range(row, n + 1).forEach(j -> {
+                matrix[i][j] += k * matrix[row][j];
+            });
+            System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
+            print();
+        });
+
     }
 
     void stage1(int row) {
-        if (matrix[row][row] != 0) {
-            IntStream.range(row + 1, matrix[row].length).forEach(col -> matrix[row][col] /= matrix[row][row]);
-            System.out.println();
-            matrix[row][row] = 1;
-        }
         print();
         System.out.println();
         IntStream.range(row + 1, n).forEach(i -> {
