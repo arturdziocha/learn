@@ -19,14 +19,14 @@ class Matrix {
     private int vars;
     private int equations;
     private Row[] rows;
-    private Character[] variables;
+    private List<Character> variables;
 
     Matrix(int vars, int equations) {
         this.vars = vars;
         this.equations = equations;
         this.rows = new Row[equations];
-        List<Character>ss = IntStream
-                .rangeClosed('a', 'a'+vars)
+        variables = IntStream
+                .rangeClosed('a', 'a' + vars)
                 .mapToObj(c -> (char) c).collect(Collectors.toCollection(ArrayList::new));
     }
 }
@@ -57,13 +57,15 @@ class Row {
         return variables;
     }
 }
-class LinearSolution{
+
+class LinearSolution {
     Matrix matrix;
+
     void read(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
         int variables = scanner.nextInt();
         int equations = scanner.nextInt();
-        
-        
+
+
     }
 }
