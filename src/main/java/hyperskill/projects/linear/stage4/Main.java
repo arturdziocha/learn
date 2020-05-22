@@ -84,31 +84,6 @@ class Matrix {
     }
 }
 
-class Column {
-    private List<String> columns;
-
-    Column(int howManyColumns) {
-        columns = IntStream
-                .rangeClosed(1, howManyColumns)
-                .mapToObj(i -> String.valueOf("x" + i))
-                .collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    public List<String> getColumns() {
-        return columns;
-    }
-
-    void switchColumn(int from, int to) {
-        String temp = columns.get(from);
-        columns.set(from, columns.get(to));
-        columns.set(to, temp);
-    }
-
-    public String get(int index) {
-        return columns.get(index);
-    }
-}
-
 class Row {
     List<Double> row;
 
@@ -141,6 +116,32 @@ class Row {
         Double temp = row.get(from);
         row.set(from, row.get(to));
         row.set(to, temp);
+    }
+
+}
+
+class Column {
+    private List<String> columns;
+
+    Column(int howManyColumns) {
+        columns = IntStream
+                .rangeClosed(1, howManyColumns)
+                .mapToObj(i -> String.valueOf("x" + i))
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public List<String> getColumns() {
+        return columns;
+    }
+
+    void switchColumn(int from, int to) {
+        String temp = columns.get(from);
+        columns.set(from, columns.get(to));
+        columns.set(to, temp);
+    }
+
+    String get(int index) {
+        return columns.get(index);
     }
 
 }
