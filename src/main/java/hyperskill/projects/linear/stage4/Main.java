@@ -2,6 +2,7 @@ package hyperskill.projects.linear.stage4;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.security.cert.PKIXRevocationChecker.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -81,6 +82,10 @@ class Matrix {
 
     public void update(int row, int index, double value) {
         rows.get(row).updateColumn(index, value);
+    }
+
+    public Optional<Double> hasOnlyZeros(int i) {
+        return rows.get(i).getAll().stream().filter(s->!s.equals(Double.valueOf(0))).findAny();
     }
 }
 
@@ -227,6 +232,15 @@ class LinearSolution {
 
     void solve() {
         stage1();
+        for(int i = 0; i < howManyEquations;i++) {
+            if(matrix.hasOnlyZeros(i) && result.notZero(i)) {
+                System.out.println("Not solutions");
+                break;
+            }
+            else {
+                stage2(i);
+            }
+        }
         IntStream.range(0, howManyEquations).forEach(this::stage2);
     }
 
@@ -285,10 +299,8 @@ class LinearSolution {
                 double k = -matrix.getRow(i).getColumn(row);
                 if (k != 0) {
                     result.update(i, result.get(i) + k * result.get(row));
-                    IntStream.range(row, matrix.getRow(row).size()).forEach(j -> {
-                        
-                            matrix.update(i, j, matrix.getRow(i).getColumn(j) + k * matrix.getRow(row).getColumn(j));
-                        
+                    IntStream.range(row, matrix.getRow(row).size()).forEach(j -> {                        
+                            matrix.update(i, j, matrix.getRow(i).getColumn(j) + k * matrix.getRow(row).getColumn(j));                        
                         // matrix[i][j] += k * matrix[row][j];
                     });
                     System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
