@@ -85,7 +85,7 @@ class Matrix {
     }
 
     public Optional<Double> hasOnlyZeros(int i) {
-        return rows.get(i).getAll().stream().filter(s->!s.equals(Double.valueOf(0))).findAny();
+        return rows.get(i).getAll().stream().filter(s -> !s.equals(Double.valueOf(0))).findAny();
     }
 }
 
@@ -180,6 +180,10 @@ class Result {
         result.set(index, value);
 
     }
+
+    public boolean notZero(int index) {
+        return result.get(index).equals(Double.valueOf(0));
+    }
 }
 
 class RowColHelper {
@@ -232,12 +236,12 @@ class LinearSolution {
 
     void solve() {
         stage1();
-        for(int i = 0; i < howManyEquations;i++) {
-            if(matrix.hasOnlyZeros(i) && result.notZero(i)) {
+        for (int i = 0; i < howManyEquations; i++) {
+            Optional<Double> hasZeros = matrix.hasOnlyZeros(i);
+            if (matrix.hasOnlyZeros(i) && result.notZero(i)) {
                 System.out.println("Not solutions");
                 break;
-            }
-            else {
+            } else {
                 stage2(i);
             }
         }
@@ -299,8 +303,8 @@ class LinearSolution {
                 double k = -matrix.getRow(i).getColumn(row);
                 if (k != 0) {
                     result.update(i, result.get(i) + k * result.get(row));
-                    IntStream.range(row, matrix.getRow(row).size()).forEach(j -> {                        
-                            matrix.update(i, j, matrix.getRow(i).getColumn(j) + k * matrix.getRow(row).getColumn(j));                        
+                    IntStream.range(row, matrix.getRow(row).size()).forEach(j -> {
+                        matrix.update(i, j, matrix.getRow(i).getColumn(j) + k * matrix.getRow(row).getColumn(j));
                         // matrix[i][j] += k * matrix[row][j];
                     });
                     System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
