@@ -284,9 +284,11 @@ class LinearSolution {
             IntStream.range(row + 1, howManyEquations).forEach(i -> {
                 double k = -matrix.getRow(i).getColumn(row);
                 if (k != 0) {
+                    result.update(i, result.get(i) + k * result.get(row));
                     IntStream.range(row, matrix.getRow(row).size()).forEach(j -> {
-                        matrix.update(i, j, matrix.getRow(i).getColumn(j) + k * matrix.getRow(row).getColumn(j));
-                        result.update(i, result.get(i) + k * result.get(row));
+                        
+                            matrix.update(i, j, matrix.getRow(i).getColumn(j) + k * matrix.getRow(row).getColumn(j));
+                        
                         // matrix[i][j] += k * matrix[row][j];
                     });
                     System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
