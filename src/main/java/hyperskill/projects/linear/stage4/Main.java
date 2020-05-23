@@ -236,15 +236,7 @@ class LinearSolution {
 
     void solve() {
         stage1();
-        for (int i = 0; i < howManyEquations; i++) {
-            Optional<Double> hasZeros = matrix.hasOnlyZeros(i);
-            if (matrix.hasOnlyZeros(i) && result.notZero(i)) {
-                System.out.println("Not solutions");
-                break;
-            } else {
-                stage2(i);
-            }
-        }
+        
         IntStream.range(0, howManyEquations).forEach(this::stage2);
     }
 

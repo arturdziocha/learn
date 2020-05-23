@@ -7,9 +7,11 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 /*
- * Write a program, which inputs the rectangular matrix from a sequence of lines, ending with a line, containing the only word "end" (without the quotation marks).
+ * Write a program, which inputs the rectangular matrix from a sequence of lines, ending with a line, 
+ * containing the only word "end" (without the quotation marks).
 
-The program should output the matrix of the same size, where each element in the position (i, j) is equal to the sum of the elements from the first matrix on the positions (i-1, j)(i+1, j)(i, j-1), (i, j+1). Boundary elements have neighbors on the opposite side of the matrix. In the case of one row or column, the element itself may be its neighbor.
+The program should output the matrix of the same size, 
+where each element in the position (i, j) is equal to the sum of the elements from the first matrix on the positions (i-1, j)(i+1, j)(i, j-1), (i, j+1). Boundary elements have neighbors on the opposite side of the matrix. In the case of one row or column, the element itself may be its neighbor.
 
 Sample Input 1:
 

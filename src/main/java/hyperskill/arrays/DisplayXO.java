@@ -1,7 +1,5 @@
 package hyperskill.arrays;
 
-import java.util.Random;
-
 /*
 You need to write a program to display the resulting grid of a Tic-Tac-Toe game.
 
