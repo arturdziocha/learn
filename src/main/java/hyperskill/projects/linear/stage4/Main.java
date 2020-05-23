@@ -2,7 +2,6 @@ package hyperskill.projects.linear.stage4;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.security.cert.PKIXRevocationChecker.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,8 +13,9 @@ import java.util.stream.IntStream;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         LinearSolution solution = new LinearSolution();
-        File file = new File("src/main/java/hyperskill/projects/linear/stage4/in.txt");
-        solution.read(file);
+        File in = new File("src/main/java/hyperskill/projects/linear/stage4/in.txt");
+        File out = new File("src/main/java/hyperskill/projects/linear/stage4/out.txt");
+        solution.read(in);
         solution.print();
         solution.solve();
     }
@@ -82,6 +82,10 @@ class Matrix {
 
     public void update(int row, int index, double value) {
         rows.get(row).updateColumn(index, value);
+    }
+
+    public Double sumOfRow(int row) {
+        return rows.get(row).getAll().stream().reduce(Double.valueOf(0), Double::sum);
     }
 
     public Optional<Double> hasOnlyZeros(int i) {
@@ -208,6 +212,7 @@ class LinearSolution {
     private Matrix matrix;
     private Column column;
     private Result result;
+    private String solution;
     int howManyColumns;
     int howManyEquations;
 
@@ -236,8 +241,24 @@ class LinearSolution {
 
     void solve() {
         stage1();
-        
         IntStream.range(0, howManyEquations).forEach(this::stage2);
+        boolean noSolutions = false;
+        for (int i = 0; i < howManyEquations; i++) {
+            if (isNoSolutions(i)) {
+                noSolutions = true;
+                break;
+            }
+        }
+
+        if (noSolutions) {
+            solution = "No solutions";
+        } else {
+            for (int row = howManyEquations - 1; row > 0; row--) {
+                stage3(row);
+            }
+        }
+        System.out.println(solution);
+
     }
 
     void stage1() {
@@ -284,9 +305,10 @@ class LinearSolution {
 
             if (!matrix.getRow(row).getColumn(row).equals(Double.valueOf(1))) {
                 Double k = matrix.getRow(row).getColumn(row);
+                result.update(row, result.get(row) / k);
                 IntStream.range(row, matrix.getRow(row).size()).forEach(i -> {
                     matrix.update(row, i, matrix.getRow(row).getColumn(i) / k);
-                    result.update(i, result.get(i) / k);
+                    
                 });
                 System.out.println((1 / k) + " * R" + (row + 1) + " -> R" + (row + 1));
                 print();
@@ -300,20 +322,38 @@ class LinearSolution {
                         // matrix[i][j] += k * matrix[row][j];
                     });
                     System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
-                    // print();
+                    print();
                 }
             });
+        }
+
+    }
+
+    void stage3(int row) {
+        System.out.println("stage3");
+        for (int i = row - 1; i >= 0; i--) {
+            double k = -matrix.getRow(i).getColumn(row);
+            result.update(i, result.get(i) + k * result.get(row));
+            for (int col = howManyColumns - 1; col >= 0; col--) {
+                matrix.update(i, col, matrix.getRow(i).getColumn(col) + k * matrix.getRow(row).getColumn(col));
+                // matri[i][col] += k * matrix[row][col];
+            }
+            System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
             print();
         }
     }
 
-    void print() {
+    private boolean isNoSolutions(int row) {
+        return matrix.sumOfRow(row).equals(Double.valueOf(0)) && !result.get(row).equals(Double.valueOf(0));
+    }
+
+    void print() {        
         column.getColumns().stream().forEach(c -> System.out.printf(" %s  ", c));
         System.out.printf("%s\n", "result");
         IntStream.range(0, howManyEquations).forEach(i -> {
             matrix.getRow(i).getAll().stream().forEach(s -> System.out.printf("%.2f ", s));
             System.out.printf("%.2f\n", result.get(i));
         });
-
+        System.out.println();
     }
 }

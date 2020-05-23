@@ -58,6 +58,7 @@ class Matrix {
 
     void solve() {
         System.out.println("Start solving the equation.");
+        print();
         IntStream.range(0, n).forEach(this::st1);
         for (int row = n - 1; row > 0; row--) {
             st2(row);
@@ -72,7 +73,7 @@ class Matrix {
             double k = matrix[row][row];
             IntStream.range(row, matrix[row].length).forEach(i -> matrix[row][i] /= k);
             System.out.println((1 / k) + " * R" + (row + 1) + " -> R" + (row + 1));
-            // print();
+            print();
         }
         IntStream.range(row + 1, n).forEach(i -> {
             double k = -matrix[i][row];
@@ -80,7 +81,7 @@ class Matrix {
                 matrix[i][j] += k * matrix[row][j];
             });
             System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
-            // print();
+            print();
         });
     }
 
@@ -91,7 +92,7 @@ class Matrix {
                 matrix[i][col] += k * matrix[row][col];
             }
             System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
-            // print();
+             print();
         }
     }
 
