@@ -1,5 +1,1026 @@
 package hyperskill.projects.linear.stage4;
+/*
+Stage #4: When things get complicated
 
+Description
+
+This stage is devoted to various special cases of the algorithm.
+
+Firstly, look at the first stage of the algorithm. It says that you should change the first row in a way that the first element of the row would be equal to 1. But what if the first element of the row is 0? Any multiplication of the row never let the first element of the row be equal to 1 because it would always be 0.
+
+⎧⎩⎨⎪⎪⎪⎪⎪⎪0a21x1an1x1+a12x2+...+a1nxn=b1+a22x2+...+a2nxn=b2...+an2x2+...+annxn=bn
+{
+0	+
+a
+12
+x
+2
++...+
+a
+1
+n
+x
+n
+=
+b
+1
+a
+21
+x
+1
++
+a
+22
+x
+2
++...+
+a
+2
+n
+x
+n
+=
+b
+2
+...
+a
+n
+1
+x
+1
++
+a
+n
+2
+x
+2
++...+
+a
+n
+n
+x
+n
+=
+b
+n
+
+
+Because of that, you need to modify the algorithm. All rules will follow the example of a system of linear equations. The question marks next to the coefficients mean any value. The coefficients highlighted in red mean the ones mentioned in the rule.
+
+1. Before the scaling the current row you should check if the corresponding element of the row is not equal to 0.
+⎧⎩⎨⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪1x1+?x2+?x3+?x4+?x5=?0x1+1x2+?x3+?x4+?x5=?0x1+0x2+\red?x3+?x4+?x5=?0x1+0x2+?x3+?x4+?x5=?0x1+0x2+?x3+?x4+?x5=?
+{
+1
+x
+1
++?
+x
+2
++?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++1
+x
+2
++?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++\red?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++?
+x
+3
++?
+x
+4
++?
+x
+5
+=?
+
+2. If the coefficient is zero, the program should look for a non-zero coefficient under this coefficient. If such a coefficient is found in some row, you should swap this row with the current one. In the example below, rows 3 and 5 have been swapped.
+⎧⎩⎨⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪1x1+?x2+?x3+?x4+?x5=?0x1+1x2+?x3+?x4+?x5=?0x1+0x2+0x3+?x4+?x5=?0x1+0x2+\red?x3+?x4+?x5=?0x1+0x2+\red?x3+?x4+?x5=?
+{
+1
+x
+1
++?
+x
+2
++?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++1
+x
+2
++?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++\red?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++\red?
+x
+3
++?
+x
+4
++?
+x
+5
+=?
+
+
+⎧⎩⎨⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪1x1+?x2+?x3+?x4+?x5=?0x1+1x2+?x3+?x4+?x5=?0x1+0x2+0x3+?x4+?x5=?0x1+0x2 + ?x3+?x4+?x5=?0x1+0x2+\green5x3+?x4+?x5=?
+{
+1
+x
+1
++?
+x
+2
++?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++1
+x
+2
++?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
+ + ?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++\green5
+x
+3
++?
+x
+4
++?
+x
+5
+=?
+
+
+⎧⎩⎨⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪1x1+?x2+?x3+?x4+?x5=?0x1+1x2+?x3+?x4+?x5=?0x1+0x2+\green5x3+?x4+?x5=?0x1+0x2 + ?x3+?x4+?x5=?0x1+0x2+0x3+?x4+?x5=?
+{
+1
+x
+1
++?
+x
+2
++?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++1
+x
+2
++?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++\green5
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
+ + ?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
++?
+x
+4
++?
+x
+5
+=?
+
+3. If all the coefficients below the element are equal to zero, you should look for a non-zero coefficient to the right of the current one. If such a coefficient is found in some column, you should swap this column with the current one. Don't forget to remember this swap because after all, you need to swap them back to output the solutions in the right order. There could be a lot of swaps. In the example below, rows 3 and 4 have been swapped.
+⎧⎩⎨⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪1x1 + ?x2 + ?x3+?x4+?x5=?0x1+1x2 + ?x3+?x4+?x5=?0x1+0x2+0x3+\red?x4+\red?x5=?0x1+0x2+0x3+?x4+?x5=?0x1+0x2+0x3+?x4+?x5=?
+{
+1
+x
+1
+ + ?
+x
+2
+ + ?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++1
+x
+2
+ + ?
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
++\red?
+x
+4
++\red?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
++?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
++?
+x
+4
++?
+x
+5
+=?
+
+
+⎧⎩⎨⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪1x1 + ?x2 + ?x3 + ?x4+?x5=?0x1+1x2 + ?x3 + ?x4+?x5=?0x1+0x2+0x3+\green7x4+?x5=?0x1+0x2+0x3 + ?x4+?x5=?0x1+0x2+0x3 + ?x4+?x5=?
+{
+1
+x
+1
+ + ?
+x
+2
+ + ?
+x
+3
+ + ?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++1
+x
+2
+ + ?
+x
+3
+ + ?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
++\green7
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
+ + ?
+x
+4
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
+ + ?
+x
+4
++?
+x
+5
+=?
+
+
+⎧⎩⎨⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪1x1 + ?x2 + ?x4 + ?x3+?x5=?0x1+1x2 + ?x4 + ?x3+?x5=?0x1+0x2+\green7x4+0x3+?x5=?0x1+0x2 + ?x4+0x3+?x5=?0x1+0x2 + ?x4+0x3+?x5=?
+{
+1
+x
+1
+ + ?
+x
+2
+ + ?
+x
+4
+ + ?
+x
+3
++?
+x
+5
+=?	0
+x
+1
++1
+x
+2
+ + ?
+x
+4
+ + ?
+x
+3
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++\green7
+x
+4
++0
+x
+3
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
+ + ?
+x
+4
++0
+x
+3
++?
+x
+5
+=?	0
+x
+1
++0
+x
+2
+ + ?
+x
+4
++0
+x
+3
++?
+x
+5
+=?
+
+4.  If all the coefficients below and to the right of the element are equal to zero, you should find the non-zero element in the whole bottom-left part of the linear system regarding the current element. If such a coefficient is found in some row and column, you should swap both row and column so that this non-zero element appear in place of the current element. Also, don't forget to remember the column's swap. In the example below, rows 3 and 4 and columns 3 and 5 have been swapped.
+⎧⎩⎨⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪1x1 + ?x2 + ?x3 + ?x4 + ?x5=?0x1+1x2 + ?x3 + ?x4 + ?x5=?0x1+0x2+0x3+0x4+0x5=?0x1+0x2+0x3 + \red?x4 + \red?x5=?0x1+0x2+0x3 + \red?x4 + \red?x5=?
+{
+1
+x
+1
+ + ?
+x
+2
+ + ?
+x
+3
+ + ?
+x
+4
+ + ?
+x
+5
+=?	0
+x
+1
++1
+x
+2
+ + ?
+x
+3
+ + ?
+x
+4
+ + ?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
++0
+x
+4
++0
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
+ + \red?
+x
+4
+ + \red?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
+ + \red?
+x
+4
+ + \red?
+x
+5
+=?
+
+
+⎧⎩⎨⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪1x1 + ?x2 + ?x3 + ?x4 + ?x5=?0x1+1x2 + ?x3 + ?x4 + ?x5=?0x1+0x2+0x3+0x4+0x5=?0x1+0x2+0x3 + ?x4+\green3x5=?0x1+0x2+0x3 + ?x4 + ?x5=?
+{
+1
+x
+1
+ + ?
+x
+2
+ + ?
+x
+3
+ + ?
+x
+4
+ + ?
+x
+5
+=?	0
+x
+1
++1
+x
+2
+ + ?
+x
+3
+ + ?
+x
+4
+ + ?
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
++0
+x
+4
++0
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
+ + ?
+x
+4
++\green3
+x
+5
+=?	0
+x
+1
++0
+x
+2
++0
+x
+3
+ + ?
+x
+4
+ + ?
+x
+5
+=?
+
+
+⎧⎩⎨⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪1x1 + ?x2 + ?x5 + ?x4 + ?x3=?0x1+1x2 + ?x5 + ?x4 + ?x3=?0x1+0x2+\green3x5 + ?x4+0x3=?0x1+0x2+0x5+0x4+0x3=?0x1+0x2 + ?x5 + ?x4+0x3=?
+{
+1
+x
+1
+ + ?
+x
+2
+ + ?
+x
+5
+ + ?
+x
+4
+ + ?
+x
+3
+=?	0
+x
+1
++1
+x
+2
+ + ?
+x
+5
+ + ?
+x
+4
+ + ?
+x
+3
+=?	0
+x
+1
++0
+x
+2
++\green3
+x
+5
+ + ?
+x
+4
++0
+x
+3
+=?	0
+x
+1
++0
+x
+2
++0
+x
+5
++0
+x
+4
++0
+x
+3
+=?	0
+x
+1
++0
+x
+2
+ + ?
+x
+5
+ + ?
+x
+4
++0
+x
+3
+=?
+
+
+5. If there are no such elements in the whole bottom-left part of the linear system, you should end the first part of the algorithm.
+
+After all the manipulations in the first half of the algorithm, check the possibility of no solutions. It is possible when there is a all-zero row and a constant is not equal to zero. You can see the example below. In this case, a linear system contains a contradiction and therefore have no solutions. In this case, you can end the algorithm.
+
+⎧⎩⎨0...+0+...+0=bi,bi≠0...
+{
+...	0	+0+...+0=
+b
+i
+,
+b
+i
+≠0		...
+
+Secondly, the linear system doesn't need to be an equal in amount variables and in amount of equations.
+
+A number of significant equations are equal to the number of non-zero rows in the linear system. A number of significant variables are equal to the number of all columns in the linear system. After that, you can determine if the linear system has an infinite amount of solutions or a single one.
+
+The following variants are possible:
+
+1. The number of significant equations is equal to the number of significant variables. There is only one solution, you can find it like in the previous stage. The possible examples are shown below:
+
+⎛⎝⎜⎜100210341562⎞⎠⎟⎟,⎛⎝⎜⎜⎜⎜⎜⎜10000310005210073100⎞⎠⎟⎟⎟⎟⎟⎟
+(
+1	2	3	5	0	1	4	6	0	0	1	2
+)
+,
+(
+1	3	5	7	0	1	2	3	0	0	1	1	0	0	0	0	0	0	0	0
+)
+
+
+2. The number of significant equations is less than the number of significant variables. There are infinitely many solutions. The possible examples are shown below:
+
+(10314555),(10710015)
+(
+1	3	4	5	0	1	5	5
+)
+,
+(
+1	7	0	1	0	1	0	5
+)
+
+⎛⎝⎜⎜⎜⎜⎜⎜10000310005200073000⎞⎠⎟⎟⎟⎟⎟⎟,⎛⎝⎜⎜100410000620⎞⎠⎟⎟
+(
+1	3	5	7	0	1	2	3	0	0	0	0	0	0	0	0	0	0	0	0
+)
+,
+(
+1	4	0	6	0	1	0	2	0	0	0	0
+)
+
+Note that there can't be a case in which the number of significant equations is greater than the number of significant variables because in this case there would be a contradiction we handled in the previous steps of the algorithm.
+
+In this stage you should write a program that handles all these nuances.
+
+Write to file only No solutions or Infinitely many solutions when this appears to happen. If there is a single solution you should write to file only x1,x2,...,xn
+x
+1
+,
+x
+2
+,
+.
+.
+.
+,
+x
+n
+, and every number should be on a separate line.
+
+Don't forget that input can contain floating-point numbers.
+
+You can refactor your code and work with a linear equation on a high level of abstraction - using Command pattern.
+
+Example
+
+Suppose you have a file named in.txt. It contains the following. Note that the first line contains the number of variables and the number of equations. So, in the following example, there are three variables, x1
+x
+1
+, x2
+x
+2
+, x3
+x
+3
+ (remember, that last column is devoted to bi
+b
+i
+ ) and four equations (number of equations is the number of rows).
+
+3 4
+0 1 2 9
+0 1 3 1
+1 0 6 0
+2 0 2 0
+ Input corresponds to the following equation:
+
+⎧⎩⎨⎪⎪⎪⎪0∗x1+1∗x2+2∗x3=90∗x1+1∗x2+3∗x3=11∗x1+0∗x2+6∗x3=02∗x1+0∗x2+2∗x3=0
+{
+0∗
+x
+1
++1∗
+x
+2
++2∗
+x
+3
+=9	0∗
+x
+1
++1∗
+x
+2
++3∗
+x
+3
+=1	1∗
+x
+1
++0∗
+x
+2
++6∗
+x
+3
+=0	2∗
+x
+1
++0∗
+x
+2
++2∗
+x
+3
+=0
+
+Below is how your program might work. The lines which start with > represent the user input.
+
+> java Solver -in in.txt -out out.txt
+Start solving the equation.
+Rows manipulation:
+R1 <-> R3
+-2 * R1 + R4 -> R4
+-1 * R2 + R3 -> R3
+-1 * R3 -> R3
+No solutions
+Saved to file out.txt
+And the file out.txt should look like this.
+
+No solutions
+ */
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -310,9 +1331,7 @@ class LinearSolution {
                     double k = -matrix.getRow(i).getColumn(row);
                     if (k != 0) {
                         result.update(i, result.get(i) + k * result.get(row));
-                        IntStream.range(row, matrix.getRow(row).size()).forEach(j -> {
-                            matrix.update(i, j, matrix.getRow(i).getColumn(j) + k * matrix.getRow(row).getColumn(j));
-                        });
+                        IntStream.range(row, matrix.getRow(row).size()).forEach(j -> matrix.update(i, j, matrix.getRow(i).getColumn(j) + k * matrix.getRow(row).getColumn(j)));
                         System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
                         print();
                     }
