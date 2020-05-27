@@ -59,4 +59,7 @@ class Matrix {
         }
         return Optional.empty();
     }
+    public void update(int row, int index, ComplexNumber value) {
+        rows.get(row).updateColumn(index, value);
+    }
 }

@@ -1,5 +1,9 @@
 package hyperskill.projects.linear.stage5;
 
+import java.text.DecimalFormat;
+
+import javax.crypto.spec.IvParameterSpec;
+
 public class ComplexNumber {
     private double real;
     private double imaginary;
@@ -19,8 +23,10 @@ public class ComplexNumber {
 
     @Override
     public String toString() {
-        return "" + ((double) 0 == real ? "" : real)
-                + ((double) 0 == imaginary ? "" : (imaginary < 0 ? imaginary : "+" + imaginary) + "i");
+        DecimalFormat format = new DecimalFormat("#.##");
+        String r = format.format(real);
+        String im = format.format(imaginary);
+        return "" + r + (imaginary < 0 ? im : "+" + im) + "i";
     }
 
     @Override
@@ -35,6 +41,45 @@ public class ComplexNumber {
         if (Double.compare(that.real, real) != 0)
             return false;
         return Double.compare(that.imaginary, imaginary) == 0;
+    }
+
+    public ComplexNumber add(ComplexNumber other) {
+        return new ComplexNumber(real + other.getReal(), imaginary + other.getImaginary());
+    }
+
+    public ComplexNumber substract(ComplexNumber other) {
+        return new ComplexNumber(real - other.getReal(), imaginary - other.getImaginary());
+    }
+
+    public ComplexNumber multiply(ComplexNumber other) {
+        if (imaginary == 0 || other.getImaginary() == 0) {
+            return new ComplexNumber(real * other.real, 0.0);
+        }
+        return new ComplexNumber(real * other.real - imaginary * other.getImaginary(),
+                real * other.imaginary + imaginary * other.real);
+    }
+
+    public ComplexNumber divide(ComplexNumber other) {
+        double c = other.getReal();
+        double d = other.getImaginary();
+
+        double zReal2 = 0.0;
+        if (c != 0.0) {
+            zReal2 = StrictMath.pow(c, 2);
+        }
+        double zimag2 = 0.0;
+        if (d != 0.0) {
+            zimag2 = StrictMath.pow(d, 2);
+        }
+        double ac = real * c;
+        double bd = imaginary * d;
+        double bc = imaginary * c;
+        double ad = real * d;
+        return new ComplexNumber((ac + bd) / (zReal2 + zimag2), (bc - ad) / (zReal2 + zimag2));
+    }
+
+    public boolean isAllZero() {
+        return real == 0.0 && imaginary == 0.0;
     }
 
     @Override
@@ -86,4 +131,5 @@ public class ComplexNumber {
         return new ComplexNumber(re, im);
 
     }
+
 }

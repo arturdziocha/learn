@@ -2,6 +2,7 @@ package hyperskill.projects.linear.stage5;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -39,6 +40,7 @@ class LinearSolution {
 
     public void solve() {
         stage1();
+        IntStream.range(0, howManyEquations).forEach(this::stage2);
     }
 
     private void stage1() {
@@ -56,7 +58,7 @@ class LinearSolution {
                 } else if ((findNext = matrix.findFirstNonZeroInColumn(i)).isPresent()) {
                     matrix.switchColumns(i, findNext.getAsInt());
                     column.switchColumn(i, findNext.getAsInt());
-                    System.out.println("C"+column.get(findNext.getAsInt()) + " <-> C" + column.get(i));
+                    System.out.println("C" + column.get(findNext.getAsInt()) + " <-> C" + column.get(i));
                     print();
                 } else {
                     Optional<RowColHelper> optional = matrix.findFirstNonZeroColRow(i);
@@ -73,6 +75,39 @@ class LinearSolution {
                         print();
                     }
                 }
+            }
+        }
+    }
+
+    void stage2(int row) {
+        if (row < matrix.getRow(row).size()) {
+            ComplexNumber number = matrix.getRow(row).getColumn(row);
+            if (number.getReal() != 0.0 && number.getImaginary() != 0.0) {
+                if (number.getReal() != 1.0 || number.getImaginary() != 1.0) {
+                    result.update(row, result.get(row).divide(number));
+                    IntStream
+                            .range(row, matrix.getRow(row).size())
+                            .forEach(col -> matrix.update(row, col, matrix.getRow(row).getColumn(col).divide(number)));
+                    System.out.println("R" + (row + 1) + " / " + number + " -> R" + (row + 1));
+                    print();
+                }
+                IntStream.range(row + 1, howManyEquations).forEach(i -> {
+                    ComplexNumber k = new ComplexNumber(0.0, 0.0).substract(matrix.getRow(i).getColumn(row));
+                    if (!k.isAllZero()) {
+                        result.update(i, result.get(i).add(result.get(row).multiply(k)));
+                        IntStream
+                                .range(row, matrix.getRow(row).size())
+                                .forEach(j -> matrix
+                                        .update(i, j,
+                                            matrix
+                                                    .getRow(i)
+                                                    .getColumn(j)
+                                                    .add(k.multiply(matrix.getRow(row).getColumn(j)))));
+                        System.out.printf("%s * R%d + R%d -> R%d\n", k, row+1, i+1, i+1);
+                        
+                        print();
+                    }
+                });
             }
         }
     }
