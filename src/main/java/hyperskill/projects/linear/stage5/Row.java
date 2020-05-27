@@ -27,9 +27,9 @@ public class Row {
         return row.size();
     }
 
-    void switchRow(int from, int to) {
+    void switchColumn(int from, int to) {
         ComplexNumber temp = row.get(from);
         row.set(from, row.get(to));
         row.set(to, temp);
-    }
+    }    
 }

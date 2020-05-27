@@ -1,6 +1,6 @@
 package hyperskill.projects.linear.stage5;
 
-class RowColHelper {
+public class RowColHelper {
     private final int row;
     private final int column;
 
@@ -13,7 +13,13 @@ class RowColHelper {
         return row;
     }
 
+   
+
     public int getColumn() {
         return column;
+    }
+    @Override
+    public String toString() {
+        return "RowColHelper [row=" + row + ", column=" + column + "]";
     }
 }

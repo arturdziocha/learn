@@ -19,7 +19,7 @@ public class Main {
         File out = new File("src/main/java/hyperskill/projects/linear/stage5/out.txt");
         // File out = new File(args[3]);
         solution.read(in);
-        solution.print();
+        solution.solve();
     }
 }
 
