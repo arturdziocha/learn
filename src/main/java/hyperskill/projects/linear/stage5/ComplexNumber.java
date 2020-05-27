@@ -1,9 +1,5 @@
 package hyperskill.projects.linear.stage5;
 
-import java.text.DecimalFormat;
-
-import javax.crypto.spec.IvParameterSpec;
-
 public class ComplexNumber {
     private double real;
     private double imaginary;
@@ -21,12 +17,58 @@ public class ComplexNumber {
         return imaginary;
     }
 
+
+    public ComplexNumber add(ComplexNumber other) {
+        return new ComplexNumber(real + other.getReal(), imaginary + other.getImaginary());
+    }
+
+    public ComplexNumber subtract(ComplexNumber other) {
+        return new ComplexNumber(real - other.getReal(), imaginary - other.getImaginary());
+    }
+
+    /**
+     * @param other Other number
+     * @return new ComplexNumber
+     * https://www.mathsisfun.com/numbers/complex-numbers.html
+     */
+    public ComplexNumber multiply(ComplexNumber other) {
+
+        return new ComplexNumber(real * other.getReal() - imaginary * other.getImaginary(),
+                real * other.getImaginary() + imaginary * other.getReal());
+    }
+
+    /**
+     * @param other Other number
+     * @return new ComplexNumber
+     * https://www.mathsisfun.com/numbers/complex-numbers.html
+     */
+    public ComplexNumber divide(ComplexNumber other) {
+        ComplexNumber conjugated = other.conjugate();
+        double aReal = real * conjugated.getReal() + (imaginary * conjugated.imaginary) * -1;
+        double aImaginary = real * conjugated.getImaginary() + imaginary * conjugated.getReal();
+        double bReal = other.getReal() * conjugated.getReal() + (other.imaginary * conjugated.getImaginary()) * -1;
+
+        return new ComplexNumber(aReal / bReal, aImaginary / bReal);
+    }
+
+    public ComplexNumber conjugate() {
+        return new ComplexNumber(real, -imaginary);
+    }
+
+    public boolean isAllZero() {
+        return real == 0.0 && imaginary == 0.0;
+    }
+
     @Override
     public String toString() {
-        DecimalFormat format = new DecimalFormat("#.##");
-        String r = format.format(real);
-        String im = format.format(imaginary);
-        return "" + r + (imaginary < 0 ? im : "+" + im) + "i";
+//        DecimalFormat format = new DecimalFormat("#.###");
+//        DecimalFormatSymbols sym = DecimalFormatSymbols.getInstance();
+//        sym.setDecimalSeparator('.');
+//        format.setDecimalFormatSymbols(sym);
+//        String r = format.format(real);
+//        String im = format.format(imaginary);
+        return "" + (imaginary == 0.0 ? real : real == 0.0 ? imaginary + "i" : "");
+//        return "" + (real == 0.0 ? "" : real) + (imaginary == 0.0 ? "" : imaginary + "i");
     }
 
     @Override
@@ -41,45 +83,6 @@ public class ComplexNumber {
         if (Double.compare(that.real, real) != 0)
             return false;
         return Double.compare(that.imaginary, imaginary) == 0;
-    }
-
-    public ComplexNumber add(ComplexNumber other) {
-        return new ComplexNumber(real + other.getReal(), imaginary + other.getImaginary());
-    }
-
-    public ComplexNumber substract(ComplexNumber other) {
-        return new ComplexNumber(real - other.getReal(), imaginary - other.getImaginary());
-    }
-
-    public ComplexNumber multiply(ComplexNumber other) {
-        if (imaginary == 0 || other.getImaginary() == 0) {
-            return new ComplexNumber(real * other.real, 0.0);
-        }
-        return new ComplexNumber(real * other.real - imaginary * other.getImaginary(),
-                real * other.imaginary + imaginary * other.real);
-    }
-
-    public ComplexNumber divide(ComplexNumber other) {
-        double c = other.getReal();
-        double d = other.getImaginary();
-
-        double zReal2 = 0.0;
-        if (c != 0.0) {
-            zReal2 = StrictMath.pow(c, 2);
-        }
-        double zimag2 = 0.0;
-        if (d != 0.0) {
-            zimag2 = StrictMath.pow(d, 2);
-        }
-        double ac = real * c;
-        double bd = imaginary * d;
-        double bc = imaginary * c;
-        double ad = real * d;
-        return new ComplexNumber((ac + bd) / (zReal2 + zimag2), (bc - ad) / (zReal2 + zimag2));
-    }
-
-    public boolean isAllZero() {
-        return real == 0.0 && imaginary == 0.0;
     }
 
     @Override

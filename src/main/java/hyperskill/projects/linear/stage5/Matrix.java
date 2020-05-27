@@ -30,10 +30,7 @@ class Matrix {
     public OptionalInt findNonZeroRow(int start) {
         return IntStream.range(start + 1, rows.size()).filter(i -> {
             ComplexNumber number = rows.get(i).getColumn(start);
-            if (number.getReal() != 0.0 && number.getImaginary() != 0.0) {
-                return true;
-            }
-            return false;
+            return number.getReal() != 0.0;
         }).findFirst();
     }
 
@@ -41,10 +38,7 @@ class Matrix {
         Row row = rows.get(start);
         return IntStream.range(start, row.getAll().size()).filter(i -> {
             ComplexNumber complexNumber = row.getColumn(i);
-            if (complexNumber.getReal() != 0.0 && complexNumber.getImaginary() != 0.0) {
-                return true;
-            }
-            return false;
+            return complexNumber.getReal() != 0.0 && complexNumber.getImaginary() != 0.0;
         }).findFirst();
     }
 
@@ -59,7 +53,21 @@ class Matrix {
         }
         return Optional.empty();
     }
+
     public void update(int row, int index, ComplexNumber value) {
         rows.get(row).updateColumn(index, value);
+    }
+
+    public ComplexNumber sumOfRow(int row) {
+        ComplexNumber s = new ComplexNumber(0.0, 0.0);
+        for (ComplexNumber number : rows.get(row).getAll()) {
+            s = s.add(number);
+        }
+        System.out.println(s);
+        return s;
+    }
+
+    public double sumOfDiagonalReal(int numOfColumns) {
+        return IntStream.range(0, numOfColumns).mapToDouble(i -> rows.get(i).getColumn(i).getReal()).sum();
     }
 }

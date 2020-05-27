@@ -1,10 +1,10 @@
 package hyperskill.projects.linear.stage5;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ComplexNumberTest {
 
@@ -105,6 +105,41 @@ class ComplexNumberTest {
         ComplexNumber complexNumber = ComplexNumber.parse(string);
         // Then
         assertEquals(string, complexNumber.toString());
+    }
+
+    @Test
+    @DisplayName("Conjugate ComplexNumber")
+    void tenTest() {
+        //Given
+        String string = "-1.01-3.24i";
+        //When
+        ComplexNumber number = ComplexNumber.parse(string);
+        ComplexNumber conjugated = number.conjugate();
+        assertEquals("-1.01+3.24i", conjugated.toString());
+    }
+
+    @Test
+    @DisplayName("Multiply test")
+    void multiplyTest() {
+        //Given
+        ComplexNumber first = ComplexNumber.parse("3+2i");
+        ComplexNumber second = ComplexNumber.parse("1+7i");
+        //When
+        ComplexNumber multipled = first.multiply(second);
+        //Then
+        assertEquals(new ComplexNumber(-11, 23), multipled);
+    }
+
+    @Test
+    @DisplayName("Divide test")
+    void elevenTest() {
+        //Given
+        ComplexNumber first = ComplexNumber.parse("3+2i");
+        ComplexNumber second = ComplexNumber.parse("4-3i");
+        //When
+        ComplexNumber divided = first.divide(second);
+        //Then
+        assertEquals(new ComplexNumber((double) 6/25, (double) 17/25), divided);
     }
 
 }

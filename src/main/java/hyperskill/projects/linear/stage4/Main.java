@@ -1021,6 +1021,7 @@ And the file out.txt should look like this.
 
 No solutions
  */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -1031,9 +1032,9 @@ import java.util.stream.IntStream;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         LinearSolution solution = new LinearSolution();
-        File in = new File("src/main/java/hyperskill/projects/linear/stage4/in.txt");
+        File in = new File("src/main/java/hyperskill/projects/linear/stage5/in.txt");
         // File in = new File(args[1]);
-        File out = new File("src/main/java/hyperskill/projects/linear/stage4/out.txt");
+        File out = new File("src/main/java/hyperskill/projects/linear/stage5/out.txt");
         // File out = new File(args[3]);
         solution.read(in);
         solution.solve();
@@ -1331,7 +1332,10 @@ class LinearSolution {
                     double k = -matrix.getRow(i).getColumn(row);
                     if (k != 0) {
                         result.update(i, result.get(i) + k * result.get(row));
-                        IntStream.range(row, matrix.getRow(row).size()).forEach(j -> matrix.update(i, j, matrix.getRow(i).getColumn(j) + k * matrix.getRow(row).getColumn(j)));
+                        IntStream.range(row, matrix.getRow(row).size())
+                                .forEach(j ->
+                                        matrix.update(i, j, matrix.getRow(i).getColumn(j) + k * matrix.getRow(row).getColumn(j))
+                                );
                         System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
                         print();
                     }
