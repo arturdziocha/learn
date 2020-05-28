@@ -134,8 +134,8 @@ class ComplexNumberTest {
     @DisplayName("Divide test")
     void elevenTest() {
         //Given
-        ComplexNumber first = ComplexNumber.parse("3+2i");
-        ComplexNumber second = ComplexNumber.parse("4-3i");
+        ComplexNumber first = ComplexNumber.parse("1");
+        ComplexNumber second = ComplexNumber.parse("1");
         //When
         ComplexNumber divided = first.divide(second);
         //Then

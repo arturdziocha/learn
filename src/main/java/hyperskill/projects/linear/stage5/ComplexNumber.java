@@ -1,5 +1,7 @@
 package hyperskill.projects.linear.stage5;
 
+import java.util.Arrays;
+
 public class ComplexNumber {
     private double real;
     private double imaginary;
@@ -17,7 +19,6 @@ public class ComplexNumber {
         return imaginary;
     }
 
-
     public ComplexNumber add(ComplexNumber other) {
         return new ComplexNumber(real + other.getReal(), imaginary + other.getImaginary());
     }
@@ -29,7 +30,7 @@ public class ComplexNumber {
     /**
      * @param other Other number
      * @return new ComplexNumber
-     * https://www.mathsisfun.com/numbers/complex-numbers.html
+     *         https://www.mathsisfun.com/numbers/complex-numbers.html
      */
     public ComplexNumber multiply(ComplexNumber other) {
 
@@ -40,7 +41,7 @@ public class ComplexNumber {
     /**
      * @param other Other number
      * @return new ComplexNumber
-     * https://www.mathsisfun.com/numbers/complex-numbers.html
+     *         https://www.mathsisfun.com/numbers/complex-numbers.html
      */
     public ComplexNumber divide(ComplexNumber other) {
         ComplexNumber conjugated = other.conjugate();
@@ -61,14 +62,17 @@ public class ComplexNumber {
 
     @Override
     public String toString() {
-//        DecimalFormat format = new DecimalFormat("#.###");
-//        DecimalFormatSymbols sym = DecimalFormatSymbols.getInstance();
-//        sym.setDecimalSeparator('.');
-//        format.setDecimalFormatSymbols(sym);
-//        String r = format.format(real);
-//        String im = format.format(imaginary);
-        return "" + (imaginary == 0.0 ? real : real == 0.0 ? imaginary + "i" : "");
-//        return "" + (real == 0.0 ? "" : real) + (imaginary == 0.0 ? "" : imaginary + "i");
+        // DecimalFormat format = new DecimalFormat("#.###");
+        // DecimalFormatSymbols sym = DecimalFormatSymbols.getInstance();
+        // sym.setDecimalSeparator('.');
+        // format.setDecimalFormatSymbols(sym);
+        // String r = format.format(real);
+        // String im = format.format(imaginary);
+
+        // return "" + (imaginary == 0.0 ? real : real == 0.0 ? imaginary + "i"
+        // : "");
+        return "" + (real == 0.0 ? "" : real)
+                + (imaginary == 0.0 ? "" : imaginary > 0.0 ? "+" + imaginary + "i" : imaginary + "i");
     }
 
     @Override
@@ -108,11 +112,16 @@ public class ComplexNumber {
         } else {
             values = number.split("[+-]");
         }
+
         if (values.length == 1) {
             if (values[0].contains("i")) {
+                if (values[0].charAt(0) == 'i') {
+                    values[0] = "1" + values[0];
+                }
                 if (firstNegative) {
                     values[0] = "-" + values[0];
                 }
+
                 im = Double.parseDouble(values[0].substring(0, values[0].length() - 1));
             } else {
                 if (firstNegative) {
@@ -120,9 +129,13 @@ public class ComplexNumber {
                 }
                 re = Double.parseDouble(values[0]);
             }
+
         } else {
             if (firstNegative) {
                 values[0] = "-" + values[0];
+            }
+            if (values[1].charAt(0) == 'i') {
+                values[1] = "1" + values[1];
             }
             if (secondNegative) {
                 values[1] = "-" + values[1];
@@ -130,8 +143,8 @@ public class ComplexNumber {
             re = Double.parseDouble(values[0]);
             im = Double.parseDouble(values[1].substring(0, values[1].length() - 1));
         }
-
-        return new ComplexNumber(re, im);
+        ComplexNumber complexNumber = new ComplexNumber(re, im);
+        return complexNumber;
 
     }
 
