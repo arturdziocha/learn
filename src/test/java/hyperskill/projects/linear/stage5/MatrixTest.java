@@ -22,7 +22,7 @@ class MatrixTest {
         for (String[] row : arr) {
             Row r = new Row();
             for (String col : row) {
-                r.add(ComplexNumber.parse(col));
+                r.add(new ComplexNumber(col));
             }
             matrix.add(r);
         }
@@ -31,7 +31,7 @@ class MatrixTest {
         assertTrue(find.isPresent());
         assertEquals(1, find.getAsInt());
         matrix.switchRow(0, find.getAsInt());
-        assertEquals(matrix.getRow(0).getColumn(0), ComplexNumber.parse("-1+3i"));
+        assertEquals(matrix.getRow(0).getColumn(0), new ComplexNumber("-1+3i"));
     }
 
     @Test
@@ -44,7 +44,7 @@ class MatrixTest {
         for (String[] row : arr) {
             Row r = new Row();
             for (String col : row) {
-                r.add(ComplexNumber.parse(col));
+                r.add(new ComplexNumber(col));
             }
             matrix.add(r);
         }
@@ -53,7 +53,7 @@ class MatrixTest {
         assertTrue(find.isPresent());
         assertEquals(1, find.getAsInt());
         matrix.switchColumns(0, find.getAsInt());
-        assertEquals(matrix.getRow(0).getColumn(0), ComplexNumber.parse("-1.5-1.1i"));
+        assertEquals(matrix.getRow(0).getColumn(0), new ComplexNumber("-1.5-1.1i"));
     }
 
     @Test
@@ -65,7 +65,7 @@ class MatrixTest {
         for (String[] row : arr) {
             Row r = new Row();
             for (String col : row) {
-                r.add(ComplexNumber.parse(col));
+                r.add(new ComplexNumber(col));
             }
             matrix.add(r);
         }
@@ -75,7 +75,7 @@ class MatrixTest {
         assertEquals(1, find.get().getRow());
         matrix.switchRow(0, find.get().getRow());
         matrix.switchColumns(0, find.get().getColumn());
-        assertEquals(matrix.getRow(0).getColumn(0), ComplexNumber.parse("1.2-3.3"));
+        assertEquals(matrix.getRow(0).getColumn(0), new ComplexNumber("1.2-3.3"));
 
     }
 

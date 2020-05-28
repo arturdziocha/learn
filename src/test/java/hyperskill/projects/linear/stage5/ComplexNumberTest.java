@@ -14,7 +14,7 @@ class ComplexNumberTest {
         // Given
         String string = "0";
         // When
-        ComplexNumber complexNumber = ComplexNumber.parse(string);
+        ComplexNumber complexNumber = new ComplexNumber(string);
         // Then
         Assertions.assertEquals(new ComplexNumber(0, 0), complexNumber);
     }
@@ -25,7 +25,7 @@ class ComplexNumberTest {
         // Given
         String string = "1";
         // When
-        ComplexNumber complexNumber = ComplexNumber.parse(string);
+        ComplexNumber complexNumber = new ComplexNumber(string);
         // Then
         Assertions.assertEquals(new ComplexNumber(1, 0), complexNumber);
     }
@@ -36,7 +36,7 @@ class ComplexNumberTest {
         // Given
         String string = "-1";
         // When
-        ComplexNumber complexNumber = ComplexNumber.parse(string);
+        ComplexNumber complexNumber = new ComplexNumber(string);
         // Then
         Assertions.assertEquals(new ComplexNumber(-1, 0), complexNumber);
     }
@@ -47,7 +47,7 @@ class ComplexNumberTest {
         // Given
         String string = "1.01";
         // When
-        ComplexNumber complexNumber = ComplexNumber.parse(string);
+        ComplexNumber complexNumber = new ComplexNumber(string);
         // Then
         Assertions.assertEquals(new ComplexNumber(1.01, 0), complexNumber);
     }
@@ -58,7 +58,7 @@ class ComplexNumberTest {
         // Given
         String string = "1.01+3.24i";
         // When
-        ComplexNumber complexNumber = ComplexNumber.parse(string);
+        ComplexNumber complexNumber = new ComplexNumber(string);
         // Then
         Assertions.assertEquals(new ComplexNumber(1.01, 3.24), complexNumber);
     }
@@ -69,7 +69,7 @@ class ComplexNumberTest {
         // Given
         String string = "-1.01-3.24i";
         // When
-        ComplexNumber complexNumber = ComplexNumber.parse(string);
+        ComplexNumber complexNumber = new ComplexNumber(string);
         // Then
         Assertions.assertEquals(new ComplexNumber(-1.01, -3.24), complexNumber);
     }
@@ -80,7 +80,7 @@ class ComplexNumberTest {
         // Given
         String string = "-3.24i";
         // When
-        ComplexNumber complexNumber = ComplexNumber.parse(string);
+        ComplexNumber complexNumber = new ComplexNumber(string);
         // Then
         Assertions.assertEquals(new ComplexNumber(0.0, -3.24), complexNumber);
     }
@@ -91,7 +91,7 @@ class ComplexNumberTest {
         // Given
         String string = "3.24i";
         // When
-        ComplexNumber complexNumber = ComplexNumber.parse(string);
+        ComplexNumber complexNumber = new ComplexNumber(string);
         // Then
         Assertions.assertEquals(new ComplexNumber(0.0, 3.24), complexNumber);
     }
@@ -102,7 +102,7 @@ class ComplexNumberTest {
         // Given
         String string = "-1.01-3.24i";
         // When
-        ComplexNumber complexNumber = ComplexNumber.parse(string);
+        ComplexNumber complexNumber = new ComplexNumber(string);
         // Then
         assertEquals(string, complexNumber.toString());
     }
@@ -113,7 +113,7 @@ class ComplexNumberTest {
         //Given
         String string = "-1.01-3.24i";
         //When
-        ComplexNumber number = ComplexNumber.parse(string);
+        ComplexNumber number = new ComplexNumber(string);
         ComplexNumber conjugated = number.conjugate();
         assertEquals("-1.01+3.24i", conjugated.toString());
     }
@@ -122,8 +122,8 @@ class ComplexNumberTest {
     @DisplayName("Multiply test")
     void multiplyTest() {
         //Given
-        ComplexNumber first = ComplexNumber.parse("3+2i");
-        ComplexNumber second = ComplexNumber.parse("1+7i");
+        ComplexNumber first = new ComplexNumber("3+2i");
+        ComplexNumber second = new ComplexNumber("1+7i");
         //When
         ComplexNumber multipled = first.multiply(second);
         //Then
@@ -134,8 +134,8 @@ class ComplexNumberTest {
     @DisplayName("Divide test")
     void elevenTest() {
         //Given
-        ComplexNumber first = ComplexNumber.parse("1");
-        ComplexNumber second = ComplexNumber.parse("1");
+        ComplexNumber first = new ComplexNumber("1");
+        ComplexNumber second = new ComplexNumber("1");
         //When
         ComplexNumber divided = first.divide(second);
         //Then

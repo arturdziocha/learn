@@ -28,9 +28,9 @@ class LinearSolution {
             System.out.println(Arrays.toString(r));
 
             for (int j = 0; j < howManyColumns; j++) {
-                row.add(ComplexNumber.parse(r[j]));
+                row.add(new ComplexNumber(r[j]));
             }
-            result.add(ComplexNumber.parse(r[howManyColumns]));
+            result.add(new ComplexNumber(r[howManyColumns]));
             matrix.add(row);
         }
         scanner.close();

@@ -1,14 +1,32 @@
 package hyperskill.projects.linear.stage5;
 
-import java.util.Arrays;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class ComplexNumber {
+    public static final double EPSILON = 0.001;
     private double real;
     private double imaginary;
 
     ComplexNumber(double real, double imaginary) {
         this.real = real;
         this.imaginary = imaginary;
+    }
+
+    public ComplexNumber(String s)  throws NumberFormatException{
+        final String[] strs = split(s);
+        if (strs[1].contains("i")) {
+            strs[1] = strs[1].replace("i", "1");
+        }
+        if (strs[1].equals("-")) {
+            strs[1] = "-1";
+        }
+        if (strs[1].equals("+")) {
+            strs[1] = "1";
+        }
+        real = Double.parseDouble(strs[0]);
+        imaginary = Double.parseDouble(strs[1]);
     }
 
     public double getReal() {
@@ -60,19 +78,55 @@ public class ComplexNumber {
         return real == 0.0 && imaginary == 0.0;
     }
 
+    private String[] split(String s) throws NumberFormatException {
+        if (s.equals("i")) {
+            return new String[] { "0", "1" };
+        }
+        if (s.equals("-i")) {
+            return new String[] { "0", "-1" };
+        }
+        String realString = "0";
+        String imagString = "0";
+        int i = 1;
+        for (; i < s.length(); ++i) {
+            if (s.charAt(i) == '+' || s.charAt(i) == '-') {
+                realString = s.substring(0, i);
+                imagString = s.substring(i, s.length() - 1);
+                if (s.charAt(s.length() - 1) != 'i') {
+                    throw new NumberFormatException("can't parse complex");
+                }
+                break;
+            }
+            if (s.charAt(i) == 'i') {
+                if (i != s.length() - 1) {
+                    throw new NumberFormatException("can't parse complex");
+                }
+                imagString = s.substring(0, i);
+                break;
+            }
+        }
+        if (i == s.length()) {
+            realString = s;
+        }
+        if (imagString.length() == 0) {
+            imagString = "1";
+        }
+        return new String[] { realString, imagString };
+    }
+
     @Override
     public String toString() {
-        // DecimalFormat format = new DecimalFormat("#.###");
-        // DecimalFormatSymbols sym = DecimalFormatSymbols.getInstance();
-        // sym.setDecimalSeparator('.');
-        // format.setDecimalFormatSymbols(sym);
-        // String r = format.format(real);
-        // String im = format.format(imaginary);
-
-        // return "" + (imaginary == 0.0 ? real : real == 0.0 ? imaginary + "i"
-        // : "");
-        return "" + (real == 0.0 ? "" : real)
-                + (imaginary == 0.0 ? "" : imaginary > 0.0 ? "+" + imaginary + "i" : imaginary + "i");
+        final DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        final DecimalFormat realFormat = new DecimalFormat("0.####", symbols);
+        final DecimalFormat imagFormat = new DecimalFormat("0.####i", symbols);
+        if (Math.abs(imaginary) < EPSILON) {
+            return realFormat.format(real);
+        }
+        if (Math.abs(real) < EPSILON) {
+            return imagFormat.format(imaginary);
+        }
+        imagFormat.setPositivePrefix("+");
+        return String.format("%s%s", realFormat.format(real), imagFormat.format(imaginary));
     }
 
     @Override
@@ -99,53 +153,24 @@ public class ComplexNumber {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
-
-    public static ComplexNumber parse(String number) {
-
-        boolean firstNegative = number.charAt(0) == '-';
-        boolean secondNegative = number.substring(1).contains("-");
-        double re = 0.0;
-        double im = 0.0;
-        String[] values;
-        if (firstNegative) {
-            values = number.substring(1).split("[+-]");
-        } else {
-            values = number.split("[+-]");
-        }
-
-        if (values.length == 1) {
-            if (values[0].contains("i")) {
-                if (values[0].charAt(0) == 'i') {
-                    values[0] = "1" + values[0];
-                }
-                if (firstNegative) {
-                    values[0] = "-" + values[0];
-                }
-
-                im = Double.parseDouble(values[0].substring(0, values[0].length() - 1));
-            } else {
-                if (firstNegative) {
-                    values[0] = "-" + values[0];
-                }
-                re = Double.parseDouble(values[0]);
-            }
-
-        } else {
-            if (firstNegative) {
-                values[0] = "-" + values[0];
-            }
-            if (values[1].charAt(0) == 'i') {
-                values[1] = "1" + values[1];
-            }
-            if (secondNegative) {
-                values[1] = "-" + values[1];
-            }
-            re = Double.parseDouble(values[0]);
-            im = Double.parseDouble(values[1].substring(0, values[1].length() - 1));
-        }
-        ComplexNumber complexNumber = new ComplexNumber(re, im);
-        return complexNumber;
-
-    }
-
+    /*
+     * public static ComplexNumber parse(String s) { if(s.equals("i")) { return
+     * new ComplexNumber(0, 1); } if(s.equals("-i")) { return new
+     * ComplexNumber(0, -1); } boolean firstNegative = s.charAt(0) == '-';
+     * boolean secondNegative = s.substring(1).contains("-"); double re = 0.0;
+     * double im = 0.0; String[] values; if (firstNegative) { values =
+     * s.substring(1).split("[+-]"); } else { values = s.split("[+-]"); } if
+     * (values.length == 1) { if (values[0].contains("i")) { if
+     * (values[0].charAt(0) == 'i') { values[0] = "1" + values[0]; } if
+     * (firstNegative) { values[0] = "-" + values[0]; } im =
+     * Double.parseDouble(values[0].substring(0, values[0].length() - 1)); }
+     * else { if (firstNegative) { values[0] = "-" + values[0]; } re =
+     * Double.parseDouble(values[0]); } } else { if (firstNegative) { values[0]
+     * = "-" + values[0]; } if (values[1].charAt(0) == 'i') { values[1] = "1" +
+     * values[1]; } if (secondNegative) { values[1] = "-" + values[1]; } re =
+     * Double.parseDouble(values[0]); im =
+     * Double.parseDouble(values[1].substring(0, values[1].length() - 1)); }
+     * ComplexNumber complexNumber = new ComplexNumber(re, im); return
+     * complexNumber; }
+     */
 }
