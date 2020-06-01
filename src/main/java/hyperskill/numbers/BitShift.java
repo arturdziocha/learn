@@ -7,5 +7,10 @@ public class BitShift {
 
         int result = n1 | n2;
         System.out.println(result);
+
+        int n = 15;
+
+        result = n << 2 << 1;
+        System.out.println(result);
     }
 }
