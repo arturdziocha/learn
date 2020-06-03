@@ -97,7 +97,7 @@ public class ComplexNumber {
                 }
                 break;
             }
-            if (s.charAt(i) == 'i') {
+            if ('i' == s.charAt(i)) {
                 if (i != s.length() - 1) {
                     throw new NumberFormatException("can't parse complex");
                 }

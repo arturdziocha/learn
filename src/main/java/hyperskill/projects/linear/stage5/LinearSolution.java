@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 class LinearSolution {
-    private final Matrix matrix = new Matrix();
+    /*private final Matrix matrix = new Matrix();
     private Column column;
     private final Result result = new Result();
     private String solution;
@@ -179,5 +179,5 @@ class LinearSolution {
         });
         System.out.println();
     }
-
+*/
 }

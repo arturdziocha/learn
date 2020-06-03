@@ -34,8 +34,8 @@ public class Row {
         row.set(to, temp);
     }
 
-    int sumOfRealZeroInRow() {
-        return row.stream().filter(r -> r.getReal() == 0.0).map(i -> 1).reduce(0, Integer::sum);
+    long countRealZerosInRow() {
+        return row.stream().filter(r -> r.getReal() == 0.0).count();
     }
 
 }
