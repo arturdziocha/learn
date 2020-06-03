@@ -53,7 +53,6 @@ class LinearSolution {
         for (int i = 0; i < howManyEquations; i++) {
             if (isNoSolutions(i)) {
                 noSolutions = true;
-
                 break;
             }
         }

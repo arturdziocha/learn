@@ -4,20 +4,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main2 {
     public static void main(String[] args) throws IOException {
-    String from = "";
-    String to = "";
+    String from = "src/main/java/hyperskill/projects/linear/stage5/in.txt";
+    String to = "src/main/java/hyperskill/projects/linear/stage5/out.txt";
 
-    for (int i = 0; i < args.length; i += 2) {
-        if ("-in".equals(args[i])) {
-            from = args[i + 1];
-        } else {
-            to = args[i + 1];
-        }
-    }
+//    for (int i = 0; i < args.length; i += 2) {
+//        if ("-in".equals(args[i])) {
+//            from = args[i + 1];
+//        } else {
+//            to = args[i + 1];
+//        }
+//    }
 
     // there is probably a design patter for that, but...
     toFile(rref(fromFile(from)), to);
@@ -60,6 +61,10 @@ public class Main2 {
      * @param fileName        write data to file
      */
     static void toFile(double[][] augmentedMatrix, String fileName) throws IOException {
+        for(double[] d : augmentedMatrix) {
+            System.out.println(Arrays.toString(d));
+        }
+        System.out.println(Arrays.toString(augmentedMatrix));
         File file = new File(fileName);
         int matrixLength = augmentedMatrix.length;
         boolean inf = false;
@@ -74,9 +79,12 @@ public class Main2 {
                 }
             }
             if (cnt == k.length) {
+                System.out.println("Dupa");
                 matrixLength -= 1;
             }
             if (k[k.length - 1] != 0 && cnt == k.length - 1) {
+                System.out.println("Res"+k[k.length-1]);
+                System.out.println(cnt);
                 nosol = true;
                 break;
             }

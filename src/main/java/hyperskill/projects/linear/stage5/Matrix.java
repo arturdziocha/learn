@@ -9,21 +9,25 @@ import java.util.stream.IntStream;
 class Matrix {
     private final List<Row> rows = new ArrayList<>();
 
-    void add(Row row) {
+    public void add(Row row) {
         rows.add(row);
     }
 
-    Row getRow(int index) {
+    public Row getRow(int index) {
         return rows.get(index);
     }
 
-    void switchRow(int from, int to) {
+    public List<Row> getAll() {
+        return rows;
+    }
+
+    public void switchRow(int from, int to) {
         Row temp = rows.get(from);
         rows.set(from, rows.get(to));
         rows.set(to, temp);
     }
 
-    void switchColumns(int from, int to) {
+    public void switchColumns(int from, int to) {
         rows.forEach(r -> r.switchColumn(from, to));
     }
 
@@ -59,16 +63,22 @@ class Matrix {
     }
 
     public double sumOfRealInRow(int row) {
-        return IntStream.range(0, rows.get(row).size()).mapToDouble(i->rows.get(row).getColumn(i).getReal()).sum();
+        return IntStream.range(0, rows.get(row).size()).mapToDouble(i -> rows.get(row).getColumn(i).getReal()).sum();
     }
+
     public double sumOfImaginaryInRow(int row) {
-        return IntStream.range(0, rows.get(row).size()).mapToDouble(i->rows.get(row).getColumn(i).getImaginary()).sum();
+        return IntStream
+                .range(0, rows.get(row).size())
+                .mapToDouble(i -> rows.get(row).getColumn(i).getImaginary())
+                .sum();
     }
 
     public double sumOfDiagonalReal(int numOfColumns) {
         return IntStream.range(0, numOfColumns).mapToDouble(i -> rows.get(i).getColumn(i).getReal()).sum();
     }
+
     public double sumOfDiagonalImaginary(int numOfColumns) {
         return IntStream.range(0, numOfColumns).mapToDouble(i -> rows.get(i).getColumn(i).getImaginary()).sum();
     }
+
 }
