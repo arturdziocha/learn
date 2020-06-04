@@ -14,7 +14,6 @@ class GaussianEliminationTest {
     private final String noSolutions = "No solutions";
     private final String infiniteSolutions = "Infinitely many solutions";
 
-
     @BeforeEach
     void setUp() {
         this.elimination = new GaussianElimination();
@@ -25,7 +24,7 @@ class GaussianEliminationTest {
     void test1() {
         // Given
         String testString = "3 3\n" + "1 1 2 9\n" + "2 4 -3 1\n" + "3 6 -5 0";
-        ComplexNumber[] expected = toComplex(new Double[]{1d, 2d, 3d});
+        ComplexNumber[] expected = toComplex(new Double[] { 1d, 2d, 3d });
         // When
         elimination.read(testString);
         elimination.solve();
@@ -33,13 +32,13 @@ class GaussianEliminationTest {
         assertArrayEquals(expected, toComplex(elimination.getSolution()));
 
     }
-
+    
     @DisplayName("Test 2")
     @Test
     void test2() {
         // Given
         String testString = "2 2\n" + "1 0 1\n" + "0 1 1";
-        ComplexNumber[] expected = toComplex(new Double[]{1d, 1d});
+        ComplexNumber[] expected = toComplex(new Double[] { 1d, 1d });
         // When
         elimination.read(testString);
         elimination.solve();
@@ -53,7 +52,7 @@ class GaussianEliminationTest {
     void test3() {
         // Given
         String testString = "2 2\n" + "2 0 2\n" + "0 2 2";
-        ComplexNumber[] expected = toComplex(new Double[]{1d, 1d});
+        ComplexNumber[] expected = toComplex(new Double[] { 1d, 1d });
         // When
         elimination.read(testString);
         elimination.solve();
@@ -67,7 +66,7 @@ class GaussianEliminationTest {
     void test4() {
         // Given
         String testString = "2 2\n" + "1 2 1\n" + "3 4 1";
-        ComplexNumber[] expected = toComplex(new Double[]{-1d, 1d});
+        ComplexNumber[] expected = toComplex(new Double[] { -1d, 1d });
         // When
         elimination.read(testString);
         elimination.solve();
@@ -75,7 +74,7 @@ class GaussianEliminationTest {
         assertArrayEquals(expected, toComplex(elimination.getSolution()));
 
     }
-
+    
     @DisplayName("Test 5")
     @Test
     void test5() {
@@ -100,9 +99,9 @@ class GaussianEliminationTest {
                 + "4 64 4 43 54 99 77 7 72 82 27 22 29 94 53 48 65 88 26 86 42\n"
                 + "69 59 62 63 42 29 73 18 82 78 48 60 84 73 84 9 82 53 14 1 12\n"
                 + "98 2 47 62 69 11 28 14 83 32 94 24 71 1 16 91 53 50 38 26 17";
-        ComplexNumber[] expected = toComplex(new Double[]{0.5428d, -2.3923d, 1.5789d, -1.3679d, 0.6433d, -1.7531d,
+        ComplexNumber[] expected = toComplex(new Double[] { 0.5428d, -2.3923d, 1.5789d, -1.3679d, 0.6433d, -1.7531d,
                 -0.0432d, -0.7503d, -0.8245d, -0.4562d, -1.2163d, 0.3093d, -0.1105d, 1.1717d, -0.5873d, -1.3933d,
-                1.1229d, 3.0693d, 1.1995d, 1.5399});
+                1.1229d, 3.0693d, 1.1995d, 1.5399 });
         // When
         elimination.read(testString);
         elimination.solve();
@@ -136,9 +135,9 @@ class GaussianEliminationTest {
                 + "0.54 0.57 0.53 0.23 0.78 0.89 0.24 0.98 0.7 0.75 0.46 0.85 0.39 0.58 0.36 0.29 0.54 0.83 0.97 0.62 0.34\n"
                 + "0.3 0.64 0.71 0.07 0.03 0.76 0.25 0.34 0.97 0.93 0.48 0.57 0.98 0.33 0.4 0.18 0.01 0.81 0.38 0.87 0.95\n"
                 + "0.25 0.7 0.07 0.4 0.67 0.84 0.12 0.43 0.61 0.7 0.89 0.88 0.48 0.14 0.32 0.98 0.15 0.87 0.34 0.81 0.37";
-        ComplexNumber[] expected = toComplex(new Double[]{0.2182d, 0.3886d, 0.2337d, 0.5804d, -0.1867d, 0.3536d,
+        ComplexNumber[] expected = toComplex(new Double[] { 0.2182d, 0.3886d, 0.2337d, 0.5804d, -0.1867d, 0.3536d,
                 -0.5597d, -0.4706d, -0.3946d, -0.4577d, 0.371d, -0.1959d, 1.1403d, 0.2808d, -0.8712d, -0.3355d,
-                -0.1309d, -0.3008d, 0.6355d, 0.4716d});
+                -0.1309d, -0.3008d, 0.6355d, 0.4716d });
         // When
         elimination.read(testString);
         elimination.solve();
@@ -152,7 +151,7 @@ class GaussianEliminationTest {
     void test7() {
         // Given
         String testString = "2 2\n" + "0 1 1\n" + "1 0 1";
-        ComplexNumber[] expected = toComplex(new Double[]{1d, 1d});
+        ComplexNumber[] expected = toComplex(new Double[] { 1d, 1d });
         // When
         elimination.read(testString);
         elimination.solve();
@@ -166,7 +165,7 @@ class GaussianEliminationTest {
     void test8() {
         // Given
         String testString = "2 2\n" + "0 1 1\n" + "1 0 2";
-        ComplexNumber[] expected = toComplex(new Double[]{2d, 1d});
+        ComplexNumber[] expected = toComplex(new Double[] { 2d, 1d });
         // When
         elimination.read(testString);
         elimination.solve();
@@ -181,7 +180,7 @@ class GaussianEliminationTest {
         // Given
         String testString = "6 6\n" + "2 6 1 3 9 1 6\n" + "9 2 4 3 6 1 5\n" + "6 5 9 1 4 2 6\n" + "4 1 1 2 9 2 4\n"
                 + "5 4 6 2 3 1 6\n" + "3 5 4 1 7 9 6";
-        ComplexNumber[] expected = toComplex(new Double[]{-0.5175d, -0.1523d, 0.7669d, 2.0115d, 0.0958d, 0.2849d});
+        ComplexNumber[] expected = toComplex(new Double[] { -0.5175d, -0.1523d, 0.7669d, 2.0115d, 0.0958d, 0.2849d });
         // When
         elimination.read(testString);
         elimination.solve();
@@ -195,7 +194,7 @@ class GaussianEliminationTest {
         // Given
         String testString = "6 6\n" + "0 6 1 3 9 1 6\n" + "9 0 4 3 6 1 5\n" + "6 5 0 1 4 2 6\n" + "4 1 1 0 9 2 4\n"
                 + "5 4 6 2 0 1 6\n" + "3 5 4 1 7 0 6";
-        ComplexNumber[] expected = toComplex(new Double[]{0.241, 0.5984, 0.2851, 0.1325, 0.1446, 0.4257,});
+        ComplexNumber[] expected = toComplex(new Double[] { 0.241, 0.5984, 0.2851, 0.1325, 0.1446, 0.4257, });
         // When
         elimination.read(testString);
         elimination.solve();
@@ -209,7 +208,7 @@ class GaussianEliminationTest {
         // Given
         String testString = "6 6\n" + "1 6 1 1 9 1 6\n" + "0 1 4 3 2 1 5\n" + "0 0 0 1 4 2 6\n" + "0 0 0 2 9 2 4\n"
                 + "0 0 0 2 3 1 6\n" + "0 0 5 1 7 9 6";
-        ComplexNumber[] expected = toComplex(new Double[]{-65.8154, 13.0615, -4.4, 2.6154, -0.9231, 3.5385,});
+        ComplexNumber[] expected = toComplex(new Double[] { -65.8154, 13.0615, -4.4, 2.6154, -0.9231, 3.5385, });
         // When
         elimination.read(testString);
         elimination.solve();
@@ -223,7 +222,7 @@ class GaussianEliminationTest {
         // Given
         String testString = "6 6\n" + "1 6 1 1 9 1 6\n" + "0 1 4 3 2 1 5\n" + "0 0 0 0 0 2 6\n" + "0 0 0 0 2 2 4\n"
                 + "0 0 0 9 2 1 6\n" + "0 0 7 1 7 9 6";
-        ComplexNumber[] expected = toComplex(new Double[]{-50.381, 10.6508, -2.0794, 0.5556, -1d, 3d,});
+        ComplexNumber[] expected = toComplex(new Double[] { -50.381, 10.6508, -2.0794, 0.5556, -1d, 3d, });
         // When
         elimination.read(testString);
         elimination.solve();
@@ -235,11 +234,7 @@ class GaussianEliminationTest {
     @Test
     void test13() {
         // Given
-        String testString = "3 4\n" +
-                "0 1 2 9\n" +
-                "0 1 3 1\n" +
-                "1 0 6 0\n" +
-                "2 0 2 0";
+        String testString = "3 4\n" + "0 1 2 9\n" + "0 1 3 1\n" + "1 0 6 0\n" + "2 0 2 0";
 
         // When
         elimination.read(testString);
@@ -252,15 +247,8 @@ class GaussianEliminationTest {
     @Test
     void test14() {
         // Given
-        String testString = "3 4\n" +
-                "1 1 2 9\n" +
-                "0 1 3 1\n" +
-                "0 0 6 0\n" +
-                "0 0 0 0";
-        ComplexNumber[] expected = toComplex(new Double[]{
-                8d,
-                1d,
-                0d,});
+        String testString = "3 4\n" + "1 1 2 9\n" + "0 1 3 1\n" + "0 0 6 0\n" + "0 0 0 0";
+        ComplexNumber[] expected = toComplex(new Double[] { 8d, 1d, 0d, });
         // When
         elimination.read(testString);
         elimination.solve();
@@ -272,11 +260,7 @@ class GaussianEliminationTest {
     @Test
     void test15() {
         // Given
-        String testString = "3 4\n" +
-                "1 1 2 9\n" +
-                "0 1 3 1\n" +
-                "0 0 6 0\n" +
-                "0 0 0 7";
+        String testString = "3 4\n" + "1 1 2 9\n" + "0 1 3 1\n" + "0 0 6 0\n" + "0 0 0 7";
         // When
         elimination.read(testString);
         elimination.solve();
@@ -288,11 +272,7 @@ class GaussianEliminationTest {
     @Test
     void test16() {
         // Given
-        String testString = "3 4\n" +
-                "1 1 2 9\n" +
-                "0 1 3 1\n" +
-                "0 2 6 2\n" +
-                "0 0 0 0";
+        String testString = "3 4\n" + "1 1 2 9\n" + "0 1 3 1\n" + "0 2 6 2\n" + "0 0 0 0";
         // When
         elimination.read(testString);
         elimination.solve();
@@ -304,10 +284,7 @@ class GaussianEliminationTest {
     @Test
     void test17() {
         // Given
-        String testString = "4 3\n" +
-                "1 1 2 9 7\n" +
-                "0 1 3 1 2\n" +
-                "0 2 6 2 9";
+        String testString = "4 3\n" + "1 1 2 9 7\n" + "0 1 3 1 2\n" + "0 2 6 2 9";
         // When
         elimination.read(testString);
         elimination.solve();
@@ -319,10 +296,7 @@ class GaussianEliminationTest {
     @Test
     void test18() {
         // Given
-        String testString = "4 3\n" +
-                "1 1 2 9 7\n" +
-                "0 1 3 1 2\n" +
-                "0 2 6 3 9";
+        String testString = "4 3\n" + "1 1 2 9 7\n" + "0 1 3 1 2\n" + "0 2 6 3 9";
         // When
         elimination.read(testString);
         elimination.solve();
@@ -334,10 +308,7 @@ class GaussianEliminationTest {
     @Test
     void test19() {
         // Given
-        String testString = "4 3\n" +
-                "1 0 0 0 1\n" +
-                "0 0 0 0 0\n" +
-                "1 0 0 0 0";
+        String testString = "4 3\n" + "1 0 0 0 1\n" + "0 0 0 0 0\n" + "1 0 0 0 0";
         // When
         elimination.read(testString);
         elimination.solve();
@@ -349,12 +320,8 @@ class GaussianEliminationTest {
     @Test
     void test20() {
         // Given
-        String testString = "2 2\n" +
-                "i 0 1\n" +
-                "0 i 1";
-        ComplexNumber[] expected = new ComplexNumber[]{
-                new ComplexNumber(0, -1),
-                new ComplexNumber(0, -1)};
+        String testString = "2 2\n" + "i 0 1\n" + "0 i 1";
+        ComplexNumber[] expected = new ComplexNumber[] { new ComplexNumber(0, -1), new ComplexNumber(0, -1) };
         // When
         elimination.read(testString);
         elimination.solve();
@@ -366,14 +333,44 @@ class GaussianEliminationTest {
     @Test
     void test21() {
         // Given
-        String testString = "2 2\n" +
-                "i -i i\n" +
-                "-i i i";
+        String testString = "2 2\n" + "i -i i\n" + "-i i i";
         // When
         elimination.read(testString);
         elimination.solve();
         // Then
-        assertEquals(noSolutions, elimination.getSolution());
+        assertEquals(infiniteSolutions, elimination.getSolution());
+    }
+    @DisplayName("Test 22.  This test is about complex numbers with infinity soltions")
+    @Test
+    void test22() {
+        // Given
+        String testString = "2 2\n" +
+                "i -i i\n" +
+                "-i i -i";
+        // When
+        elimination.read(testString);
+        elimination.solve();
+        // Then
+        assertEquals(infiniteSolutions, elimination.getSolution());
+    }
+    @DisplayName("Test 23. This is the first test with complex numbers.")
+    @Test
+    void test23() {
+        // Given
+        String testString = "3 3\n" +
+                "1+i 2+6i 7-8i 12\n" +
+                "-7i 123 12+i i\n" +
+                "11-11i 12+i -i 1+i";
+        ComplexNumber[] expected = new ComplexNumber[]{
+                new ComplexNumber(-0.0879, 0.1686),
+                new ComplexNumber(-0.0707, -0.0877),
+                new ComplexNumber(0.6987, 0.8726),
+            };
+        // When
+        elimination.read(testString);
+        elimination.solve();
+        // Then
+        assertArrayEquals(expected, toComplex(elimination.getSolution()));
     }
 
     private ComplexNumber[] toComplex(Double[] array) {
@@ -381,10 +378,7 @@ class GaussianEliminationTest {
     }
 
     private ComplexNumber[] toComplex(String string) {
-        return Arrays.stream(string.split("\n")).map(i -> {
-            System.out.println(i);
-            return i.strip();
-        }).map(ComplexNumber::new).toArray(ComplexNumber[]::new);
+        return Arrays.stream(string.split("\n")).map(ComplexNumber::new).toArray(ComplexNumber[]::new);
     }
 
 }

@@ -10,11 +10,11 @@ public class ComplexNumber {
     private double imaginary;
 
     ComplexNumber(double real, double imaginary) {
-        this.real = real;
-        this.imaginary = imaginary;
+        this.real = real == -0.0 ? 0.0 : real;
+        this.imaginary = imaginary == -0.0 ? 0.0 : imaginary;
     }
 
-    public ComplexNumber(String s)  throws NumberFormatException{
+    public ComplexNumber(String s) throws NumberFormatException {
         final String[] strs = split(s);
         if (strs[1].contains("i")) {
             strs[1] = strs[1].replace("i", "1");
@@ -63,15 +63,14 @@ public class ComplexNumber {
      */
     public ComplexNumber divide(ComplexNumber other) {
         ComplexNumber conjugated = other.conjugate();
-        double aReal = real * conjugated.getReal() + (imaginary * conjugated.imaginary) * -1;
-        double aImaginary = real * conjugated.getImaginary() + imaginary * conjugated.getReal();
-        double bReal = other.getReal() * conjugated.getReal() + (other.imaginary * conjugated.getImaginary()) * -1;
+        ComplexNumber a1 = this.multiply(conjugated);
+        ComplexNumber b1 = other.multiply(conjugated);
 
-        return new ComplexNumber(aReal / bReal, aImaginary / bReal);
+        return new ComplexNumber(a1.getReal() / b1.getReal(), a1.getImaginary() / b1.getReal());
     }
 
     public ComplexNumber conjugate() {
-        return new ComplexNumber(real, -imaginary);
+        return new ComplexNumber(real, imaginary == 0.0 ? 0.0 : -imaginary);
     }
 
     public boolean isAllZero() {

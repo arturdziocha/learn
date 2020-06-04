@@ -122,24 +122,24 @@ class ComplexNumberTest {
     @DisplayName("Multiply test")
     void multiplyTest() {
         //Given
-        ComplexNumber first = new ComplexNumber("3+2i");
-        ComplexNumber second = new ComplexNumber("1+7i");
+        ComplexNumber first = new ComplexNumber("1i");
+        ComplexNumber second = new ComplexNumber("-1");
         //When
         ComplexNumber multipled = first.multiply(second);
         //Then
-        assertEquals(new ComplexNumber(-11, 23), multipled);
+        assertEquals(new ComplexNumber(0,-1), multipled);
     }
 
     @Test
     @DisplayName("Divide test")
     void elevenTest() {
         //Given
-        ComplexNumber first = new ComplexNumber("1");
+        ComplexNumber first = new ComplexNumber("1i");
         ComplexNumber second = new ComplexNumber("1");
         //When
         ComplexNumber divided = first.divide(second);
         //Then
-        assertEquals(new ComplexNumber((double) 6/25, (double) 17/25), divided);
+        assertEquals(new ComplexNumber(0,1), divided);
     }
 
 }

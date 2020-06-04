@@ -45,11 +45,10 @@ public class GaussianElimination {
         scanner.close();
     }
 
-
     public String getSolution() {
         boolean noSol = false;
         boolean oneSol = false;
-        //No solution check
+        // No solution check
         for (int i = 0; i < howManyEquations; i++) {
             if (matrix.getRow(i).countRealZerosInRow() == howManyColumns && result.get(i).getReal() != 0.0) {
                 noSol = true;
@@ -58,7 +57,7 @@ public class GaussianElimination {
             }
         }
         if (!noSol) {
-            //One solution
+            // One solution
             int sum = 0;
             for (int i = 0; i < howManyEquations; i++) {
                 long count = matrix.getRow(i).countRealZerosInRow();
@@ -76,12 +75,10 @@ public class GaussianElimination {
                 solution = "Infinitely many solutions";
             }
         }
-        System.out.println(solution);
         return solution;
     }
 
     public void write(File file) throws FileNotFoundException {
-
 
         try (PrintWriter writer = new PrintWriter(file)) {
             System.out.println();
@@ -95,10 +92,11 @@ public class GaussianElimination {
         print();
         stage1();
         IntStream.range(0, howManyEquations).forEach(this::stage2);
+        // IntStream.range(0, howManyEquations).forEach(this::stage3);
 
         int s = Math.min(howManyColumns, howManyEquations);
         for (int row = s - 1; row > 0; row--) {
-            stage3(row);
+            stage4(row);
         }
     }
 
@@ -140,38 +138,60 @@ public class GaussianElimination {
     void stage2(int row) {
         if (row < matrix.getRow(row).size()) {
             ComplexNumber number = matrix.getRow(row).getColumn(row);
-
-            if (number.getReal() != 1.0 || number.getImaginary() != 0.0) {
+            System.out.println(number.getReal() + " " + number.getImaginary());
+            if (number.getReal() != 0.0) {
                 result.update(row, result.get(row).divide(number));
                 IntStream
-                        .range(row, matrix.getRow(row).size())
+                        .range(0, matrix.getRow(row).size())
                         .forEach(i -> matrix.update(row, i, matrix.getRow(row).getColumn(i).divide(number)));
                 System.out.println("R" + (row + 1) + " / " + number + " -> R" + (row + 1));
                 print();
+
+            } else if (number.getReal() == 0.0 && number.getImaginary() != 0.0) {
+                result.update(row, result.get(row).divide(number));
+                IntStream
+                        .range(0, matrix.getRow(row).size())
+                        .forEach(i -> matrix.update(row, i, matrix.getRow(row).getColumn(i).divide(number)));
+                System.out.println("R" + (row + 1) + " / " + number + " -> R" + (row + 1));
+                print();
+
             }
             IntStream.range(row + 1, howManyEquations).forEach(i -> {
                 ComplexNumber k = new ComplexNumber(0.0, 0.0).subtract(matrix.getRow(i).getColumn(row));
 
-                if (k.getReal() != 0.0) {
-                    result.update(i, result.get(i).add(result.get(row).multiply(k)));
-                    IntStream
-                            .range(row, matrix.getRow(row).size())
-                            .forEach(j -> matrix
-                                    .update(i, j,
-                                            matrix
-                                                    .getRow(i)
-                                                    .getColumn(j)
-                                                    .add(k.multiply(matrix.getRow(row).getColumn(j)))));
-                    System.out.printf("%s * R%d + R%d -> R%d\n", k, row + 1, i + 1, i + 1);
+                result.update(i, result.get(i).add(result.get(row).multiply(k)));
+                IntStream
+                        .range(row, matrix.getRow(row).size())
+                        .forEach(j -> matrix
+                                .update(i, j,
+                                    matrix.getRow(i).getColumn(j).add(k.multiply(matrix.getRow(row).getColumn(j)))));
+                System.out.printf("%s * R%d + R%d -> R%d\n", k, row + 1, i + 1, i + 1);
+                print();
 
-                    print();
-                }
             });
 
         }
     }
 
-    private void stage3(int row) {
+    void stage3(int row) {
+        if (row < matrix.getRow(row).size()) {
+            IntStream.range(row + 1, howManyEquations).forEach(i -> {
+                ComplexNumber k = new ComplexNumber(0.0, 0.0).subtract(matrix.getRow(i).getColumn(row));
+
+                result.update(i, result.get(i).add(result.get(row).multiply(k)));
+                IntStream
+                        .range(row, matrix.getRow(row).size())
+                        .forEach(j -> matrix
+                                .update(i, j,
+                                    matrix.getRow(i).getColumn(j).add(k.multiply(matrix.getRow(row).getColumn(j)))));
+                System.out.printf("%s * R%d + R%d -> R%d\n", k, row + 1, i + 1, i + 1);
+
+                print();
+            });
+        }
+    }
+
+    private void stage4(int row) {
         for (int i = row - 1; i >= 0; i--) {
             ComplexNumber k = new ComplexNumber(0.0, 0.0).subtract(matrix.getRow(i).getColumn(row));
             if (matrix.getRow(row).getColumn(row).getReal() == 1.0) {
@@ -179,7 +199,7 @@ public class GaussianElimination {
                 for (int col = howManyColumns - 1; col >= 0; col--) {
                     matrix
                             .update(i, col,
-                                    matrix.getRow(i).getColumn(col).add(k.multiply(matrix.getRow(row).getColumn(col))));
+                                matrix.getRow(i).getColumn(col).add(k.multiply(matrix.getRow(row).getColumn(col))));
 
                 }
                 System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
@@ -188,12 +208,7 @@ public class GaussianElimination {
             }
         }
     }
-
-    private boolean isNoSolutions(int row) {
-        // return matrix.sumOfRealInRow(row)==0.0 &&!result.get(row).equals(new
-        // ComplexNumber(0.0, 0.0));
-        return matrix.sumOfRealInRow(row) == 0.0 && !result.get(row).equals(new ComplexNumber(0.0, 0.0));
-    }
+    
 
     private void print() {
         column.getColumns().forEach(c -> System.out.printf("  %s  ", c));
