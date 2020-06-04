@@ -338,7 +338,7 @@ class GaussianEliminationTest {
         elimination.read(testString);
         elimination.solve();
         // Then
-        assertEquals(infiniteSolutions, elimination.getSolution());
+        assertEquals(noSolutions, elimination.getSolution());
     }
     @DisplayName("Test 22.  This test is about complex numbers with infinity soltions")
     @Test

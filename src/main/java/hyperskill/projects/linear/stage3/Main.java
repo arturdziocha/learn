@@ -14,7 +14,7 @@ public class Main {
         Matrix matrix = new Matrix();
         // matrix.read(args[1]);
         matrix.read("src/main/java/hyperskill/projects/linear/stage3/in.txt");
-        // matrix.print();
+        // matrix.//print();
         matrix.solve();
         // matrix.write(args[3]);
         matrix.write("src/main/java/hyperskill/projects/linear/stage3/out.txt");
@@ -38,7 +38,7 @@ class Matrix {
         scanner.close();
     }
 
-    public void write(String filename) throws FileNotFoundException, IOException {
+    public void write(String filename) throws IOException {
         try (PrintWriter writer = new PrintWriter(new File(filename))) {
             double[] toPrint = IntStream.range(0, n).mapToDouble(s -> matrix[s][n]).toArray();
             System.out.println();
@@ -58,7 +58,7 @@ class Matrix {
 
     void solve() {
         System.out.println("Start solving the equation.");
-        print();
+        //print();
         IntStream.range(0, n).forEach(this::st1);
         for (int row = n - 1; row > 0; row--) {
             st2(row);
@@ -66,22 +66,17 @@ class Matrix {
     }
 
     void st1(int row) {
-        if (matrix[row][row] == 0) {
-
-        }
         if (matrix[row][row] != 1) {
             double k = matrix[row][row];
             IntStream.range(row, matrix[row].length).forEach(i -> matrix[row][i] /= k);
             System.out.println((1 / k) + " * R" + (row + 1) + " -> R" + (row + 1));
-            print();
+            //print();
         }
         IntStream.range(row + 1, n).forEach(i -> {
             double k = -matrix[i][row];
-            IntStream.range(row, n + 1).forEach(j -> {
-                matrix[i][j] += k * matrix[row][j];
-            });
+            IntStream.range(row, n + 1).forEach(j -> matrix[i][j] += k * matrix[row][j]);
             System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
-            print();
+            //print();
         });
     }
 
@@ -92,12 +87,12 @@ class Matrix {
                 matrix[i][col] += k * matrix[row][col];
             }
             System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
-             print();
+             //print();
         }
     }
 
     void stage1(int row) {
-        print();
+        //print();
         System.out.println();
         IntStream.range(row + 1, n).forEach(i -> {
             double k = matrix[i][row];

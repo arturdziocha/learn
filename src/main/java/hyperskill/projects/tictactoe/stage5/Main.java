@@ -11,7 +11,7 @@ public class Main {
         TicTacToe ticTacToe = new TicTacToe(3);
         do {
             ticTacToe.print();
-            System.out.printf("Enter the coordinates: ");
+            System.out.println("Enter the coordinates: ");
             // String[] number = scanner.nextLine().split("\\s+");
             String numbers = scanner.nextLine();
             Scanner scInts = new Scanner(numbers);
@@ -63,12 +63,12 @@ class TicTacToe {
                 setBox(x, y);
                 if (isWin(lastPlayer)) {
                     finished = true;
-                    print();
+                    //print();
                     System.out.println(lastPlayer + " wins");
                 }
                 else if(checkFinished()) {
                     finished = true;
-                    print();
+                    //print();
                     System.out.println("Draw");
                 }
             }
@@ -142,14 +142,11 @@ class TicTacToe {
     }
 
     private int xChanger(int x) {
-        switch (x) {
-            case 1:
-                return 3;
-            case 3:
-                return 1;
-            default:
-                return 2;
-        }
+        return switch (x) {
+            case 1 -> 3;
+            case 3 -> 1;
+            default -> 2;
+        };
     }
 
 }

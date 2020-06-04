@@ -28,5 +28,4 @@ class Column {
     int get(int index) {
         return columns.get(index);
     }
-
 }

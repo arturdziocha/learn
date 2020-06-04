@@ -1253,7 +1253,7 @@ class LinearSolution {
     }
 
     void solve() {
-        print();
+        //print();
         stage1();
         IntStream.range(0, howManyEquations).forEach(this::stage2);
         boolean noSolutions = false;
@@ -1290,12 +1290,12 @@ class LinearSolution {
                     matrix.switchRow(i, findNext.getAsInt());
                     result.switchResult(findNext.getAsInt(), i);
                     System.out.println("R" + (i + 1) + " <-> R" + (findNext.getAsInt() + 1));
-                    print();
+                    //print();
                 } else if ((findNext = matrix.findFirstNonZeroInColumn(i)).isPresent()) {
                     matrix.switchColumns(i, findNext.getAsInt());
                     column.switchColumn(i, findNext.getAsInt());
                     System.out.println(column.get(findNext.getAsInt()) + " <-> " + column.get(i));
-                    print();
+                    //print();
                 } else {
                     Optional<RowColHelper> optional = matrix.findFirstNonZeroColRow(i);
                     if (optional.isPresent()) {
@@ -1308,7 +1308,7 @@ class LinearSolution {
                         matrix.switchColumns(i, col);
                         column.switchColumn(i, col);
                         System.out.println(column.get(col) + " <-> " + column.get(i));
-                        print();
+                        //print();
                     }
                 }
             }
@@ -1325,7 +1325,7 @@ class LinearSolution {
                             .range(row, matrix.getRow(row).size())
                             .forEach(i -> matrix.update(row, i, matrix.getRow(row).getColumn(i) / k));
                     System.out.println((1 / k) + " * R" + (row + 1) + " -> R" + (row + 1));
-                    print();
+                    //print();
 
                 }
                 IntStream.range(row + 1, howManyEquations).forEach(i -> {
@@ -1337,7 +1337,7 @@ class LinearSolution {
                                         matrix.update(i, j, matrix.getRow(i).getColumn(j) + k * matrix.getRow(row).getColumn(j))
                                 );
                         System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
-                        print();
+                        //print();
                     }
                 });
             }
@@ -1354,7 +1354,7 @@ class LinearSolution {
                     matrix.update(i, col, matrix.getRow(i).getColumn(col) + k * matrix.getRow(row).getColumn(col));
                 }
                 System.out.println(k + " * R" + (row + 1) + " + R" + (i + 1) + " -> R" + (i + 1));
-                print();
+                //print();
             }
 
         }

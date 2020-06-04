@@ -61,24 +61,4 @@ class Matrix {
     public void update(int row, int index, ComplexNumber value) {
         rows.get(row).updateColumn(index, value);
     }
-
-    public double sumOfRealInRow(int row) {
-        return IntStream.range(0, rows.get(row).size()).mapToDouble(i -> rows.get(row).getColumn(i).getReal()).sum();
-    }
-
-    public double sumOfImaginaryInRow(int row) {
-        return IntStream
-                .range(0, rows.get(row).size())
-                .mapToDouble(i -> rows.get(row).getColumn(i).getImaginary())
-                .sum();
-    }
-
-    public double sumOfDiagonalReal(int numOfColumns) {
-        return IntStream.range(0, numOfColumns).mapToDouble(i -> rows.get(i).getColumn(i).getReal()).sum();
-    }
-
-    public double sumOfDiagonalImaginary(int numOfColumns) {
-        return IntStream.range(0, numOfColumns).mapToDouble(i -> rows.get(i).getColumn(i).getImaginary()).sum();
-    }
-
 }

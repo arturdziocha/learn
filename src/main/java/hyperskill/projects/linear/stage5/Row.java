@@ -2,7 +2,6 @@ package hyperskill.projects.linear.stage5;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Row {
     private final List<ComplexNumber> row = new ArrayList<>();
@@ -38,4 +37,7 @@ public class Row {
         return row.stream().filter(r -> r.getReal() == 0.0).count();
     }
 
+    public long countImaginary() {
+        return row.stream().filter(i -> i.getReal() == 0.0 && i.getImaginary() != 0.0).count();
+    }
 }
