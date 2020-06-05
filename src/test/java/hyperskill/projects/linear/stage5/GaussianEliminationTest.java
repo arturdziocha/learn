@@ -16,7 +16,7 @@ class GaussianEliminationTest {
 
     @BeforeEach
     void setUp() {
-        this.elimination = new GaussianElimination();
+        this.elimination = new GaussianElimination(false);
     }
 
     @DisplayName("Should return Double array")

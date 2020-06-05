@@ -11,9 +11,7 @@ public class RowColHelper {
 
     public int getRow() {
         return row;
-    }
-
-   
+    }   
 
     public int getColumn() {
         return column;
