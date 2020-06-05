@@ -40,7 +40,6 @@ public class GaussianElimination {
         for (int i = 0; i < howManyEquations; i++) {
             Row row = new Row();
             String[] r = scanner.nextLine().split("\\s+");
-            System.out.println(Arrays.toString(r));
 
             for (int j = 0; j < howManyColumns; j++) {
                 row.add(new ComplexNumber(r[j]));
@@ -58,7 +57,7 @@ public class GaussianElimination {
     public void write(File file, File logFile) throws FileNotFoundException {
         try (PrintWriter writer = new PrintWriter(file)) {
             log.write("\n");
-            log.write(String.format("The solution is: %s", solution.replace("\n", ", ")));
+            log.write(String.format("The solution is: %s\n", solution.replace("\n", ", ")));
             writer.print(solution);
             log.write(String.format("Saved to file %s", file.getAbsolutePath()));
         }
@@ -69,7 +68,6 @@ public class GaussianElimination {
     }
 
     public void solve() {
-        // print();
         stage1();
         IntStream.range(0, howManyEquations).forEach(this::stage2);
 
@@ -104,7 +102,6 @@ public class GaussianElimination {
                         int row = optional.get().getRow();
                         matrix.switchRow(i, row);
                         result.switchResult(i, row);
-                        System.out.println("R" + (i + 1) + " <-> R" + (row));
                         log.write(String.format("R%d <-> R%d", (i + 1), row));
                         logOpers();
                         int col = optional.get().getColumn();
@@ -141,19 +138,20 @@ public class GaussianElimination {
     private void updateRowByAddDown(int row) {
         IntStream.range(row + 1, howManyEquations).forEach(i -> {
             ComplexNumber k = new ComplexNumber(0.0, 0.0).subtract(matrix.getRow(i).getColumn(row));
-
             if (matrix.getRow(row + 1).countImaginary() != howManyColumns) {
                 result.update(i, result.get(i).add(result.get(row).multiply(k)));
                 IntStream
                         .range(row, matrix.getRow(row).size())
                         .forEach(j -> matrix
                                 .update(i, j,
-                                    matrix.getRow(i).getColumn(j).add(k.multiply(matrix.getRow(row).getColumn(j)))));
+                                        matrix.getRow(i).getColumn(j).add(k.multiply(matrix.getRow(row).getColumn(j)))));
                 log.write(String.format("%s * R%d + R%d -> R%d\n", k, row + 1, i + 1, i + 1));
                 logOpers();
                 // print();
+
             }
         });
+
     }
 
     private void stage3(int row) {
@@ -164,7 +162,7 @@ public class GaussianElimination {
                 for (int col = howManyColumns - 1; col >= 0; col--) {
                     matrix
                             .update(i, col,
-                                matrix.getRow(i).getColumn(col).add(k.multiply(matrix.getRow(row).getColumn(col))));
+                                    matrix.getRow(i).getColumn(col).add(k.multiply(matrix.getRow(row).getColumn(col))));
 
                 }
                 log.write(String.format("%s * R%d + R%d -> R%d", k, row + 1, i + 1, i + 1));
@@ -217,16 +215,5 @@ public class GaussianElimination {
             builder.append("\n");
             log.write(builder.toString());
         }
-
-    }
-
-    private void print() {
-        column.getColumns().forEach(c -> System.out.printf("  %s  ", c));
-        System.out.printf("%s\n", "result");
-        IntStream.range(0, howManyEquations).forEach(i -> {
-            matrix.getRow(i).getAll().forEach(s -> System.out.printf("%s | ", s));
-            System.out.printf("%s\n", result.get(i));
-        });
-        System.out.println();
     }
 }
