@@ -63,12 +63,11 @@ class TicTacToe {
                 setBox(x, y);
                 if (isWin(lastPlayer)) {
                     finished = true;
-                    //print();
+                    // print();
                     System.out.println(lastPlayer + " wins");
-                }
-                else if(checkFinished()) {
+                } else if (checkFinished()) {
                     finished = true;
-                    //print();
+                    // print();
                     System.out.println("Draw");
                 }
             }
@@ -142,11 +141,15 @@ class TicTacToe {
     }
 
     private int xChanger(int x) {
-        return switch (x) {
-            case 1 -> 3;
-            case 3 -> 1;
-            default -> 2;
-        };
+        switch (x) {
+            case 1:
+                return 3;
+            case 3:
+                return 1;
+            default:
+                return 2;
+
+        }
     }
 
 }
