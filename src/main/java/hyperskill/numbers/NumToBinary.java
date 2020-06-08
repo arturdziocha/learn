@@ -6,8 +6,8 @@ import java.util.List;
 
 public class NumToBinary {
     public static void main(String[] args) {
-        System.out.println(byDivision(10));
-        System.out.println(bySubstraction(10));
+        System.out.println(byDivision(24));
+        System.out.println(bySubstraction(24));
     }
 
     public static String byDivision(long number) {
