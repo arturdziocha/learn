@@ -12,5 +12,7 @@ public class BitShift {
 
         result = n << 2 << 1;
         System.out.println(result);
+
+        System.out.println((2 | 1));
     }
 }
