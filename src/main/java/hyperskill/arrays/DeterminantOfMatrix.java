@@ -1,10 +1,15 @@
 package hyperskill.arrays;
 
-public class DeterminantOfMatrix {   
+public class DeterminantOfMatrix {
+    public static void main(String[] args) {
+        long[][] matrix = {{1, -2, 4, 3208, -8379}, {2, 4, -781, -5, -9}, {0, 0, 1, -54, 0}, {0, 0, 0, 3, -879}, {0, 0,
+                0, 0, 3}};
+        System.out.println(determinant(matrix));
+    }
 
     public static long determinant(long[][] matrix) {
         int size = matrix.length;
-        if (size == 2) {            
+        if (size == 2) {
             return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
 
         } else {
