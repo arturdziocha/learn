@@ -72,7 +72,6 @@ class HydraulicMotor extends Motor {
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
         return "Hydraulic " + super.toString();
     }
 
@@ -99,7 +98,6 @@ class WarpDrive extends Motor {
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
         return "WarpDrive " + super.toString();
     }
 }

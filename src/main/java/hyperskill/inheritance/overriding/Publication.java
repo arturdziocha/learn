@@ -23,7 +23,6 @@ class Newspaper extends Publication {
 
     @Override
     public String getDetails() {
-        // TODO Auto-generated method stub
         return super.getDetails() + ", source=\"" + source + "\"";
     }
 }
@@ -39,7 +38,6 @@ class Article extends Publication {
 
     @Override
     public String getDetails() {
-        // TODO Auto-generated method stub
         return super.getDetails() + ", author=\"" + author + "\"";
     }
 }
@@ -55,7 +53,6 @@ class Announcement extends Publication {
 
     @Override
     public String getDetails() {
-        // TODO Auto-generated method stub
         return super.getDetails() + ", daysToExpire=" + daysToExpire;
     }
 }

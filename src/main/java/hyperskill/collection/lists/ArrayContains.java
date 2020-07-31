@@ -50,6 +50,7 @@ public class ArrayContains {
                 .collect(Collectors.toCollection(ArrayList::new));
         Integer toFind = Integer.parseInt(scanner.nextLine());
         System.out.println(ints.contains(toFind));
+        scanner.close();
 
     }
 

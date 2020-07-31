@@ -32,7 +32,7 @@ public class Stage4 {
         Map<String, String> actions = toMap(String.class, String.class, args);
         System.out
                 .println(encodeDecode(actions.getOrDefault("-mode", "enc"),
-                        actions.containsKey("-key") ? Integer.parseInt(actions.get("-key")) : 0, actions.get("-data")));
+                    actions.containsKey("-key") ? Integer.parseInt(actions.get("-key")) : 0, actions.get("-data")));
 
     }
 
@@ -52,6 +52,6 @@ public class Stage4 {
             return i * 2;
         })
                 .collect(HashMap::new, (m, i) -> m.put(keyType.cast(entries[i]), valueType.cast(entries[i + 1])),
-                        Map::putAll);
+                    Map::putAll);
     }
 }

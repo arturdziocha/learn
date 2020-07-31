@@ -69,7 +69,6 @@ class LinearSolution {
                         .collect(TreeMap::new, (m, i) -> m.put(column.get(i), result.get(i)), TreeMap::putAll);
                 solution = map.values().stream().map(String::valueOf).collect(Collectors.joining("\n"));
             }
-            // TODO check imaginary sum;
             else {
                 solution = "Infinitely many solutions";
             }

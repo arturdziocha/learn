@@ -35,7 +35,6 @@ public class FizzBuzz {
                 }
             }
         } else {
-            //TODO
         }
         scanner.close();
     }

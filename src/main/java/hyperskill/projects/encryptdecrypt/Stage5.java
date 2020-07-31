@@ -65,7 +65,6 @@ public class Stage5 {
             try (PrintWriter writer = new PrintWriter(file)) {
                 writer.print(ret);
             } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else {

@@ -54,6 +54,7 @@ public class AlphabeticalOrder {
         String[] temp = arr.clone();
         Arrays.sort(arr);
         System.out.println(Arrays.equals(arr, temp));
+        scanner.close();
 
     }
 

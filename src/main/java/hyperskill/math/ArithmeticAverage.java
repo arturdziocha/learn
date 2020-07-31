@@ -26,5 +26,6 @@ public class ArithmeticAverage {
         int end = scanner.nextInt();
         IntStream intStream = IntStream.rangeClosed(start, end).filter(i -> i % 3 == 0);
         System.out.println(intStream.average().orElse(0.0));
+        scanner.close();
     }
 }

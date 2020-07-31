@@ -28,7 +28,7 @@ public class MaxDivisible {
             }
         }
         System.out.println(currentMax);
-
+        in.close();
 
         // Scanner scanner = new Scanner(System.in);
         // int len = scanner.nextInt();
@@ -44,6 +44,5 @@ public class MaxDivisible {
         // }
         // System.out.println(max);
     }
-
 
 }

@@ -23,7 +23,6 @@ Sample Output 2:
 5
  */
 public class CountWords {
-    //TODO
     public static void main(String[] args) throws IOException {
         try (Reader reader = new BufferedReader(new InputStreamReader(
                 new ByteArrayInputStream("between   us  several   space characters".getBytes(StandardCharsets.UTF_8))))) {
